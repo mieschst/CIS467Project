@@ -89,9 +89,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e8a3d93345ca14d96c3c2b430708ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 0
-  columns: 0
-  myName: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  unitsLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!212 &21226328
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -181,6 +184,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_AngularDrag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: blockingLayer.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: unitsLayer.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

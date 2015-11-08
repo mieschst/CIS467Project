@@ -2,29 +2,17 @@
 using System.Collections;
 using Random = UnityEngine.Random;
 
-public class Moblin : Unit {
+public class Moblin : Enemy {
 
 	Animator moblinAnimator;
 
 	int numFrames;
 
-	const int FRAMES_PER_TURN = 60;
-
-	public LayerMask blockingLayer;
-	public LayerMask unitsLayer;
-
-	public void InitMoblin(int level) {
+	public override void InitEnemy(int level) {
 		CalculateStats (level);
 	}
 
-	// Initializes key variables for the Moblin enemy.
-	void Start () {
-		InitMoblin (1);
-		numFrames = 0;
-		moblinAnimator = this.GetComponent<Animator> ();
-	}
-
-	public void CalculateStats(int level){
+	public override void CalculateStats(int level){
 		this.Level = level;
 		this.Health = 3;
 		this.Attack = 1;
@@ -45,7 +33,14 @@ public class Moblin : Unit {
 		}
 	}
 
-	public void CalculateDamageDealt(Unit player){
+	// Initializes key variables for the Moblin enemy.
+	void Start () {
+		InitEnemy (1);
+		numFrames = 0;
+		moblinAnimator = this.GetComponent<Animator> ();
+	}
+
+	public override void CalculateDamageDealt(Unit player){
 		// If the enemy's attack stat is greater than the player's defense, then set the new damage amount.
 		// The enemy's attack must be at least 2 more than the player's defense for the damage to be more
 		// than 1.
