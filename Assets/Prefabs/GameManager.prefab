@@ -1,15 +1,15 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &100838
+--- !u!1 &130524
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 430904}
-  - 114: {fileID: 11480756}
-  - 114: {fileID: 11415792}
+  - 4: {fileID: 495566}
+  - 114: {fileID: 11423226}
+  - 114: {fileID: 11469924}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17,45 +17,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &430904
+--- !u!4 &495566
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100838}
+  m_GameObject: {fileID: 130524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11415792
+--- !u!114 &11423226
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8df9984cdf5f4e7ebab20e3e2f0565d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 143324, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
-  cynthia: {fileID: 127472, guid: 9a1c0250669bf57478a2d36c4183ac74, type: 2}
---- !u!114 &11480756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100838}
+  m_GameObject: {fileID: 130524}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c21baf27b186d44a8be627dfdc9e0c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTile: {fileID: 185736, guid: 70e2cd5ab958d4f38ba9aa0f87fa37ad, type: 2}
+  floorTile: {fileID: 140714, guid: e8e484be8c3394a4eb66a9f05ee1a0a3, type: 2}
   wallTile: {fileID: 117544, guid: e8ce4e46c57a74905bbf59270f464a0d, type: 2}
-  waterTile: {fileID: 142490, guid: d5f99a6d16c0c447f8425a483153f921, type: 2}
+  waterTile: {fileID: 170220, guid: 9ec40fecb869241869f301d849877f16, type: 2}
+  pitTile: {fileID: 148562, guid: 910bfb5656422064a8b54f717e7a6c05, type: 2}
+  rockTiles:
+  - {fileID: 185332, guid: b78b67c0399024b50bfdbee3100ce06c, type: 2}
+  - {fileID: 181528, guid: 9e59b862387d746ee91c4be822f97ef0, type: 2}
   basicItems:
   - {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
   - {fileID: 134680, guid: 9d6f330e07f3b4f08ade92e23ae55b5e, type: 2}
@@ -66,67 +57,30 @@ MonoBehaviour:
   - {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
   enemies:
   - {fileID: 127472, guid: 9a1c0250669bf57478a2d36c4183ac74, type: 2}
-  - {fileID: 119674, guid: 165a67011cd494b679262b463da15305, type: 2}
+  - {fileID: 134626, guid: 165a67011cd494b679262b463da15305, type: 2}
   ladder: {fileID: 152950, guid: 90ce2abc87ca645b58e0f629844fb897, type: 2}
-  door: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
-  pitTile: {fileID: 148562, guid: 910bfb5656422064a8b54f717e7a6c05, type: 2}
-  rows: 0
-  columns: 0
+  lockedDoor: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
+--- !u!114 &11469924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8df9984cdf5f4e7ebab20e3e2f0565d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 153116, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
+  cynthia: {fileID: 127472, guid: 9a1c0250669bf57478a2d36c4183ac74, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: enemies.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: keyItems.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: waterTile
-      value: 
-      objectReference: {fileID: 142490, guid: d5f99a6d16c0c447f8425a483153f921, type: 2}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.data[0]
-      value: 
-      objectReference: {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.data[1]
-      value: 
-      objectReference: {fileID: 134680, guid: 9d6f330e07f3b4f08ade92e23ae55b5e, type: 2}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.data[2]
-      value: 
-      objectReference: {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.data[3]
-      value: 
-      objectReference: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
-    - target: {fileID: 0}
-      propertyPath: basicItems.Array.data[4]
-      value: 
-      objectReference: {fileID: 148738, guid: 9353e65028cef4d5a9176daf3eb8b1ea, type: 2}
-    - target: {fileID: 0}
-      propertyPath: keyItems.Array.data[0]
-      value: 
-      objectReference: {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
-    - target: {fileID: 0}
-      propertyPath: door
-      value: 
-      objectReference: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
-      propertyPath: pitTile
-      value: 
-      objectReference: {fileID: 148562, guid: 910bfb5656422064a8b54f717e7a6c05, type: 2}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 100838}
+  m_RootGameObject: {fileID: 130524}
   m_IsPrefabParent: 1

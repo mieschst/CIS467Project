@@ -5,13 +5,19 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject cynthia;
-    public BoardManager boardScript;
+    //public BoardManager boardScript;
     private int level = 1;
+
+	public static bool isHardMode { get; set; }
 
     public static GameManager instance = null;
 
     // Use this for initialization
     void Start () {
+
+		// Sets isHardMode's value.
+		isHardMode = false;
+
 		Instantiate (player);
 		//Instantiate (cynthia);
 
@@ -26,12 +32,12 @@ public class GameManager : MonoBehaviour {
 
             //Then destroy this
             Destroy(gameObject); 
-        
+//        
+//
+//        //Sets this to not be destroyed when reloading scene
+//        DontDestroyOnLoad(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-
-        boardScript = GetComponent<BoardManager>();
+        //boardScript = GetComponent<BoardManager>();
         Init();
         //boardScript.LevelSelector(level);
     }
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
     void Init()
     {
-        boardScript.LevelSelector(level);
+        //boardScript.LevelSelector(level);
     }
 
     // Update is called once per frame

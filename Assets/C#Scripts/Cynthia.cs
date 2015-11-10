@@ -14,27 +14,54 @@ public class Cynthia : Unit {
 	public int rows;
 	public int columns;
 
-	// A string variable that we can change while playing the game or outside Play mode.
-	public string myName;
-
 	public static Vector3 currentPosition;
 
-	public void InitPlayer(string unitName = "Cynthia"){
-		this.Level = 3;
-		this.Health = 5;
-		this.Attack = 1;
-		this.Defense = 1;
-		this.Speed = 1;
+	public void InitPlayer(int level, bool isHardMode){
 
-		this.Currency = 10;
-		this.Experience = 50;
-		myName = unitName;
+		CalculateStats (level, isHardMode);
+
 		state = 0;
 		maxmoves = 1.0;
 		moves = maxmoves;
 
 		canWalk = true;
 		canJump = true;
+	}
+
+	public void CalculateStats(int level, bool isHardMode){
+		this.Level = level;
+		this.Health = 3;
+		this.Attack = 1;
+		this.Defense = 1;
+		this.Speed = 1;
+		this.Experience = 20 * level;
+		
+		// If we are on normal mode, then just follow the normal enemy stat calculations.
+		if (isHardMode == false) {
+			for (int i = 1; i < level; i++) {
+				if (i % 2 == 0) {
+					this.Health++;
+					this.Speed++;
+					this.Defense++;
+				} else {
+					this.Attack++;
+					this.Speed++;
+				}
+			}
+		}
+		// Otherwise, if we are on hard mode, then Cynthia will have enhanced health and speed stats.
+		else {
+			for (int i = 1; i < level; i++) {
+				if (i % 2 == 0) {
+					this.Health += 2;
+					this.Speed++;
+					this.Defense++;
+				} else {
+					this.Attack++;
+					this.Speed += 2;
+				}
+			}
+		}
 	}
 
 	// Sets the borders for the player movement.
@@ -169,32 +196,32 @@ public class Cynthia : Unit {
 		float xMinus1 = currentPosition.x - (float)1.0;
 		float yPlus1 = currentPosition.y + (float)1.0;
 		float yMinus1 = currentPosition.y - (float)1.0;
-		Debug.Log(otherCharacterPosition);
-		Debug.Log(currentPosition);
+		//Debug.Log(otherCharacterPosition);
+		//Debug.Log(currentPosition);
 		switch(currentDirection) {
 			case "south":
 				if(otherCharacterPosition.x != currentPosition.x || otherCharacterPosition.y != yMinus1)
 					currentPosition = goSouth(currentPosition);
 				moves--;
-		Debug.Log(yMinus1);
+		//Debug.Log(yMinus1);
 				break;
 			case "north":
 				if(otherCharacterPosition.x != currentPosition.x || otherCharacterPosition.y != yPlus1)
 					currentPosition = goNorth(currentPosition);
 				moves--;
-		Debug.Log(yPlus1);
+		//Debug.Log(yPlus1);
 				break;
 			case "west":
 				if(otherCharacterPosition.x != xMinus1 || otherCharacterPosition.y != currentPosition.y)
 					currentPosition = goWest(currentPosition);
 				moves--;
-		Debug.Log(xMinus1);
+		//Debug.Log(xMinus1);
 				break;
 			default:
 				if(otherCharacterPosition.x != xPlus1  || otherCharacterPosition.y != currentPosition.y)
 					currentPosition = goEast(currentPosition);
 				moves--;
-		Debug.Log(xPlus1);
+		//Debug.Log(xPlus1);
 				break;
 		}
 	}
@@ -204,7 +231,7 @@ public class Cynthia : Unit {
 		animator = GetComponent<Animator> ();
 
 		// Ititializes the player stats.
-		InitPlayer ();
+		InitPlayer (1, GameManager.isHardMode);
 		int xPos = 0;
 		int yPos = 0;
 		SetMoveLimits (9,15);
