@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
@@ -68,6 +69,7 @@ public class Player : Unit {
 	public string myName;
 
 	int[] stats;
+
 
 	public static void setHUDhealth(int pHealth)
 	{
@@ -528,6 +530,7 @@ public class Player : Unit {
 			}
 			else {
 				this.Inventory.Add (item);
+				InventoryScript.updateInventory(Inventory);
 			}
 			// Removes the item from the game board.
 			Destroy (collider.gameObject);
@@ -543,6 +546,7 @@ public class Player : Unit {
 		}
 		// Remove the item from the player's inventory.
 		Inventory.Remove(item);
+		InventoryScript.removeFromInventory(item);
 	}
 
 	public void CalculateDamageDealt(Unit enemy){

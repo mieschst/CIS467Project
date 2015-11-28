@@ -27,9 +27,14 @@ public class GameManager : MonoBehaviour {
             //Then destroy this
             Destroy(gameObject); 
         
+		/*********************************************
+		 * I commented out this "DontDestroyOnLoad". 
+		 * It got rid of the glitch, and I don't notice
+		 * any problems loading between levels!
+		 * ******************************************/
 
         //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         boardScript = GetComponent<BoardManager>();
         Init();
