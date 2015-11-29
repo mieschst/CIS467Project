@@ -177,6 +177,9 @@ public class Player : Unit {
 			if(Input.GetKey(keyATTACK)){
 				UseBowAttack(hitUnit);
 			}
+			else if(Input.GetKey (KeyCode.B)){
+				UseBomb(hitUnit);
+			}
 			else {
 				UseSwordAttack (hitUnit);
 			}
@@ -462,6 +465,58 @@ public class Player : Unit {
 		}
 	}
 
+
+	public void UseBomb(RaycastHit2D hitUnit){
+		int bombDamage = 5;
+		
+		bool hasBomb = false;
+		
+		foreach (Item item in Inventory) {
+			if(item.Name.Equals ("Bomb")){
+				Inventory.Remove (item);
+				hasBomb = true;
+				break;
+			}
+		}
+		
+		if (hitUnit.collider.gameObject.tag.Equals ("Enemy") && hasBomb) {
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				animator.SetTrigger ("PlayerBombRight");
+			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				animator.SetTrigger ("PlayerBombLeft");
+			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+				animator.SetTrigger ("PlayerBombBackward");
+			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+				animator.SetTrigger ("PlayerBombForward");
+			} 
+			string enemyType;
+			if(hitUnit.collider.gameObject.name.Contains("(Clone)")){
+				// Gets rid of the (Clone) in the object name.
+				enemyType = hitUnit.collider.gameObject.name.Substring(0,hitUnit.collider.gameObject.name.Length - 7);
+			}
+			else{
+				enemyType = hitUnit.collider.gameObject.name;
+			}
+			switch(enemyType){
+			case "Cynthia":
+				hitUnit.collider.gameObject.GetComponent<Cynthia>().Health -= bombDamage;
+				if(hitUnit.collider.gameObject.GetComponent<Cynthia>().Health <= 0){
+					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Cynthia>());
+					Destroy (hitUnit.collider.gameObject);
+				}
+				break;
+			case "Moblin":
+				hitUnit.collider.gameObject.GetComponent<Moblin>().Health -= bombDamage;
+				if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
+					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
+					Destroy (hitUnit.collider.gameObject);
+				}
+				break;
+			}
+		}
+	}
+
+
     	//Restart reloads the scene when called.
     	private void Restart()
     	{
@@ -548,9 +603,7 @@ public class Player : Unit {
 			}
 		}
 	}
-
-
-
+	
 	void OnTriggerEnter2D(Collider2D collider){
 
 		//Check if the tag of the trigger collided with is Exit.
@@ -584,7 +637,7 @@ public class Player : Unit {
 		// Remove the item from the player's inventory.
 		Inventory.Remove(item);
 	}
-
+	
 	public void CalculateDamageDealt(Unit enemy){
 		// If the player's attack stat is greater than the enemy's defense, then set the new damage amount.
 		// The player's attack must be at least 2 more than the enemy's defense for the damage to be more
