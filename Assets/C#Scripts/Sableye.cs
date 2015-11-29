@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cynthia : Enemy {
-
-// The amount of health the player has.
+public class Sableye : Enemy {
 	Animator animator;
 
 	int numFrames;
@@ -76,13 +74,9 @@ public class Cynthia : Enemy {
 		numFrames = 0;
 		animator = GetComponent<Animator> ();
 	}
-
+	
 	public override void CalculateDamageDealt(Unit player){
-		// If the enemy's attack stat is greater than the player's defense, then set the new damage amount.
-		// The enemy's attack must be at least 2 more than the player's defense for the damage to be more
-		// than 1.
-		int damage = (this.Attack > player.Defense) ? this.Attack - player.Defense : 1;
-		player.Health -= damage;
+		//Sableye doesn't attack
 	}
 
 	public override void Move(){
@@ -90,66 +84,27 @@ public class Cynthia : Enemy {
 		Vector3 endPosition = this.transform.position;
 		
 		int movement = 1;
-		//int direction = (int)(Random.value * 4);
-		int direction;
-		float playerEnemyXDiff = Player.currentPosition.x - this.transform.position.x;
-		float playerEnemyYDiff = Player.currentPosition.y - this.transform.position.y;
-		float absPlayerEnemyXDiff = Mathf.Abs(playerEnemyXDiff);
-		float absPlayerEnemyYDiff = Mathf.Abs(playerEnemyYDiff);
-
-		if(absPlayerEnemyYDiff > 1 || absPlayerEnemyXDiff > 1){
-			//We aren't in range of the player to attack, we must advance!
-			//Now, which way should we go...
-			if(absPlayerEnemyYDiff > absPlayerEnemyXDiff){
-				if(absPlayerEnemyXDiff != 0){
-					direction = moveWestEast(playerEnemyXDiff);
-				}else{
-					direction = moveNorthSouth(playerEnemyYDiff);
-				}
-			}else {
-				if(absPlayerEnemyYDiff != 0){
-					direction = moveNorthSouth(playerEnemyYDiff);
-				}else{
-					direction = moveWestEast(playerEnemyXDiff);
-				}
-			}
-		}else if(absPlayerEnemyXDiff == 1 && absPlayerEnemyYDiff == 1){
-			if(playerEnemyXDiff == 1 && playerEnemyYDiff == 1){
-				direction = 0;
-			}else if(playerEnemyXDiff == 1 && playerEnemyYDiff == -1){
-				direction = 3;
-			}else if(playerEnemyXDiff == -1 && playerEnemyYDiff == -1){
-				direction = 1;
-			}else {
-				direction = 2;
-			}
-		}else {
-			if(absPlayerEnemyXDiff > 0){
-				direction = moveWestEast(playerEnemyXDiff);
-			} else{
-				direction = moveNorthSouth(playerEnemyYDiff);
-			}
-		}
+		int direction = (int)(Random.value * 4);
 		
 		switch (direction) {
 		case 0: 
 			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
-			animator.Play ("cynthia_ 1");
+			animator.Play ("SableyeDown");
 			//animator.Play ("GarchompDown");
 			break;
 		case 1:
 			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
-			animator.Play ("cynthia_");
+			animator.Play ("SableyeUp");
 			//animator.Play ("GarchompUp");
 			break;
 		case 2:
 			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
-			animator.Play ("cynthia_ 3");
+			animator.Play ("SableyeRight");
 			//animator.Play ("GarchompRight");
 			break;
 		case 3:
 			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
-			animator.Play ("cynthia_ 2");
+			animator.Play ("SableyeLeft");
 			//animator.Play ("GarchompLeft");
 			break;
 		}
@@ -166,47 +121,18 @@ public class Cynthia : Enemy {
 		if (!hit && !hitUnit) {
 			this.transform.position = endPosition;
 		}
-		if (hitUnit) {
-			AttackPlayer(hitUnit, direction);
-		}
 	}
 
-	int moveNorthSouth(float y){
-		if(y > 0){
-			return 1;
-		}else{
-			return 0;
-		}
-	}
+	void OnTriggerEnter2D(Collider2D collider){
 
-	int moveWestEast(float x){
-		if(x > 0){
-			return 2;
-		}else{
-			return 3;
-		}
-	}
-
-	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
-		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
-            source.Play();
-			switch (movementDirection) {
-			case 0:
-				animator.Play ("GarchompDown");
-				break;
-			case 1:
-				animator.Play ("GarchompUp");
-				break;
-			case 2:
-				animator.Play ("GarchompRight");
-				break;
-			case 3:
-				animator.Play ("GarchompLeft");
-				break;
-			}
-			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
-			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
-				Destroy (hitPlayer.collider.gameObject);
+		if (collider.gameObject.tag.Equals ("Item")) {
+			// Adds the item to the player's inventory.
+			Item item = new Item(collider.gameObject.name);
+			if(item.Name.Contains("Rupee")) {
+				item.Steal(this);
+				source.Play();
+				// Removes the item from the game board.
+				Destroy (collider.gameObject);
 			}
 		}
 	}
@@ -219,6 +145,6 @@ public class Cynthia : Enemy {
 				Move ();
 				numFrames = 0;
 			}
-		}
+		}	
 	}
 }
