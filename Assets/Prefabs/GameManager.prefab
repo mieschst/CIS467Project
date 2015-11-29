@@ -57,7 +57,7 @@ MonoBehaviour:
   - {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
   - {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
   - {fileID: 148738, guid: 9353e65028cef4d5a9176daf3eb8b1ea, type: 2}
-  - {fileID: 146856, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
+  - {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
   keyItems:
   - {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
   enemies:
@@ -114,7 +114,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: basicItems.Array.data[5]
       value: 
-      objectReference: {fileID: 146856, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
+      objectReference: {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}

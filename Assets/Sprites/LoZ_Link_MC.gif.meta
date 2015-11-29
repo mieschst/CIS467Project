@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 068f977974d7c445ebebe0d983514fe7
-timeCreated: 1448780274
+timeCreated: 1448785119
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -126,6 +126,22 @@ TextureImporter:
     21300238: LoZ_Link_MC_119
     21300240: LoZ_Link_MC_120
     21300242: LoZ_Link_MC_121
+    21300244: LoZ_Link_MC_122
+    21300246: LoZ_Link_MC_123
+    21300248: LoZ_Link_MC_124
+    21300250: LoZ_Link_MC_125
+    21300252: LoZ_Link_MC_126
+    21300254: LoZ_Link_MC_127
+    21300256: LoZ_Link_MC_128
+    21300258: LoZ_Link_MC_129
+    21300260: LoZ_Link_MC_130
+    21300262: LoZ_Link_MC_131
+    21300264: LoZ_Link_MC_132
+    21300266: LoZ_Link_MC_133
+    21300268: LoZ_Link_MC_134
+    21300270: LoZ_Link_MC_135
+    21300272: LoZ_Link_MC_136
+    21300274: LoZ_Link_MC_137
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1155,10 +1171,10 @@ TextureImporter:
     - name: LoZ_Link_MC_98
       rect:
         serializedVersion: 2
-        x: 2887
-        y: 5131
-        width: 129
-        height: 100
+        x: 912
+        y: 4328
+        width: 53
+        height: 61
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1389,6 +1405,166 @@ TextureImporter:
         y: 4152
         width: 50
         height: 40
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_122
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 4120
+        width: 94
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_123
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 4120
+        width: 88
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_124
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 4120
+        width: 75
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_125
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 4120
+        width: 82
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_126
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 3845
+        width: 94
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_127
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 3845
+        width: 88
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_128
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 3845
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_129
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 3845
+        width: 82
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_130
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 3569
+        width: 76
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_131
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 3569
+        width: 80
+        height: 110
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_132
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 3569
+        width: 80
+        height: 110
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_133
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 3569
+        width: 80
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_134
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 3310
+        width: 88
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_135
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 3307
+        width: 87
+        height: 107
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_136
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 3307
+        width: 89
+        height: 107
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_137
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 3314
+        width: 79
+        height: 105
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

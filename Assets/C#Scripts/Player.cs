@@ -67,6 +67,8 @@ public class Player : Unit {
 	// A string variable that we can change while playing the game or outside Play mode.
 	public static string myName;
 
+	public GameObject bomb;
+
 	int[] stats;
 	
 	public static void setHUDhealth(int pHealth)
@@ -468,9 +470,9 @@ public class Player : Unit {
 
 	public void UseBomb(RaycastHit2D hitUnit){
 		int bombDamage = 5;
-		
+
 		bool hasBomb = false;
-		
+
 		foreach (Item item in Inventory) {
 			if(item.Name.Equals ("Bomb")){
 				Inventory.Remove (item);
@@ -480,6 +482,12 @@ public class Player : Unit {
 		}
 		
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy") && hasBomb) {
+			// Spawns a bomb on the enemy space.
+			GameObject bombObj = Instantiate(bomb, hitUnit.collider.gameObject.transform.position, Quaternion.identity) as GameObject;
+			// Gets the animation controller associated with the bomb object.
+			Animator bombAnimator = bombObj.GetComponent<Animator>();
+			// Plays the explosion animation for the bomb.
+			bombAnimator.Play ("BombExplosion");
 			if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBombRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
@@ -513,10 +521,11 @@ public class Player : Unit {
 				}
 				break;
 			}
+			// Destroy the bomb after 1.8 seconds (The approximate time of its animation).
+			Destroy (bombObj, 1.8F);
 		}
 	}
-
-
+	
     	//Restart reloads the scene when called.
     	private void Restart()
     	{
