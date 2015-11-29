@@ -7,9 +7,10 @@ using System.Collections.Generic;
 public class BoardManager : MonoBehaviour {
 	
 	public GameObject floorTile;
-	public GameObject wallTile;
 	public GameObject waterTile;
+	public GameObject lavaTile;
 	public GameObject pitTile;
+	public GameObject[] wallTiles;
 
 	public GameObject[] rockTiles;
 	
@@ -63,7 +64,8 @@ public class BoardManager : MonoBehaviour {
             {
                 if (i < 0 || i >= rows || j < 0 || j >= columns)
                 {
-                    GameObject newTile = Instantiate(wallTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+					int index = (int) (Random.value * wallTiles.Length);
+                    GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
                     newTile.transform.SetParent(boardTiles);
                 }
             }
@@ -110,7 +112,8 @@ public class BoardManager : MonoBehaviour {
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
 
-		GenerateBlockingObjects (waterTile, 0.03F);
+		GenerateBlockingObjects (waterTile, 0.01F);
+		GenerateBlockingObjects (lavaTile, 0.01F);
 		for (int i = 0; i < rockTiles.Length; i++) {
 			GenerateBlockingObjects (rockTiles [(int)(Random.value * rockTiles.Length)], 0.01F);
 		}

@@ -96,9 +96,6 @@ public class Player : Unit {
 	public static Player player = null;
 
 	public void InitPlayer(){
-
-		//DontDestroyOnLoad (this.gameObject);
-
 		if (player == null) {
 			player = this;
 		}
@@ -488,6 +485,7 @@ public class Player : Unit {
 			Animator bombAnimator = bombObj.GetComponent<Animator>();
 			// Plays the explosion animation for the bomb.
 			bombAnimator.Play ("BombExplosion");
+
 			if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBombRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {

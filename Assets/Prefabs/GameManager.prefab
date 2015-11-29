@@ -41,9 +41,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorTile: {fileID: 140714, guid: e8e484be8c3394a4eb66a9f05ee1a0a3, type: 2}
-  wallTile: {fileID: 117544, guid: e8ce4e46c57a74905bbf59270f464a0d, type: 2}
   waterTile: {fileID: 170220, guid: 9ec40fecb869241869f301d849877f16, type: 2}
+  lavaTile: {fileID: 109792, guid: 8c7864c61105e459ba8ef39a108635b1, type: 2}
   pitTile: {fileID: 148562, guid: 910bfb5656422064a8b54f717e7a6c05, type: 2}
+  wallTiles:
+  - {fileID: 117544, guid: e8ce4e46c57a74905bbf59270f464a0d, type: 2}
+  - {fileID: 145578, guid: 8255402a7112e4fdf8d73ddc41f8ab3b, type: 2}
   rockTiles:
   - {fileID: 185332, guid: b78b67c0399024b50bfdbee3100ce06c, type: 2}
   - {fileID: 181528, guid: 9e59b862387d746ee91c4be822f97ef0, type: 2}
@@ -88,6 +91,10 @@ Prefab:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
+      propertyPath: wallTiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: basicItems.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -115,6 +122,18 @@ Prefab:
       propertyPath: basicItems.Array.data[5]
       value: 
       objectReference: {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
+    - target: {fileID: 0}
+      propertyPath: lavaTile
+      value: 
+      objectReference: {fileID: 109792, guid: 8c7864c61105e459ba8ef39a108635b1, type: 2}
+    - target: {fileID: 0}
+      propertyPath: wallTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 117544, guid: e8ce4e46c57a74905bbf59270f464a0d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: wallTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 145578, guid: 8255402a7112e4fdf8d73ddc41f8ab3b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}
