@@ -19,11 +19,17 @@ public class BoardManager : MonoBehaviour {
     public GameObject[] items;
 
 	public GameObject ladder;
-	
-	public int rows;
+
+    public GameObject player;
+
+    public int rows;
 	public int columns;
 
-	List<Vector3> filledPositions;
+    //public List<Vector3> OpenList = new List<Vector3>();
+    //public List<Vector3> ClosedList = new List<Vector3>();
+    //public List<int> HValues = new List<int>();
+
+	List<Vector3> filledPositions = new List<Vector3>();
 
 	private Transform boardTiles;
 	private Transform boardItems;
@@ -44,7 +50,7 @@ public class BoardManager : MonoBehaviour {
 		else
 			this.columns = 1;
 
-        /* This section includes the board fix for the ghost instance
+        //This section includes the board fix for the ghost instance
         boardTiles = new GameObject("BoardTiles").transform;
 
         // Assigns values to the column and row variables.
@@ -84,8 +90,11 @@ public class BoardManager : MonoBehaviour {
         Instantiate(ladder, new Vector3(rows - 1, columns - 1, 0), Quaternion.identity);
 
         // May generate items up to the specified number and place them on the board.
-        GenerateItems(10); 
-        */
+        GenerateBasicItems(10);
+
+        //SpawnEnemies(0, new Vector3[] { new Vector3(3, 6), new Vector3(8, 2), new Vector3(10, 7) });
+        //SpawnEnemies(1, new Vector3[] { new Vector3(5, 5), new Vector3(7, 4), new Vector3(8, 8) });
+
     }
 
     void SetupList()
@@ -94,13 +103,10 @@ public class BoardManager : MonoBehaviour {
         boardPositions.Clear();
 
         // Adds tiles to the board positions list.
-        for (int i = 1; i < rows; i++)
+        for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
-            {
-                if (j == 8)
-                    break;
-                
+            {                          
                 //Adds the board location to the list
                 boardPositions.Add(new Vector3(i, j, -1f));
             }
@@ -152,33 +158,9 @@ public class BoardManager : MonoBehaviour {
 		// Adds a ladder right corner of the moveable section of the board.
 		Instantiate (ladder, new Vector3 (rows-1, columns-1), Quaternion.identity);
 
-		SpawnEnemies(0, new Vector3 [] { new Vector3(3,6), new Vector3(8,2), new Vector3(10,7) });
-		SpawnEnemies(1, new Vector3 [] { new Vector3(5,5), new Vector3(7,4), new Vector3(8,8) });
-
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems (6);
 
-	}
-
-	void GenerateKeyItems(){
-		Vector3 position;
-		foreach (GameObject keyItem in keyItems) {
-			// Values between 1 and the number of rows-1.
-			float x = (int)(Random.value * (rows-2)+1);
-			// Values between 1 and the number of columns-1.
-			float y = (int)(Random.value * (columns-2)+1);
-
-			// The position on the board to place the item.
-			Vector3 location = new Vector3(x,y);
-			
-			// Checks if the random position hasn't been added already.
-			if(filledPositions.Contains(location) == false){
-				// Add the position to the list.
-				filledPositions.Add(location);
-				// Instantiate the new item GameObject.
-				GameObject newItem = Instantiate (keyItem, location, Quaternion.identity) as GameObject;
-			}
-		}
 	}
 
 	public void DrawPond(int rows, int columns, Vector3 position){
@@ -198,6 +180,27 @@ public class BoardManager : MonoBehaviour {
 					newTile.transform.SetParent(boardTiles);
 					filledPositions.Add(newTile.transform.position);
 				}
+			}
+		}
+	}
+
+	void GenerateKeyItems(){
+		Vector3 position;
+		foreach (GameObject keyItem in keyItems) {
+			// Values between 1 and the number of rows-1.
+			float x = (int)(Random.value * (rows-2)+1);
+			// Values between 1 and the number of columns-1.
+			float y = (int)(Random.value * (columns-2)+1);
+
+			// The position on the board to place the item.
+			Vector3 location = new Vector3(x,y);
+			
+			// Checks if the random position hasn't been added already.
+			if(filledPositions.Contains(location) == false){
+				// Add the position to the list.
+				filledPositions.Add(location);
+				// Instantiate the new item GameObject.
+				GameObject newItem = Instantiate (keyItem, location, Quaternion.identity) as GameObject;
 			}
 		}
 	}
@@ -237,501 +240,35 @@ public class BoardManager : MonoBehaviour {
 		return obj;
 	}
 
-	void SpawnEnemies (int index, Vector3 [] positions){
-		foreach (Vector3 position in positions) {
-			if(!filledPositions.Contains(position)) {
-				Instantiate(enemies[index], position, Quaternion.identity);
-				filledPositions.Add (position);
-			}
-		}
+	void SpawnEnemies (int index, Vector3 position){			
+		Instantiate(enemies[index], position, Quaternion.identity);
+		filledPositions.Add (position);			
 	}
 
     public void LevelSelector(int level)
     {
         //Un comment this when using the ghost instance board fix above
-        //SetupBoard(9, 9);
+        SetupBoard(rows, columns);
 
         SetupList();
+
+        Instantiate(player);        
 
         LayoutTilesAtRandom(wallTile, 5, 10);
 
         LayoutTilesAtRandom(pitTile, 1, 4);
 
-   /*     //sets the board to the level it corresponds to
-        if (level == 1)
-            LoadMap1();
-        else if (level == 2)
-            LoadMap2();
-        else if (level == 3)
-            LoadMap3();
-        else if (level == 4)
-            LoadMap4();
-        else if (level == 5)
-            LoadMap5();
-        else if (level == 6)
-            LoadMap6();
-        else if (level == 7)
-            LoadMap7();
-        else if (level == 8)
-            LoadMap8();
-        else if (level == 9)
-            LoadMap9();
-        else if (level == 10)
-            LoadMap10(); */
-    }
+        int enemyCounter = (int)Math.Log(level, 2);
 
-  /*  //Create an empty room with a door in the north wall
-    void LoadMap1()
-    {
-        //Puts a ladder by the north wall
-        //Instantiate(floorTile, new Vector3(4, 9, -1), Quaternion.identity);
-        GameObject newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with curved walls on 3 corners
-    void LoadMap2()
-    {
-        //Sets up upper left wall section
-        GameObject newTile = Instantiate(wallTile, new Vector3(0, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Sets up upper right wall section
-        newTile = Instantiate(wallTile, new Vector3(8, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Sets up lower right wall section
-        newTile = Instantiate(wallTile, new Vector3(6, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(8, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with a large pillar in the center
-    void LoadMap3()
-    {
-        //Put the Center Pillar in the room
-        GameObject newTile = Instantiate(wallTile, new Vector3(4, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with a small path on the left and an area on the right surrounded by pits
-    void LoadMap4()
-    {
-        //sets up top left wall
-        GameObject newTile = Instantiate(wallTile, new Vector3(0, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Sets up bottom left wall
-        newTile = Instantiate(wallTile, new Vector3(2, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //sets up pit border on right side
-        newTile = Instantiate(pitTile, new Vector3(8, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(7, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(7, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with 3 medium sized pillars in the middle
-    void LoadMap5()
-    {
-        //creates top left pillar
-        GameObject newTile = Instantiate(wallTile, new Vector3(2, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //creates right pillar
-        newTile = Instantiate(wallTile, new Vector3(7, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(6, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //creates bottom left pillar
-        newTile = Instantiate(wallTile, new Vector3(2, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(2, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with a couple islands surrounded by pits
-    void LoadMap6()
-    {
-        //Creates a pit surrounded area on the left
-        GameObject newTile = Instantiate(pitTile, new Vector3(0, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(1, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(2, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(1, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(0, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Creates a pit surrounded area on the right side
-        newTile = Instantiate(pitTile, new Vector3(6, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(7, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 0, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(8, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(7, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(pitTile, new Vector3(6, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with 3 walls in the room
-    void LoadMap7()
-    {
-        //Puts the left wall in the room
-        GameObject newTile = Instantiate(wallTile, new Vector3(1, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts the right wall in the room
-        newTile = Instantiate(wallTile, new Vector3(7, 2, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 6, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts the center wall in the room
-        newTile = Instantiate(wallTile, new Vector3(4, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room with multiple small pillars in the room
-    void LoadMap8()
-    {
-        //Sets up the various pillars
-        GameObject newTile = Instantiate(wallTile, new Vector3(1, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts a ladder by the north wall
-        newTile = Instantiate(ladder, new Vector3(4, 8, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-
-    //Creates a room completely covered in pits with a single path running
-    //to the exit
-    void LoadMap9()
-    {
-        //covers the room in pits
-        for (int i = 0; i < rows; i++)
+        while (enemyCounter != 0)
         {
-            for (int j = 0; j < columns; j++)
-            {
-                GameObject pitTiles = Instantiate(pitTile, new Vector3(i, j, -1), Quaternion.identity) as GameObject;
-                pitTiles.transform.SetParent(boardTiles);
-            }
+            SpawnEnemies(0, GetRandomPosition());
+            SpawnEnemies(1, GetRandomPosition());
+
+            enemyCounter--;
         }
 
-        //Sets up the path to the exit
-        GameObject newTile = Instantiate(floorTile, new Vector3(0, 0, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(0, 1, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(1, 1, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(2, 1, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(2, 2, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(2, 3, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(3, 3, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 3, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 2, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 1, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 0, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(5, 0, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(6, 0, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 0, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 1, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 2, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 3, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 4, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(6, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(5, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(3, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(2, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(1, 5, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(1, 6, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(1, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(2, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(3, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(4, 8, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Puts 2 random tiles off to the side (maybe for treasure or an enemy)
-        newTile = Instantiate(floorTile, new Vector3(6, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(floorTile, new Vector3(7, 7, -2), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-
-        //Ladder
-        newTile = Instantiate(ladder, new Vector3(4, 8, -3), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
     }
-
-    //Creates a room with a few small sized pillars (boss room?)
-    void LoadMap10()
-    {
-        //Puts the pillars in the room
-        GameObject newTile = Instantiate(wallTile, new Vector3(1, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 7, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 5, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(4, 4, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(3, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(5, 3, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(1, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-        newTile = Instantiate(wallTile, new Vector3(7, 1, -1), Quaternion.identity) as GameObject;
-        newTile.transform.SetParent(boardTiles);
-    }
-    */
 
     Vector3 GetRandomPosition()
     {
@@ -752,9 +289,64 @@ public class BoardManager : MonoBehaviour {
         {
             Vector3 randomPosition = GetRandomPosition();
 
-            Instantiate(tile, randomPosition, Quaternion.identity);
+            //if (BestSearch() == true)
+                Instantiate(tile, randomPosition, Quaternion.identity);
+            //else
+            //    Instantiate(floorTile, randomPosition, Quaternion.identity);
         }
     }
+
+    /* bool BestSearch()
+    {
+        OpenList.Clear();
+        ClosedList.Clear();
+        OpenList.Add(new Vector3(0, 0, 0));
+        ClosedList.Add(new Vector3(0, 0, 0));
+
+        Vector3 goal = new Vector3(rows - 1, columns - 1);
+
+        while(OpenList.Count != 0)
+        {
+            Vector3 current = OpenList[0];
+
+            if (current == goal)
+                break;
+
+            foreach(Vector3 neighbor in GetNeighbors(current))
+            {
+                if(ClosedList.Contains(neighbor) == false)
+                {
+                    OpenList.Insert(0, neighbor);
+                    ClosedList.Add(current);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    int Heuristic(Vector3 a, Vector3 b)
+    {
+        return (int)Math.Abs(a.x - b.x) + (int)Math.Abs(a.y - b.y);
+    }
+
+    List<Vector3> GetNeighbors(Vector3 current)
+    {
+        List<Vector3> ret = new List<Vector3>();
+
+        ret.Add(new Vector3(current.x + 1, current.y, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y, current.z));
+        ret.Add(new Vector3(current.x, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x, current.y - 1, current.z));
+        ret.Add(new Vector3(current.x + 1, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x + 1, current.y - 1, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y - 1, current.z));
+
+        return ret;
+    }
+
+    */
 
     // Update is called once per frame
     void Update () {

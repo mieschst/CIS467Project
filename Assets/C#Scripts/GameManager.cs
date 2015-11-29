@@ -3,8 +3,8 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public GameObject player;
-	public GameObject cynthia;
+	//public GameObject player;
+	//public GameObject cynthia;
     public BoardManager boardScript;
     private int level = 1;
 
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		Instantiate (player);
+		//Instantiate (player);
 		//Instantiate (cynthia);
 
         //Check if instance already exists
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 
     //Called each time a level was loaded
     public void OnLevelWasLoaded(int index)
-    {
+    {     
         //Add one to our level number.
         level++;
         //Call Init to initialize the level.
