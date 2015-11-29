@@ -106,6 +106,7 @@ public class BoardManager : MonoBehaviour {
 
 		SpawnEnemies(0, 1);
 		SpawnEnemies(1, 2);
+		SpawnEnemies(2, 3);
 
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);

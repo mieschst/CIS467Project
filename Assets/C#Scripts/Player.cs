@@ -334,7 +334,8 @@ public class Player : Unit {
 		CanMove (Input.GetKey(KeyCode.D));
 		// Check each frame if the player's health has changed.
 		setHUDhealth (this.Health);
-//		currentPosition = this.transform.position;
+		//Updates the player's current position so the AI knows where to go to fight him
+		currentPosition = this.transform.position;
 	}
 
 	//moves the character occording to the inputs
@@ -419,6 +420,13 @@ public class Player : Unit {
 					Destroy (hitUnit.collider.gameObject);
 				}
 				break;
+			case "Sableye":
+				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Sableye>());
+				if(hitUnit.collider.gameObject.GetComponent<Sableye>().Health <= 0){
+					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Sableye>());
+					Destroy (hitUnit.collider.gameObject);
+				}
+				break;
 			}
 		}
 	}
@@ -455,6 +463,13 @@ public class Player : Unit {
 				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Moblin>());
 				if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
 					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
+					Destroy (hitUnit.collider.gameObject);
+				}
+				break;
+			case "Sableye":
+				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Sableye>());
+				if(hitUnit.collider.gameObject.GetComponent<Sableye>().Health <= 0){
+					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Sableye>());
 					Destroy (hitUnit.collider.gameObject);
 				}
 				break;
@@ -546,6 +561,10 @@ public class Player : Unit {
 				LevelUp();
 				nextLevel = (int) Mathf.Pow (this.Level, 2) * EXPERIENCE_FACTOR;
 			}
+		}
+		if(enemy.Currency > 0){
+			this.Currency += enemy.Currency;
+			this.setHUDcurrency(this.Currency);
 		}
 	}
 
