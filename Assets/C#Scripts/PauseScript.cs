@@ -112,7 +112,7 @@ public class PauseScript : MonoBehaviour {
 
 			// Removes the player object.
 			Destroy (FindObjectOfType<Player> ());
-			Application.LoadLevel(0);
+			Application.LoadLevel("MainMenu");
 		}
     }
 

@@ -148,16 +148,16 @@ public class Player : Unit {
 		// If jump is true, then the movement space is 2, otherwise the player can move 1 space.
 		int movement = isJump ? 2 : 1;
 
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+		if (Input.GetKeyDown (keyRIGHT)) {
 			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
 			animator.Play ("PlayerRightIdle");
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+		} else if (Input.GetKeyDown (keyLEFT)) {
 			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
 			animator.Play ("PlayerLeftIdle");
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+		} else if (Input.GetKeyDown (keyUP)) {
 			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
 			animator.Play ("PlayerBackwardIdle");
-		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+		} else if (Input.GetKeyDown (keyDOWN)) {
 			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
 			animator.Play ("PlayerForwardIdle");
 		} 
@@ -331,7 +331,7 @@ public class Player : Unit {
 //		base.Update ();
 //		Move ();
 
-		CanMove (Input.GetKey(KeyCode.D));
+		CanMove (Input.GetKey(keyMOVE));
 		// Check each frame if the player's health has changed.
 		setHUDhealth (this.Health);
 		//Updates the player's current position so the AI knows where to go to fight him
@@ -387,13 +387,13 @@ public class Player : Unit {
 	// Allows the player to do damage with their sword attack.
 	void UseSwordAttack (RaycastHit2D hitUnit) {
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy")) {
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			if (Input.GetKeyDown (keyRIGHT)) {
 				animator.SetTrigger ("PlayerSwordRight");
-			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			} else if (Input.GetKeyDown (keyLEFT)) {
 				animator.SetTrigger ("PlayerSwordLeft");
-			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			} else if (Input.GetKeyDown (keyUP)) {
 				animator.SetTrigger ("PlayerSwordBackward");
-			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			} else if (Input.GetKeyDown (keyDOWN)) {
 				animator.SetTrigger ("PlayerSwordForward");
 			} 
 
@@ -434,13 +434,13 @@ public class Player : Unit {
 	// Allows the player to do damage with their bow attack.
 	void UseBowAttack(RaycastHit2D hitUnit){
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy")) {
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			if (Input.GetKeyDown (keyRIGHT)) {
 				animator.SetTrigger ("PlayerBowRight");
-			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			} else if (Input.GetKeyDown (keyLEFT)) {
 				animator.SetTrigger ("PlayerBowLeft");
-			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			} else if (Input.GetKeyDown (keyUP)) {
 				animator.SetTrigger ("PlayerBowBackward");
-			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			} else if (Input.GetKeyDown (keyDOWN)) {
 				animator.SetTrigger ("PlayerBowForward");
 			} 
 			string enemyType;
@@ -587,6 +587,7 @@ public class Player : Unit {
 			}
 			else {
 				this.Inventory.Add (item);
+				InventoryScript.updateInventory(Inventory);
 			}
 			// Removes the item from the game board.
 			Destroy (collider.gameObject);
@@ -602,6 +603,7 @@ public class Player : Unit {
 		}
 		// Remove the item from the player's inventory.
 		Inventory.Remove(item);
+		InventoryScript.removeFromInventory (item);
 	}
 
 	public void CalculateDamageDealt(Unit enemy){
@@ -624,6 +626,7 @@ public class Player : Unit {
 
 		if (door.collider.gameObject.name == "Door(Clone)" && hasKey) {
 			this.Inventory.Remove(key);
+			InventoryScript.removeFromInventory(key);
 			Destroy (door.collider.gameObject);
 		}
 	}

@@ -63,6 +63,7 @@ public class OptionsMenuScript : MonoBehaviour {
 		Player.keyCANCEL = KeyCode.Space;
 		Player.keyPAUSE = KeyCode.Escape;
 		Player.keyEXIT = KeyCode.Return;
+		InventoryScript.keyINVENTORY = KeyCode.I;
 		kcTEMP = KeyCode.Q;
 		DefaultKeyText.enabled = true;
 		SuccessText.enabled = false;
@@ -96,13 +97,16 @@ public class OptionsMenuScript : MonoBehaviour {
 		if ((kcTEMP == Player.keyITEM) && (keyFlag != "item")) {
 			sharedKeys++;
 		}
-		if ((kcTEMP == Player.keyCANCEL) && (keyFlag != "jump")) {
+		if ((kcTEMP == Player.keyCANCEL) && (keyFlag != "cancel")) {
 			sharedKeys++;
 		}
 		if ((kcTEMP == Player.keyPAUSE) && (keyFlag != "pause")) {
 			sharedKeys++;
 		}
 		if ((kcTEMP == Player.keyEXIT) && (keyFlag != "quit")) {
+			sharedKeys++;
+		}
+		if ((kcTEMP == InventoryScript.keyINVENTORY) && (keyFlag != "inventory")) {
 			sharedKeys++;
 		}
 
@@ -198,16 +202,16 @@ public class OptionsMenuScript : MonoBehaviour {
 		}
 	}
 	//If this button is pressed then search for new input.
-	public void SetJumpButton ()
+	public void SetCancelButton ()
 	{
-		if (CheckKeyOverlap (kcTEMP, "jump")) {
+		if (CheckKeyOverlap (kcTEMP, "cancel")) {
 			Player.keyCANCEL = kcTEMP;
-			SuccessText.text = "SUCCESS: The 'JUMP' command was re-assigned to the key: " + kcTEMP;
+			SuccessText.text = "SUCCESS: The 'CANCEL' command was re-assigned to the key: " + kcTEMP;
 			SuccessText.enabled = true;
 			ErrorText.enabled = false;
 		} else {
 			SuccessText.enabled = false;
-			ErrorText.text = "ERROR: The 'JUMP' command is already assigned to a key other than: " + kcTEMP;
+			ErrorText.text = "ERROR: The 'CANCEL' command is already assigned to a key other than: " + kcTEMP;
 			ErrorText.enabled = true;
 		}
 	}
@@ -222,6 +226,20 @@ public class OptionsMenuScript : MonoBehaviour {
 		} else {
 			SuccessText.enabled = false;
 			ErrorText.text = "ERROR: The 'PAUSE' command is already assigned to a key other than: " + kcTEMP;
+			ErrorText.enabled = true;
+		}
+	}
+	//If this button is pressed then search for new input.
+	public void SetInventoryButton ()
+	{
+		if (CheckKeyOverlap (kcTEMP, "inventory")) {
+			InventoryScript.keyINVENTORY = kcTEMP;
+			SuccessText.text = "SUCCESS: The 'INVENTORY' command was re-assigned to the key: " + kcTEMP;
+			SuccessText.enabled = true;
+			ErrorText.enabled = false;
+		} else {
+			SuccessText.enabled = false;
+			ErrorText.text = "ERROR: The 'INVENTORY' command is already assigned to a key other than: " + kcTEMP;
 			ErrorText.enabled = true;
 		}
 	}

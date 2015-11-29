@@ -126,7 +126,7 @@ public class Moblin : Enemy {
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
-				Destroy (hitPlayer.collider.gameObject);
+				Destroy (hitPlayer.collider.gameObject, 1F);
 			}
 		}
 	}

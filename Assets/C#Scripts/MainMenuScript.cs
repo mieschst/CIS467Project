@@ -6,14 +6,17 @@ public class MainMenuScript : MonoBehaviour
 {
     public Button startButton;
     public Button quitButton;
+	public Button creditsButton;
 
     void MainGUI()
     {
         startButton = startButton.GetComponent<Button>();
         quitButton = quitButton.GetComponent<Button>();
+		creditsButton = creditsButton.GetComponent<Button> ();
 
         startButton.enabled = true;
         quitButton.enabled = true;
+		creditsButton.enabled = true;
     }
 
     public void StartGame()
@@ -25,4 +28,9 @@ public class MainMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+	public void ViewCredits()
+	{
+		Application.LoadLevel ("Credits");
+	}
 }
