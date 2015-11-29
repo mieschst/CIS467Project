@@ -23,13 +23,20 @@ public class BoardManager : MonoBehaviour {
 	int rows;
 	int columns;
 
-	List<Vector3> filledPositions;
+
+    	public GameObject player;
+
+    //public List<Vector3> OpenList = new List<Vector3>();
+    //public List<Vector3> ClosedList = new List<Vector3>();
+    //public List<int> HValues = new List<int>();
+
+	List<Vector3> filledPositions = new List<Vector3>();
 
 	private Transform boardTiles;
 	private Transform boardItems;
 
     //List of all possible board positions
-    //private List<Vector3> boardPositions = new List<Vector3>();
+    private List<Vector3> boardPositions = new List<Vector3>();
 	
 	public void SetupBoard(){
 
@@ -67,28 +74,32 @@ public class BoardManager : MonoBehaviour {
                     newTile.transform.SetParent(boardTiles);
                 }
             }
-        }       
-    }
 
-//    void SetupList()
-//    {
-//        //Clear previous list
-//        //boardPositions.Clear();
-//
-//        // Adds tiles to the board positions list.
-//        for (int i = 1; i < rows; i++)
-//        {
-//            for (int j = 0; j < columns; j++)
-//            {
-//                if (j == 8)
-//                    break;
-//                
-//                //Adds the board location to the list
-//                //boardPositions.Add(new Vector3(i, j, -1f));
-//            }
-//        }
-//    }
-	
+        }
+
+        // Adds a ladder right corner of the moveable section of the board.
+        //Instantiate(ladder, new Vector3(rows - 1, columns - 1, 0), Quaternion.identity);
+
+ }
+
+    void SetupList()
+    {
+        //Clear previous list
+        boardPositions.Clear();
+
+        // Adds tiles to the board positions list.
+        for (int i = 1; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {     
+		if(j==8)
+			break;
+		                     
+                //Adds the board location to the list
+                boardPositions.Add(new Vector3(i, j, -1f));
+            }
+        }
+    }	
     
 	// Use this for initialization
 	void Start () {
@@ -104,9 +115,12 @@ public class BoardManager : MonoBehaviour {
 
 		GenerateKeyItems ();
 
-		SpawnEnemies(0, 1);
-		SpawnEnemies(1, 2);
-		SpawnEnemies(2, 3);
+		//SpawnEnemies(0, 1);
+		//SpawnEnemies(1, 2);
+		//SpawnEnemies(2, 3);
+
+		// Adds a ladder right corner of the moveable section of the board.
+		Instantiate (ladder, new Vector3 (rows-1, columns-1), Quaternion.identity);
 
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
@@ -195,6 +209,7 @@ public class BoardManager : MonoBehaviour {
 		return obj;
 	}
 
+	/*
 	void SpawnEnemies (int type, int numToSpawn){
 		for(int i = 0; i < numToSpawn; i++) {
 			float x = (int)(Random.value * columns-2) + 1;
@@ -205,41 +220,116 @@ public class BoardManager : MonoBehaviour {
 				filledPositions.Add (position);
 			}
 		}
+	*/
+	void SpawnEnemies (int index, Vector3 position){			
+		Instantiate(enemies[index], position, Quaternion.identity);
+		filledPositions.Add (position);	
 	}
 
     public void LevelSelector(int level)
     {
-//        SetupList();
 
-//        LayoutTilesAtRandom(wallTile, 5, 10);
-//
-//        LayoutTilesAtRandom(pitTile, 1, 4);
+        //Un comment this when using the ghost instance board fix above
+        SetupBoard(rows, columns);
+
+        SetupList();
+
+        Instantiate(player);        
+
+        LayoutTilesAtRandom(wallTile, 5, 10);
+
+        LayoutTilesAtRandom(pitTile, 1, 4);
+
+        int enemyCounter = (int)Math.Log(level, 2);
+
+        while (enemyCounter != 0)
+        {
+            SpawnEnemies(0, GetRandomPosition());
+            SpawnEnemies(1, GetRandomPosition());
+
+            enemyCounter--;
+        }
+
     }
 
+    Vector3 GetRandomPosition()
+    {
+        int randomIndex = Random.Range(0, boardPositions.Count);
 
+        Vector3 randomPosition = boardPositions[randomIndex];
 
-//    Vector3 GetRandomPosition()
-//    {
-//        int randomIndex = Random.Range(0, boardPositions.Count);
-//
-//        Vector3 randomPosition = boardPositions[randomIndex];
-//
-//        boardPositions.RemoveAt(randomIndex);
-//
-//        return randomPosition;        
-//    }
+        boardPositions.RemoveAt(randomIndex);
 
-//    void LayoutTilesAtRandom(GameObject tile, int min, int max)
-//    {
-//        int objectCounter = Random.Range(min, max + 1);
-//
-//        for (int i = 0; i < objectCounter; i++)
-//        {
-//            Vector3 randomPosition = GetRandomPosition();
-//
-//            Instantiate(tile, randomPosition, Quaternion.identity);
-//        }
-//    }
+        return randomPosition;        
+    }
+
+    void LayoutTilesAtRandom(GameObject tile, int min, int max)
+    {
+        int objectCounter = Random.Range(min, max + 1);
+
+        for (int i = 0; i < objectCounter; i++)
+        {
+            Vector3 randomPosition = GetRandomPosition();
+
+            //if (BestSearch() == true)
+                Instantiate(tile, randomPosition, Quaternion.identity);
+            //else
+            //    Instantiate(floorTile, randomPosition, Quaternion.identity);
+        }
+    }
+
+    /* Work in Progress for Pathfinding
+	bool BestSearch()
+    {
+        OpenList.Clear();
+        ClosedList.Clear();
+        OpenList.Add(new Vector3(0, 0, 0));
+        ClosedList.Add(new Vector3(0, 0, 0));
+
+        Vector3 goal = new Vector3(rows - 1, columns - 1);
+
+        while(OpenList.Count != 0)
+        {
+            Vector3 current = OpenList[0];
+
+            if (current == goal)
+                break;
+
+            foreach(Vector3 neighbor in GetNeighbors(current))
+            {
+                if(ClosedList.Contains(neighbor) == false)
+                {
+                    OpenList.Insert(0, neighbor);
+                    ClosedList.Add(current);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    int Heuristic(Vector3 a, Vector3 b)
+    {
+        return (int)Math.Abs(a.x - b.x) + (int)Math.Abs(a.y - b.y);
+    }
+
+    List<Vector3> GetNeighbors(Vector3 current)
+    {
+        List<Vector3> ret = new List<Vector3>();
+
+        ret.Add(new Vector3(current.x + 1, current.y, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y, current.z));
+        ret.Add(new Vector3(current.x, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x, current.y - 1, current.z));
+        ret.Add(new Vector3(current.x + 1, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x + 1, current.y - 1, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y + 1, current.z));
+        ret.Add(new Vector3(current.x - 1, current.y - 1, current.z));
+
+        return ret;
+    }
+
+    */
 
     // Update is called once per frame
     void Update () {
