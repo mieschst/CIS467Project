@@ -82,7 +82,7 @@ public class BoardManager : MonoBehaviour {
 
  }
 
-    void SetupList()
+   /* void SetupList()
     {
         //Clear previous list
         boardPositions.Clear();
@@ -99,7 +99,7 @@ public class BoardManager : MonoBehaviour {
                 boardPositions.Add(new Vector3(i, j, -1f));
             }
         }
-    }	
+    }	*/
     
 	// Use this for initialization
 	void Start () {
@@ -115,9 +115,9 @@ public class BoardManager : MonoBehaviour {
 
 		GenerateKeyItems ();
 
-		//SpawnEnemies(0, 1);
-		//SpawnEnemies(1, 2);
-		//SpawnEnemies(2, 3);
+		SpawnEnemies(0, 1);
+		SpawnEnemies(1, 2);
+		SpawnEnemies(2, 3);
 
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
@@ -206,30 +206,34 @@ public class BoardManager : MonoBehaviour {
 		return obj;
 	}
 
-	/*
-	void SpawnEnemies (int type, int numToSpawn){
-		for(int i = 0; i < numToSpawn; i++) {
-			float x = (int)(Random.value * columns-2) + 1;
-			float y = (int)(Random.value * rows-2) + 1;
-			Vector3 position = new Vector3(x,y);
-			if(!filledPositions.Contains(position)) {
-				Instantiate(enemies[type], position, Quaternion.identity);
-				filledPositions.Add (position);
-			}
-		}
-	*/
-	void SpawnEnemies (int index, Vector3 position){			
+
+    void SpawnEnemies(int type, int numToSpawn)
+    {
+        for (int i = 0; i < numToSpawn; i++)
+        {
+            float x = (int)(Random.value * columns - 2) + 1;
+            float y = (int)(Random.value * rows - 2) + 1;
+            Vector3 position = new Vector3(x, y);
+            if (!filledPositions.Contains(position))
+            {
+                Instantiate(enemies[type], position, Quaternion.identity);
+                filledPositions.Add(position);
+            }
+        }
+    }
+	
+	/*void SpawnEnemies (int index, Vector3 position){			
 		Instantiate(enemies[index], position, Quaternion.identity);
 		filledPositions.Add (position);	
-	}
+	}*/
 
-    public void LevelSelector(int level)
+    /*public void LevelSelector(int level)
     {
 
         //Un comment this when using the ghost instance board fix above
 //        SetupBoard(rows, columns);
 
-        SetupList();
+        //SetupList();
 
         Instantiate(player);        
 
@@ -247,7 +251,7 @@ public class BoardManager : MonoBehaviour {
             enemyCounter--;
         }
 
-    }
+    } */
 
     Vector3 GetRandomPosition()
     {

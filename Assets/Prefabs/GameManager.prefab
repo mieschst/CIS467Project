@@ -61,10 +61,11 @@ MonoBehaviour:
   - {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
   enemies:
   - {fileID: 127472, guid: 9a1c0250669bf57478a2d36c4183ac74, type: 2}
-  - {fileID: 134626, guid: 165a67011cd494b679262b463da15305, type: 2}
+  - {fileID: 134626, guid: 990af6dbe53bc1d48801676da8289498, type: 2}
   - {fileID: 119260, guid: 34c7b7071ee45694f94e73ad01c1ea49, type: 2}
   ladder: {fileID: 152950, guid: 90ce2abc87ca645b58e0f629844fb897, type: 2}
   lockedDoor: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
+  player: {fileID: 134736, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
 --- !u!114 &11469924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,7 +95,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: player
       value: 
-      objectReference: {fileID: 153116, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
+      objectReference: {fileID: 134736, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
     - target: {fileID: 0}
       propertyPath: rockTiles.Array.data[2]
       value: 
@@ -115,6 +116,10 @@ Prefab:
       propertyPath: enemies.Array.data[2]
       value: 
       objectReference: {fileID: 119260, guid: 34c7b7071ee45694f94e73ad01c1ea49, type: 2}
+    - target: {fileID: 0}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 134626, guid: 990af6dbe53bc1d48801676da8289498, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}

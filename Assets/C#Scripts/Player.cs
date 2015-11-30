@@ -564,7 +564,7 @@ public class Player : Unit {
 		}
 		if(enemy.Currency > 0){
 			this.Currency += enemy.Currency;
-			this.setHUDcurrency(this.Currency);
+			//this.setHUDcurrency(this.Currency);
 		}
 	}
 
