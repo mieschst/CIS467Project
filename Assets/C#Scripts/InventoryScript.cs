@@ -123,7 +123,7 @@ public class InventoryScript : MonoBehaviour {
 					Item5Full = true;
 					break;
 				}else{
-					playerList.Remove (slot);
+					//playerList.Remove (slot);
 					break;
 				}
 			case "Key":
@@ -131,11 +131,11 @@ public class InventoryScript : MonoBehaviour {
 					Item6Full = true;
 					break;
 				}else{
-					playerList.Remove(slot);
+					//playerList.Remove(slot);
 					break;
 				}
 			default:
-				playerList.Remove (slot);
+				//playerList.Remove (slot);
 				break;
 			}
 		}
