@@ -24,6 +24,7 @@ public class Moblin : Unit {
 		InitMoblin (1, GameManager.isHardMode);
 		numFrames = 0;
 		moblinAnimator = this.GetComponent<Animator> ();
+        maxmoves = Speed;
 	}
 
 	public void CalculateStats(int level, bool isHardMode){
@@ -44,7 +45,8 @@ public class Moblin : Unit {
 				} else {
 					this.Attack++;
 					this.Speed++;
-				}
+                    this.maxmoves++;
+                }
 			}
 		}
 		// Otherwise, if we are on hard mode, then the moblin will have enhanced health and attack stats.
@@ -57,7 +59,8 @@ public class Moblin : Unit {
 				} else {
 					this.Attack++;
 					this.Speed++;
-				}
+                    this.maxmoves++;
+                }
 			}
 		}
 	}
@@ -110,7 +113,7 @@ public class Moblin : Unit {
 		}
 		if (hitUnit) {
 			AttackPlayer(hitUnit, direction);
-		}
+        }
 	}
 
 	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
@@ -137,11 +140,15 @@ public class Moblin : Unit {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	new void Update () {
+        base.Update();
 		if (PauseScript.isKeysEnabled) {
 			numFrames++;
 			if (numFrames == FRAMES_PER_TURN) {
-				Move ();
+                if(isTurn) {
+                    Move();
+                    moves-= 1.1f;
+                }
 				numFrames = 0;
 			}
 		}

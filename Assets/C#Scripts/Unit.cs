@@ -15,6 +15,8 @@ public abstract class Unit : MonoBehaviour {
 	bool walk;
 	bool jump;
 
+    public bool isTurn { get; set; }
+
 	public int Level { get; set; }
 
 	public int Health { get; set; }
@@ -72,28 +74,85 @@ public abstract class Unit : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        isTurn = true;
 	}
-	
-	// Update is called once per frame
-	public void Update () {
 
-		// If all actions have been taken this turn, end the turn
-		if (moves <= 0){
-			state = 4;
+    IEnumerator CameraWait()
+    {
+        for(int i=0; i<5; i++)
+            yield return new WaitForSeconds(Random.value/5);
+    }
+
+    // Update is called once per frame
+    public void Update () {
+
+        Unit[] creatures = FindObjectsOfType(typeof(Unit)) as Unit[];
+
+        // returns to active state if it is your turn
+        if ((state == 4) & (isTurn)) {
+            TargettedCamera.setTarget(this);
+            state = 0;
+                foreach (Unit guy in creatures)
+                {
+                    if(guy != this)
+                    {
+                        guy.isTurn = false;
+                        guy.state = 4;
+                    }
+                }
+            CameraWait();
 		}
-		
-		// returns to active state if it is your turn
-		if (state == 4 & moves > 0) {
-			state = 0;
-		}
-		
-		// debug turn incrementor, will be incremented by 1 everytime it is my turn again in final product
-		moves += 0.01;
-		
-		// Make sure moves are limited by maxmoves
-		if (moves > maxmoves) {
-			moves = maxmoves;	
-		}
+
+        // debug turn incrementor, NOT NEEDED ANYMORE?!?
+        //moves += 0.01;
+
+        // If all actions have been taken this turn, end the turn
+        if (moves <= 0)
+        {
+            isTurn = false;
+            state = 4;
+            bool hasTurn = true;
+
+            while (hasTurn)
+            {
+                foreach (Unit guy in creatures)
+                {
+
+                    //pass your turn to the first eligible target
+                    if ((Random.value < (guy.Speed * 0.1f)) & (this != guy) & (guy.moves > 0) & hasTurn)
+                    {
+                        guy.isTurn = true;
+                        hasTurn = false;
+                    }
+                }
+            }
+
+            isTurn = false;
+            state = 4;
+            // If you are the only entity, it is always your turn
+            if (creatures.Length == 1)
+            {
+                isTurn = true;
+            }
+
+        }
+
+        //If nobody is doing anything, restore moves
+        bool restore = true;
+        foreach (Unit guy in creatures)
+        {
+            if (guy.isTurn)
+                restore = false;
+        }
+        if (restore)
+             foreach (Unit guy in creatures)
+            {
+                guy.moves += 1;
+                // Make sure moves are limited by maxmoves
+                if (guy.moves > guy.maxmoves)
+                {
+                    guy.moves = guy.maxmoves;
+                }
+            }
 	}
 }

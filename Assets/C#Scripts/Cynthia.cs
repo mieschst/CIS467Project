@@ -20,8 +20,8 @@ public class Cynthia : Unit {
 
 		CalculateStats (level, isHardMode);
 
-		state = 0;
-		maxmoves = 1.0;
+		state = 4;
+		maxmoves = Speed;
 		moves = maxmoves;
 
 		canWalk = true;
@@ -42,6 +42,7 @@ public class Cynthia : Unit {
 				if (i % 2 == 0) {
 					this.Health++;
 					this.Speed++;
+                    this.maxmoves++;
 					this.Defense++;
 				} else {
 					this.Attack++;
@@ -55,11 +56,14 @@ public class Cynthia : Unit {
 				if (i % 2 == 0) {
 					this.Health += 2;
 					this.Speed++;
-					this.Defense++;
+                    this.maxmoves++;
+                    this.maxmoves++;
+                    this.Defense++;
 				} else {
 					this.Attack++;
 					this.Speed += 2;
-				}
+                    this.maxmoves += 2;
+                }
 			}
 		}
 	}
@@ -202,25 +206,21 @@ public class Cynthia : Unit {
 			case "south":
 				if(otherCharacterPosition.x != currentPosition.x || otherCharacterPosition.y != yMinus1)
 					currentPosition = goSouth(currentPosition);
-				moves--;
 		//Debug.Log(yMinus1);
 				break;
 			case "north":
 				if(otherCharacterPosition.x != currentPosition.x || otherCharacterPosition.y != yPlus1)
 					currentPosition = goNorth(currentPosition);
-				moves--;
 		//Debug.Log(yPlus1);
 				break;
 			case "west":
 				if(otherCharacterPosition.x != xMinus1 || otherCharacterPosition.y != currentPosition.y)
 					currentPosition = goWest(currentPosition);
-				moves--;
 		//Debug.Log(xMinus1);
 				break;
 			default:
 				if(otherCharacterPosition.x != xPlus1  || otherCharacterPosition.y != currentPosition.y)
 					currentPosition = goEast(currentPosition);
-				moves--;
 		//Debug.Log(xPlus1);
 				break;
 		}
@@ -244,9 +244,10 @@ public class Cynthia : Unit {
 
 	// Update is called once per frame
 	new void Update () {
-		if (PauseScript.isKeysEnabled) {
-			base.Update ();
+        base.Update();
+        if ((isTurn)) {
 			Move ();
+            moves-= 1.1f;
 		}
 	}
 

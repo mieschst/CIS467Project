@@ -90,8 +90,9 @@ public class Player : Unit {
 	}
 
 	public static Vector3 currentPosition;
+    private bool isJump;
 
-	public void InitPlayer(string playerName = "Link"){
+    public void InitPlayer(string playerName = "Link"){
 
 		myName = playerName;
 
@@ -111,13 +112,15 @@ public class Player : Unit {
 		this.Inventory = new List<Item> ();
 
 		state = 0;
-		maxmoves = 1.0;
+        isTurn = true;
+		maxmoves = Speed;
 
 		moves = maxmoves;
 		canWalk = true;
 		canJump = true;
+        isJump = false;
 
-		setHUDhealth (this.Health);
+        setHUDhealth (this.Health);
 		setHUDmaxhealth (maxHealth);
 		setHUDplayerlevel (this.Level);
 		setHUDcurrency (this.Currency);
@@ -131,44 +134,182 @@ public class Player : Unit {
 		InitPlayer ();
 	}
 
-	public void CanMove(bool isJump = false){
+	public void CanMove(){
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
 
 		// If jump is true, then the movement space is 2, otherwise the player can move 1 space.
 		int movement = isJump ? 2 : 1;
 
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+        int x = 0;
+        int y = 0;
+
+		if (Input.GetKey (KeyCode.RightArrow)) {
 			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
 			animator.Play ("PlayerRightIdle");
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+            x = movement;
+		} else if (Input.GetKey (KeyCode.LeftArrow)) {
 			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
 			animator.Play ("PlayerLeftIdle");
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
-			animator.Play ("PlayerBackwardIdle");
-		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
-			animator.Play ("PlayerForwardIdle");
-		} 
+            x = 0 - movement;
+		} if (Input.GetKey (KeyCode.UpArrow)) {
+			endPosition = new Vector3 (endPosition.x, endPosition.y + movement);
+            if ( !( (Input.GetKey(KeyCode.LeftArrow)) | (Input.GetKey(KeyCode.RightArrow)) ) )
+                animator.Play ("PlayerBackwardIdle");
+            y = movement;
+        } else if (Input.GetKey (KeyCode.DownArrow)) {
+			endPosition = new Vector3 (endPosition.x, endPosition.y - movement);
+            if (!((Input.GetKey(KeyCode.LeftArrow)) | (Input.GetKey(KeyCode.RightArrow))))
+                animator.Play ("PlayerForwardIdle");
+            y = 0 - movement;
+        } 
 		
 		BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
 		
 		boxCollider.enabled = false;
-		
-		RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
+
+        RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
 		RaycastHit2D hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
 
 		boxCollider.enabled = true;
 
-		if (!hit && !hitUnit) {
-			this.transform.position = endPosition;
-		} else if (hitUnit) {
-			AttackEnemy (hitUnit);
-		} else if (hit) {
-			UnlockDoor(hit);
-		}
-	}
+        //Movement State
+        if (state == 1)
+        {
+
+            // Creates Jump-Range Grids
+            gridInstance = Instantiate(gridSpot, new Vector3((this.transform.position.x + x), (this.transform.position.y + y), 0F), Quaternion.identity) as GridAura;
+
+            // Moves the player to the appropriate grid.
+            if (PauseScript.isKeysEnabled && Input.GetKeyDown(keyMOVE))
+            {
+                if (!isJump)
+                {
+                    if (!hit && !hitUnit)
+                    {
+                        this.transform.position = endPosition;
+                        moves -= 1.1f;
+                    }
+                    else if (hitUnit)
+                    {
+                        //	AttackEnemy (hitUnit);
+                    }
+                    else if (hit)
+                    {
+                        UnlockDoor(hit);
+                    }
+                }
+                else
+                {
+                    isJump = false;
+                }
+            }
+            // Jumps the player to the appropriate grid.
+            if (PauseScript.isKeysEnabled && Input.GetKeyDown(keyATTACK))
+            {
+                if (isJump)
+                {
+                    if (!hit && !hitUnit)
+                    {
+                        this.transform.position = endPosition;
+                        moves -= 2;
+                    }
+                    else if (hitUnit)
+                    {
+                        //	AttackEnemy (hitUnit);
+                    }
+                    else if (hit)
+                    {
+                        UnlockDoor(hit);
+                    }
+                    isJump = false;
+                }
+                else
+                {
+                    isJump = true;
+                }
+            }
+            // Skips the turn. Same as the end turn in unit
+            if (PauseScript.isKeysEnabled && Input.GetKeyDown(keyITEM))
+            {
+                Unit[] creatures = FindObjectsOfType(typeof(Unit)) as Unit[];
+
+                isTurn = false;
+                state = 4;
+                bool hasTurn = true;
+
+                while (hasTurn)
+                {
+                    foreach (Unit guy in creatures)
+                    {
+                        //pass your turn to the first eligible target
+                        if ((Random.value < (guy.Speed * 0.1f)) & (this != guy) & (guy.moves > 0) & hasTurn)
+                        {
+                            guy.isTurn = true;
+                            hasTurn = false;
+                        }
+                    }
+                }
+
+                isTurn = false;
+                state = 4;
+                // If you are the only entity, it is always your turn
+                if (creatures.Length == 1)
+                {
+                    isTurn = true;
+                }
+
+            }
+
+        }
+
+        // All Active States
+        if (state < 3)
+        {
+
+            // if it is your turn, and not in neutral state, show reticule
+            // Places the targetting icon
+            if (state > 0)
+            {
+
+                gridInstance = Instantiate(gridSpot, new Vector3((this.transform.position.x + x), (this.transform.position.y + y), 0F), Quaternion.identity) as GridAura;
+
+                gridInstance.creator = this.transform.position;
+
+            }
+
+            // Returns the player to the neutral state.
+            if (Input.GetKeyDown(keyCANCEL))
+            {
+                state = 0;
+            }
+
+        }
+
+        // State Checks
+
+        if (state == 0)
+        {
+
+            // Check for move state
+            if ((PauseScript.isKeysEnabled && Input.GetKeyDown(keyMOVE)))
+            {
+                state = 1;
+            }
+
+            //Check for attack state NOT READY
+            if (Input.GetKeyDown(keyATTACK))
+            {
+                state = 2;
+            }
+
+            //		// Check for item state NOT READY
+            //		if (Input.GetKeyDown (keyITEM)) {
+            //			state = 3;
+            //		}
+        }
+
+    }
 
 	public override void Move(){
 
@@ -219,22 +360,61 @@ public class Player : Unit {
 			}
 			// Skips the turn.
 			if (PauseScript.isKeysEnabled && Input.GetKeyDown (keyCANCEL)) {
-				moves = 0;
-			}
+
+                Unit[] creatures = FindObjectsOfType(typeof(Unit)) as Unit[];
+
+                isTurn = false;
+                state = 4;
+                bool hasTurn = true;
+                foreach (Unit guy in creatures)
+                {
+                    if (guy != this)
+                    {
+                        guy.moves += 1;
+                        // Make sure moves are limited by maxmoves
+                        if (guy.moves > guy.maxmoves)
+                        {
+                            guy.moves = guy.maxmoves;
+                        }
+                    }
+                }
+
+                while (hasTurn)
+                {
+                    foreach (Unit guy in creatures)
+                    {
+
+                        //pass your turn to the first eligible target
+                        if ( (Random.value < (guy.Speed * 0.1f)) & (this != guy) & (guy.moves > 0) & hasTurn )
+                        {
+                            guy.isTurn = true;
+                            hasTurn = false;
+                        }
+                    }
+                }
+
+                isTurn = false;
+                state = 4;
+                // If you are the only entity, it is always your turn
+                if (creatures.Length == 1)
+                {
+                    isTurn = true;
+                }
+            }
 			
 		}
 
 		// Attack Decision State
 		if (state == 2) {
-			
-			// Activates item in slot 1
-			if (Input.GetKeyDown (keyMOVE)) {
+
+            // Activates item in slot 1
+            if (Input.GetKeyDown (keyMOVE)) {
 				// item use code
 			}
 			// Attacks the target grid with the main weapon (sword?)
 			if (Input.GetKeyDown (keyATTACK)) {
-				//AttackEnemy ();
-			}
+                //AttackEnemy(hitUnit);
+            }
 			// Activates item in slot 2
 			if (Input.GetKeyDown (keyITEM)) {
 				// item use code
@@ -295,10 +475,10 @@ public class Player : Unit {
 				state = 1;
 			}
 			
-			// Check for attack state NOT READY
-			//		if (Input.GetKeyDown (keyATTACK)) {
-			//			state = 2;
-			//		}
+			 //Check for attack state NOT READY
+					if (Input.GetKeyDown (keyATTACK)) {
+						state = 2;
+					}
 			
 			//		// Check for item state NOT READY
 			//		if (Input.GetKeyDown (keyITEM)) {
@@ -313,9 +493,12 @@ public class Player : Unit {
 
 	// Update is called once per frame
 	new void Update () {
-//		base.Update ();
-//		Move ();
-		CanMove (Input.GetKey(KeyCode.D));
+		base.Update ();
+        //		Move ();
+        if (isTurn)
+        {
+            CanMove();
+        }
 		// Check each frame if the player's health has changed.
 		setHUDhealth (this.Health);
 //		currentPosition = this.transform.position;
@@ -341,7 +524,7 @@ public class Player : Unit {
 		//valid location, move to goal
 		else {
 			this.transform.position = destination;
-			moves--;
+			moves -= 1.1f;
 		}
 
 		state = 1;
@@ -361,7 +544,7 @@ public class Player : Unit {
 
 		if (this.transform.position != prepos) {
 
-			moves--;
+			moves -= 1.1f;
 
 		}
 		
@@ -455,6 +638,7 @@ public class Player : Unit {
 				break;
 			case 3:
 				Speed++;
+                maxmoves++;
 				break;
 			}
 			setHUDhealth(Health);
