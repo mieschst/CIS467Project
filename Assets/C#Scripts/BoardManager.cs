@@ -119,9 +119,6 @@ public class BoardManager : MonoBehaviour {
 		//SpawnEnemies(1, 2);
 		//SpawnEnemies(2, 3);
 
-		// Adds a ladder right corner of the moveable section of the board.
-		Instantiate (ladder, new Vector3 (rows-1, columns-1), Quaternion.identity);
-
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
 
@@ -230,7 +227,7 @@ public class BoardManager : MonoBehaviour {
     {
 
         //Un comment this when using the ghost instance board fix above
-        SetupBoard(rows, columns);
+//        SetupBoard(rows, columns);
 
         SetupList();
 
