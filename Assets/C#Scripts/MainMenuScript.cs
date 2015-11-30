@@ -21,7 +21,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void StartGame()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel("Setup");
     }
 
     public void ExitGame()
@@ -31,6 +31,6 @@ public class MainMenuScript : MonoBehaviour
 
 	public void ViewCredits()
 	{
-		Application.LoadLevel (3);
+		Application.LoadLevel ("Credits");
 	}
 }

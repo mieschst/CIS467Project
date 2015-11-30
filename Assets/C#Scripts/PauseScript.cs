@@ -109,7 +109,10 @@ public class PauseScript : MonoBehaviour {
 			isPaused = false;
 			ToggleAudio();
 			LockInput(false);
-			Application.LoadLevel(0);
+
+			// Removes the player object.
+			Destroy (FindObjectOfType<Player> ());
+			Application.LoadLevel("MainMenu");
 		}
     }
 

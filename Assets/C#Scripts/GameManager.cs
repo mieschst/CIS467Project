@@ -3,40 +3,36 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public GameObject player;
-	public GameObject cynthia;
-    public BoardManager boardScript;
+	//public GameObject player;
+	//public GameObject cynthia;
+    //public BoardManager boardScript;
     private int level = 1;
+
+	public static bool isHardMode { get; set; }
 
     public static GameManager instance = null;
 
     // Use this for initialization
     void Start () {
-		Instantiate (player);
 		//Instantiate (cynthia);
 
         //Check if instance already exists
         if (instance == null)
 
             //if not, set instance to this
-            instance = this;
+			instance = this;
 
         //If instance already exists and it's not this:
         else if (instance != this)
 
             //Then destroy this
             Destroy(gameObject); 
-        
-		/*********************************************
-		 * I commented out this "DontDestroyOnLoad". 
-		 * It got rid of the glitch, and I don't notice
-		 * any problems loading between levels!
-		 * ******************************************/
+//        
+//
+//        //Sets this to not be destroyed when reloading scene
+//        DontDestroyOnLoad(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        //DontDestroyOnLoad(gameObject);
-
-        boardScript = GetComponent<BoardManager>();
+        //boardScript = GetComponent<BoardManager>();
         Init();
         //boardScript.LevelSelector(level);
     }
@@ -52,7 +48,7 @@ public class GameManager : MonoBehaviour {
 
     void Init()
     {
-        boardScript.LevelSelector(level);
+        //boardScript.LevelSelector(level);
     }
 
     // Update is called once per frame

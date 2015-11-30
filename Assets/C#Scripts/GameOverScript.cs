@@ -18,10 +18,10 @@ public class GameOverScript : MonoBehaviour {
 	}
 
 	public void RestartGame() {
-		Application.LoadLevel (1);
+		Application.LoadLevel ("Setup");
 	}
 
 	public void GoToMainMenu (){
-		Application.LoadLevel (0);
+		Application.LoadLevel ("MainMenu");
 	}
 }
