@@ -1133,6 +1133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 107160, guid: dbaef6d91f6014c48a7634cc7353fd5f, type: 2}
+  audioManager: {fileID: 146864, guid: 7b9521b26f30147cdb01fc1afdda4541, type: 2}
   playerNameField: {fileID: 1295903660}
   normalBtn: {fileID: 337774295}
   hardBtn: {fileID: 61419445}
@@ -1149,7 +1150,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128

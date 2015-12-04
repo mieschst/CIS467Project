@@ -24,6 +24,10 @@ public class OptionsMenuScript : MonoBehaviour {
 		ScanForOptionsActive();
 	}
 
+	public void ChangeSong(){
+		FindObjectOfType<AudioManager>().PlayRandomSong();
+	}
+
 	void ScanForOptionsActive()
 	{
 		//Triggers the options menu depending on whether the Options button was pressed.

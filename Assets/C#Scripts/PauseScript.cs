@@ -112,6 +112,7 @@ public class PauseScript : MonoBehaviour {
 
 			// Removes the player object.
 			Destroy (FindObjectOfType<Player> ());
+			Destroy (FindObjectOfType<AudioManager> ());
 			Application.LoadLevel(0);
 		}
     }

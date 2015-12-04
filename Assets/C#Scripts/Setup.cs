@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Setup : MonoBehaviour {
 
 	public GameObject player;
+	public GameObject audioManager;
 
 	public InputField playerNameField;
 
@@ -29,11 +30,13 @@ public class Setup : MonoBehaviour {
 	public void SetupGame() {
 		// Sets up the player before jumping to the new scene.
 		Instantiate (player, new Vector3 (0, 0), Quaternion.identity);
+		Instantiate (audioManager);
 		if (playerNameField.text.Length > 0) {
 			Player.myName = playerNameField.text;
 		}
 		// Tells the application to maintain the player gameobject when switching to the Game scene.
 		DontDestroyOnLoad (FindObjectOfType<Player>());
+		DontDestroyOnLoad (FindObjectOfType<AudioManager>());
 		Application.LoadLevel("Game");
 	}
 }
