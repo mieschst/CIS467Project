@@ -25,6 +25,7 @@ public class BoardManager : MonoBehaviour {
 	int columns;
 
 	List<Vector3> filledPositions;
+	List<GameObject> activeEnemies;
 
 	private Transform boardTiles;
 	private Transform boardItems;
@@ -99,6 +100,7 @@ public class BoardManager : MonoBehaviour {
 		SetupBoard ();
 
 		filledPositions = new List<Vector3> ();
+		activeEnemies = new List<GameObject> ();
 
 		// Adds a ladder right corner of the moveable section of the board.
 		Instantiate (ladder, new Vector3 (columns-1, rows-1), Quaternion.identity);
@@ -207,6 +209,10 @@ public class BoardManager : MonoBehaviour {
 				filledPositions.Add (position);
 			}
 		}
+	}
+
+	void MoveEnemies(){
+
 	}
 
     public void LevelSelector(int level)

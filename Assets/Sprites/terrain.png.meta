@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 27a8162d0d819469ab4aa8f3047d3ff3
-timeCreated: 1447217825
+timeCreated: 1449212764
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,8 @@ TextureImporter:
     21300010: terrain_5
     21300012: terrain_6
     21300014: terrain_7
+    21300016: terrain_8
+    21300018: terrain_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -135,6 +137,26 @@ TextureImporter:
         y: 291
         width: 58
         height: 41
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: terrain_8
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 875
+        width: 81
+        height: 79
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: terrain_9
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 875
+        width: 81
+        height: 79
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -246,16 +246,18 @@ public class Cynthia : Unit {
 	new void Update () {
 		if (PauseScript.isKeysEnabled) {
 			base.Update ();
-			Move ();
+			if (!Player.PLAYERS_TURN){
+				Move ();
+			}
 		}
 	}
 
 	//sub function'd for inheritence compatibility
 	public override void Move () {
 		currentPosition = this.transform.position;
-		if(state < 4){
+		//if(state < 4){
 			collisionHandler(Player.currentPosition);
-		}
+		//}
 
 		this.transform.position = currentPosition;
 	}

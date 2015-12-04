@@ -11,7 +11,7 @@ public class Player : Unit {
 	 * 4 Command Keys (keyMOVE, keyATTACK, keyITEM, keyCANCEL)
 	 * 2 System Keys (keyPAUSE, keyEXIT)
 	 */
-
+	public static bool PLAYERS_TURN;
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
 	// Down
@@ -130,6 +130,8 @@ public class Player : Unit {
 		setHUDmaxhealth (maxHealth);
 		setHUDplayerlevel (this.Level);
 		setHUDcurrency (this.Currency);
+
+		Player.PLAYERS_TURN = true;
 	}
 	
 	// Use this for initialization
@@ -141,49 +143,62 @@ public class Player : Unit {
 	}
 
 	public void CanMove(bool isJump = false){
-		Vector3 startPosition = this.transform.position;
-		Vector3 endPosition = this.transform.position;
+		if (PLAYERS_TURN) {
+			bool actionPerformed = false;
 
-		// If jump is true, then the movement space is 2, otherwise the player can move 1 space.
-		int movement = isJump ? 2 : 1;
+			Vector3 startPosition = this.transform.position;
+			Vector3 endPosition = this.transform.position;
 
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
-			animator.Play ("PlayerRightIdle");
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
-			animator.Play ("PlayerLeftIdle");
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
-			animator.Play ("PlayerBackwardIdle");
-		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
-			animator.Play ("PlayerForwardIdle");
-		} 
+			// If jump is true, then the movement space is 2, otherwise the player can move 1 space.
+			int movement = isJump ? 2 : 1;
+
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
+				animator.Play ("PlayerRightIdle");
+			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
+				animator.Play ("PlayerLeftIdle");
+			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+				endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
+				animator.Play ("PlayerBackwardIdle");
+			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+				endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
+				animator.Play ("PlayerForwardIdle");
+			} 
 		
-		BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
+			BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
 		
-		boxCollider.enabled = false;
+			boxCollider.enabled = false;
 		
-		RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
-		RaycastHit2D hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
+			RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
+			RaycastHit2D hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
 
-		boxCollider.enabled = true;
+			boxCollider.enabled = true;
 
-		if (!hit && !hitUnit) {
-			this.transform.position = endPosition;
-		} else if (hitUnit) {
-			if(Input.GetKey(keyATTACK)){
-				UseBowAttack(hitUnit);
+			if (!hit && !hitUnit) {
+				this.transform.position = endPosition;
+				if(endPosition != startPosition){
+					actionPerformed = true;
+				}
+			} else if (hitUnit) {
+				if (Input.GetKey (keyATTACK)) {
+					UseBowAttack (hitUnit);
+					actionPerformed = true;
+				} else if (Input.GetKey (KeyCode.B)) {
+					UseBomb (hitUnit);
+					actionPerformed = true;
+				} else {
+					UseSwordAttack (hitUnit);
+					actionPerformed = true;
+				}
+			} else if (hit) {
+				UnlockDoor (hit);
+				actionPerformed = true;
 			}
-			else if(Input.GetKey (KeyCode.B)){
-				UseBomb(hitUnit);
+
+			if(actionPerformed){
+				Player.PLAYERS_TURN = false;
 			}
-			else {
-				UseSwordAttack (hitUnit);
-			}
-		} else if (hit) {
-			UnlockDoor(hit);
 		}
 	}
 
@@ -334,9 +349,15 @@ public class Player : Unit {
 //		Move ();
 
 		CanMove (Input.GetKey(KeyCode.D));
+		StartCoroutine(WaitForEnemies ());
 		// Check each frame if the player's health has changed.
 		setHUDhealth (this.Health);
 //		currentPosition = this.transform.position;
+	}
+
+	IEnumerator WaitForEnemies(){
+		yield return new WaitForEndOfFrame();
+		Player.PLAYERS_TURN = true;
 	}
 
 	//moves the character occording to the inputs
