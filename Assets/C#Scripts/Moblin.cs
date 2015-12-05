@@ -5,15 +5,15 @@ using Random = UnityEngine.Random;
 public class Moblin : Unit {
 
 	Animator moblinAnimator;
-
-	int numFrames;
-
-	const int FRAMES_PER_TURN = 60;
-
+	
 	bool hardModeEnabled;
+
+	int direction = 0;
 
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
+
+	GameObject player = null;
 
 	public void InitMoblin(int level, bool isHardMode) {
 		CalculateStats (level, isHardMode);
@@ -22,7 +22,6 @@ public class Moblin : Unit {
 	// Initializes key variables for the Moblin enemy.
 	void Start () {
 		InitMoblin (1, GameManager.isHardMode);
-		numFrames = 0;
 		moblinAnimator = this.GetComponent<Animator> ();
 	}
 
@@ -70,12 +69,41 @@ public class Moblin : Unit {
 		player.Health -= damage;
 	}
 
+	int ChasePlayer(){
+		int moveDirection = -1;
+
+		float playerX = player.transform.position.x;
+		float playerY = player.transform.position.y;
+		float enemyX = this.transform.position.x;
+		float enemyY = this.transform.position.y;
+
+		if (playerX > enemyX) {
+			moveDirection = 2;
+		} else if (playerX < enemyX) {
+			moveDirection = 3;
+		} else if (playerY > enemyY) {
+			moveDirection = 1;
+		} else if (playerY < enemyY) {
+			moveDirection = 0;
+		}
+
+		return moveDirection;
+	}
+
 	public override void Move(){
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
-		
+
+		if (GameManager.isHardMode) {
+			CheckLineOfSight ();
+		}
+
 		int movement = 1;
-		int direction = (int)(Random.value * 4);
+		if (player == null) {
+			direction = (int)(Random.value * 4);
+		} else {
+			direction = ChasePlayer ();
+		}
 		
 		switch (direction) {
 		case 0: 
@@ -131,7 +159,42 @@ public class Moblin : Unit {
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
-				Destroy (hitPlayer.collider.gameObject, 1F);
+				Destroy (hitPlayer.collider.gameObject, 0.5F);
+			}
+		}
+	}
+
+	public void CheckLineOfSight(){
+		int sight = 3;
+
+		Vector3 startPosition = this.transform.position;
+		Vector3 endPosition = this.transform.position;
+
+		switch (direction) {
+		case 0: 
+			endPosition = new Vector3 (startPosition.x, startPosition.y - sight);
+			break;
+		case 1:
+			endPosition = new Vector3 (startPosition.x, startPosition.y + sight);
+			break;
+		case 2:
+			endPosition = new Vector3 (startPosition.x + sight, startPosition.y);
+			break;
+		case 3:
+			endPosition = new Vector3 (startPosition.x - sight, startPosition.y);
+			break;
+		}
+
+		this.GetComponent<BoxCollider2D> ().enabled = false;
+
+		RaycastHit2D hitPlayer = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
+
+		this.GetComponent<BoxCollider2D> ().enabled = true;
+
+
+		if (hitPlayer) {
+			if (hitPlayer.collider.gameObject.tag.Contains ("Player")) {
+				player = hitPlayer.collider.gameObject;
 			}
 		}
 	}

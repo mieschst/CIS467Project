@@ -55,19 +55,15 @@ public class Player : Unit {
 	int maxHealth;
 
 	Animator animator;
-
-	BoardManager bm;
-
-//	public int rows;
-//	public int columns;
-
-	public GridAura gridSpot;
-
-	GridAura gridInstance;
+	
 	// A string variable that we can change while playing the game or outside Play mode.
 	public static string myName;
 
 	public GameObject bomb;
+	public GameObject arrow;
+	public GameObject smallRupee;
+	public GameObject mediumRupee;
+	public GameObject largeRupee;
 
 	int[] stats;
 	
@@ -105,7 +101,7 @@ public class Player : Unit {
 		}
 
 		this.Level = 1;
-		this.Health = 4;
+		this.Health = 6;
 		this.Attack = 1;
 		this.Defense = 1;
 		this.Speed = 1;
@@ -187,13 +183,19 @@ public class Player : Unit {
 				} else if (Input.GetKey (KeyCode.B)) {
 					UseBomb (hitUnit);
 					actionPerformed = true;
-				} else {
+				} else if(!isJump){
 					UseSwordAttack (hitUnit);
 					actionPerformed = true;
 				}
 			} else if (hit) {
-				UnlockDoor (hit);
-				actionPerformed = true;
+				if(Input.GetKey(keyATTACK)){
+					UseDig(hit);
+					actionPerformed = true;
+				}
+				else {
+					UnlockDoor (hit);
+				}
+
 			}
 
 			if(actionPerformed){
@@ -204,206 +206,11 @@ public class Player : Unit {
 
 	public override void Move(){
 
-		// Store position to prevent crazy additive movement
-		this.transform.position = this.transform.position;
-		
-		// Checks for directional presses once, and converts them to ints
-		// (for future method usage such as movement)
-		
-		// Store the directional presses of the player
-		int x = 0;
-		int y = 0;
-		
-		// Exclusive up
-		if (PauseScript.isKeysEnabled && Input.GetKey (keyUP) & ! Input.GetKey (keyDOWN)) {
-			y = 1;
-		}
-		// Exclusive down
-		if (PauseScript.isKeysEnabled && Input.GetKey (keyDOWN) & ! Input.GetKey (keyUP)) {
-			y = -1;
-		}
-		// Exclusive right
-		if (PauseScript.isKeysEnabled && Input.GetKey (keyRIGHT) & ! Input.GetKey (keyLEFT)) {
-			x = 1;
-		}
-		// Exclusive left
-		if (PauseScript.isKeysEnabled && Input.GetKey (keyLEFT) & ! Input.GetKey (keyRIGHT)) {
-			x = -1;
-		}
-		
-		// ACTION STATES
-		
-		// Movement Decision State
-		if (state == 1) {
-			
-			// Creates Jump-Range Grids
-			gridInstance = Instantiate(gridSpot, new Vector3((this.transform.position.x + 2*x), (this.transform.position.y + 2*y), 0F), Quaternion.identity) as GridAura;
-			
-			gridInstance.creator = this.transform.position;
-			
-			// Moves the player to the appropriate grid.
-			if (PauseScript.isKeysEnabled && Input.GetKeyDown (keyMOVE)) {
-				walk (x,y,false);
-			}
-			// Jumps the player to the appropriate grid.
-			if (PauseScript.isKeysEnabled && Input.GetKeyDown (keyATTACK)) {
-				jump (x,y);
-			}
-			// Skips the turn.
-			if (PauseScript.isKeysEnabled && Input.GetKeyDown (keyCANCEL)) {
-				moves = 0;
-			}
-			
-		}
-
-		// Attack Decision State
-		if (state == 2) {
-			
-			// Activates item in slot 1
-			if (Input.GetKeyDown (keyMOVE)) {
-				// item use code
-			}
-			// Attacks the target grid with the main weapon (sword?)
-			if (Input.GetKeyDown (keyATTACK)) {
-				//AttackEnemy ();
-			}
-			// Activates item in slot 2
-			if (Input.GetKeyDown (keyITEM)) {
-				// item use code
-			}
-			
-		}
-		
-		// All Active States
-		if (state < 3) {
-			
-			// if it is your turn, and not in neutral state, show reticule
-			// Places the targetting icon
-			if (state > 0) {
-				
-				gridInstance = Instantiate(gridSpot, new Vector3((this.transform.position.x + x), (this.transform.position.y + y), 0F), Quaternion.identity) as GridAura;
-				
-				gridInstance.creator = this.transform.position;
-				
-			}
-			
-			// Returns the player to the neutral state.
-			if (Input.GetKeyDown (keyCANCEL)) {
-				state = 0;
-			}
-			
-			// Checks if facing purely left.
-			if ( (x == -1) & (y == 0) ) {
-				animator.Play ("PlayerLeftIdle");
-			} 
-			// Checks if facing purely right.
-			if ( (x == 1) & (y == 0) ) {
-				animator.Play ("PlayerRightIdle");
-			}
-			// Checks if facing purely down.
-			if ( (x == 0) & (y == -1) ) {
-				animator.Play ("PlayerForwardIdle");
-			} 
-			// Checks if facing purely up.
-			if ( (x == 0) & (y == 1) ) {
-				animator.Play ("PlayerBackwardIdle");
-			}
-		}
-		
-		// Not My Turn State
-		
-		if (state == 4) {
-			
-			//not your turn cleanup
-			
-		}
-		
-		// State Checks
-		
-		if (state == 0) {
-			
-			// Check for move state
-			if ((PauseScript.isKeysEnabled && Input.GetKeyDown (keyMOVE))) {
-				state = 1;
-			}
-			
-			// Check for attack state NOT READY
-			//		if (Input.GetKeyDown (keyATTACK)) {
-			//			state = 2;
-			//		}
-			
-			//		// Check for item state NOT READY
-			//		if (Input.GetKeyDown (keyITEM)) {
-			//			state = 3;
-			//		}
-		}
-		
-		canWalk = true;
-		canJump = true;
-
-	}
-
-	// Update is called once per frame
-	new void Update () {
-//		base.Update ();
-//		Move ();
-
-		CanMove (Input.GetKey(KeyCode.D));
-		StartCoroutine(WaitForEnemies ());
-		// Check each frame if the player's health has changed.
-		setHUDhealth (this.Health);
-//		currentPosition = this.transform.position;
 	}
 
 	IEnumerator WaitForEnemies(){
 		yield return new WaitForEndOfFrame();
 		Player.PLAYERS_TURN = true;
-	}
-
-	//moves the character occording to the inputs
-	void walk(int x, int y,bool jump){
-
-		state = 3;
-
-		//place to go
-		Vector3 destination = new Vector3((this.transform.position.x + x),(this.transform.position.y + y), 0);
-
-		//check if goal is a valid location
-		if (jump & ! canJump) {
-			//collision, do nothing
-			//play bump noise
-		}
-		if (! jump & ! canWalk) {
-			//collision, do nothing
-			//play bump noise
-		}
-		//valid location, move to goal
-		else {
-			this.transform.position = destination;
-			moves--;
-		}
-
-		state = 1;
-		return;
-
-	}
-
-	//temporary jump fix, more interesting behavior to come
-	void jump(int x, int y){
-
-		Vector3 prepos = this.transform.position;
-
-		x *= 2;
-		y *= 2;
-
-		walk (x, y, true);
-
-		if (this.transform.position != prepos) {
-
-			moves--;
-
-		}
-		
 	}
 
 	// Allows the player to do damage with their sword attack.
@@ -418,37 +225,25 @@ public class Player : Unit {
 			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 				animator.SetTrigger ("PlayerSwordForward");
 			} 
-
-			string enemyType;
-			if(hitUnit.collider.gameObject.name.Contains("(Clone)")){
-				// Gets rid of the (Clone) in the object name.
-				enemyType = hitUnit.collider.gameObject.name.Substring(0,hitUnit.collider.gameObject.name.Length - 7);
-			}
-			else{
-				enemyType = hitUnit.collider.gameObject.name;
-			}
-			switch(enemyType){
-			case "Cynthia":
-				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Cynthia>());
-				if(hitUnit.collider.gameObject.GetComponent<Cynthia>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Cynthia>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			case "Moblin":
-				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Moblin>());
-				if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			}
+			DamageEnemy(hitUnit);
 		}
 	}
 
 	// Allows the player to do damage with their bow attack.
 	void UseBowAttack(RaycastHit2D hitUnit){
-		if (hitUnit.collider.gameObject.tag.Equals ("Enemy")) {
+		bool hasArrow = false;
+		
+		foreach (Item item in Inventory) {
+			if(item.Name.Equals ("Arrow")){
+				Inventory.Remove (item);
+				hasArrow = true;
+				break;
+			}
+		}
+
+		if (hitUnit.collider.gameObject.tag.Equals ("Enemy") && hasArrow) {
+			int arrowDamage = 1;
+			// Spawns an arrow when attacking with the bow.
 			if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBowRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
@@ -458,36 +253,13 @@ public class Player : Unit {
 			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 				animator.SetTrigger ("PlayerBowForward");
 			} 
-			string enemyType;
-			if(hitUnit.collider.gameObject.name.Contains("(Clone)")){
-				// Gets rid of the (Clone) in the object name.
-				enemyType = hitUnit.collider.gameObject.name.Substring(0,hitUnit.collider.gameObject.name.Length - 7);
-			}
-			else{
-				enemyType = hitUnit.collider.gameObject.name;
-			}
-			switch(enemyType){
-			case "Cynthia":
-				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Cynthia>());
-				if(hitUnit.collider.gameObject.GetComponent<Cynthia>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Cynthia>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			case "Moblin":
-				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Moblin>());
-				if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			}
+			DamageEnemy(hitUnit, arrowDamage);
 		}
 	}
 
-
+	// Allows the player to use bombs.
 	public void UseBomb(RaycastHit2D hitUnit){
-		int bombDamage = 5;
+		int bombDamage = 2;
 
 		bool hasBomb = false;
 
@@ -516,32 +288,37 @@ public class Player : Unit {
 			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 				animator.SetTrigger ("PlayerBombForward");
 			} 
-			string enemyType;
-			if(hitUnit.collider.gameObject.name.Contains("(Clone)")){
-				// Gets rid of the (Clone) in the object name.
-				enemyType = hitUnit.collider.gameObject.name.Substring(0,hitUnit.collider.gameObject.name.Length - 7);
-			}
-			else{
-				enemyType = hitUnit.collider.gameObject.name;
-			}
-			switch(enemyType){
-			case "Cynthia":
-				hitUnit.collider.gameObject.GetComponent<Cynthia>().Health -= bombDamage;
-				if(hitUnit.collider.gameObject.GetComponent<Cynthia>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Cynthia>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			case "Moblin":
-				hitUnit.collider.gameObject.GetComponent<Moblin>().Health -= bombDamage;
-				if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
-					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
-					Destroy (hitUnit.collider.gameObject);
-				}
-				break;
-			}
+			DamageEnemy(hitUnit, bombDamage);
 			// Destroy the bomb after 1.8 seconds (The approximate time of its animation).
 			Destroy (bombObj, 1.8F);
+		}
+	}
+
+	// Allows the player to dig up and remove rocks.
+	void UseDig(RaycastHit2D rock){
+		if (rock.collider.gameObject.name.Contains("Rock")) {
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				animator.SetTrigger ("PlayerDigRight");
+			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				animator.SetTrigger ("PlayerDigLeft");
+			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+				animator.SetTrigger ("PlayerDigBackward");
+			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+				animator.SetTrigger ("PlayerDigForward");
+			} 
+
+			float lootProbability = Random.value;
+			if(lootProbability > 0.3 && lootProbability < 0.70){
+				Instantiate(smallRupee, rock.transform.position, Quaternion.identity);
+			}
+			else if(lootProbability >= 0.70 && lootProbability < 0.95){
+				Instantiate(mediumRupee, rock.transform.position, Quaternion.identity);
+			}
+			else if(lootProbability >= 0.95){
+				Instantiate(largeRupee, rock.transform.position, Quaternion.identity);
+			}
+
+			Destroy (rock.collider.gameObject);
 		}
 	}
 	
@@ -554,19 +331,6 @@ public class Player : Unit {
 			this.animator.Play ("PlayerForwardIdle");
     	    Application.LoadLevel(Application.loadedLevel);
     	}
-
-	// Methods for GridAura to disable movement
-//	public void stopWalk(){
-
-//		canWalk = false;
-
-//	}
-
-//	public void stopJump(){
-		
-//		canJump = false;
-		
-//	}
 
 	// Randomizes the stat bonuses when leveling.
 	void RandomizeStatBonuses() {
@@ -666,12 +430,42 @@ public class Player : Unit {
 		Inventory.Remove(item);
 	}
 	
-	public void CalculateDamageDealt(Unit enemy){
+	public void CalculateDamageDealt(Unit enemy, int additionalDamage = 0){
 		// If the player's attack stat is greater than the enemy's defense, then set the new damage amount.
 		// The player's attack must be at least 2 more than the enemy's defense for the damage to be more
 		// than 1.
-		int damage = (this.Attack > enemy.Defense) ? this.Attack - enemy.Defense : 1;
+		int damage = ((this.Attack + additionalDamage) > enemy.Defense) ? (this.Attack + additionalDamage) - enemy.Defense : 1;
 		enemy.Health -= damage;
+	}
+
+	void DamageEnemy(RaycastHit2D hitUnit, int additionalDamage = 0){
+		string enemyType;
+		if(hitUnit.collider.gameObject.name.Contains("(Clone)")){
+			// Gets rid of the (Clone) in the object name.
+			enemyType = hitUnit.collider.gameObject.name.Substring(0,hitUnit.collider.gameObject.name.Length - 7);
+		}
+		else{
+			enemyType = hitUnit.collider.gameObject.name;
+		}
+		Unit enemy = null;
+		switch(enemyType){
+		case "Cynthia":
+			enemy = hitUnit.collider.gameObject.GetComponent<Cynthia>();
+			CalculateDamageDealt(enemy, additionalDamage);
+			if(hitUnit.collider.gameObject.GetComponent<Cynthia>().Health <= 0){
+				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Cynthia>());
+				Destroy (hitUnit.collider.gameObject);
+			}
+			break;
+		case "Moblin":
+			enemy = hitUnit.collider.gameObject.GetComponent<Moblin>();
+			CalculateDamageDealt(enemy, additionalDamage);
+			if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
+				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
+				Destroy (hitUnit.collider.gameObject);
+			}
+			break;
+		}
 	}
 
 	public void UnlockDoor(RaycastHit2D door){
@@ -688,5 +482,13 @@ public class Player : Unit {
 			this.Inventory.Remove(key);
 			Destroy (door.collider.gameObject);
 		}
+	}
+
+	// Update is called once per frame
+	new void Update () {
+		CanMove (Input.GetKey(keyMOVE));
+		StartCoroutine(WaitForEnemies ());
+		// Check each frame if the player's health has changed.
+		setHUDhealth (this.Health);
 	}
 }

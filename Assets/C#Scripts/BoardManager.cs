@@ -37,7 +37,7 @@ public class BoardManager : MonoBehaviour {
 
 		int maxAdditionalBoardHeight = 6;
 		int maxAdditionalBoardWidth = 6;
-		int minDimension = 6;
+		int minDimension = 8;
 
 		rows = (int)(Random.value * maxAdditionalBoardHeight) + minDimension;
 		columns = (int)(Random.value * maxAdditionalBoardWidth) + minDimension;
@@ -73,26 +73,6 @@ public class BoardManager : MonoBehaviour {
         }       
     }
 
-//    void SetupList()
-//    {
-//        //Clear previous list
-//        //boardPositions.Clear();
-//
-//        // Adds tiles to the board positions list.
-//        for (int i = 1; i < rows; i++)
-//        {
-//            for (int j = 0; j < columns; j++)
-//            {
-//                if (j == 8)
-//                    break;
-//                
-//                //Adds the board location to the list
-//                //boardPositions.Add(new Vector3(i, j, -1f));
-//            }
-//        }
-//    }
-	
-    
 	// Use this for initialization
 	void Start () {
 
@@ -248,11 +228,6 @@ public class BoardManager : MonoBehaviour {
 //            Instantiate(tile, randomPosition, Quaternion.identity);
 //        }
 //    }
-
-    // Update is called once per frame
-    void Update () {
-
-	}
 
 	void GenerateBlockingObjects(GameObject blockingObject, float frequency){
 		for (int i = 0; i < (rows * columns) * frequency; i++) {
