@@ -4,13 +4,15 @@ using Random = UnityEngine.Random;
 using System.Collections.Generic;
 
 public class Player : Unit {
-	
-	/*
+
+    /*
 	 * Static Input Keys
 	 * 4 Directional Keys (keyUP, keyDOWN, keyLEFT, keyRIGHT)
 	 * 4 Command Keys (keyMOVE, keyATTACK, keyITEM, keyCANCEL)
 	 * 2 System Keys (keyPAUSE, keyEXIT)
 	 */
+
+    public static int floorLevel = 1;
 
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;

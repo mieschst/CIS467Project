@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour {
 	int columns;
 
 
-    	public GameObject player;
+    public GameObject player;
 
     //public List<Vector3> OpenList = new List<Vector3>();
     //public List<Vector3> ClosedList = new List<Vector3>();
@@ -36,7 +36,7 @@ public class BoardManager : MonoBehaviour {
 	private Transform boardItems;
 
     //List of all possible board positions
-    private List<Vector3> boardPositions = new List<Vector3>();
+    //private List<Vector3> boardPositions = new List<Vector3>();
 	
 	public void SetupBoard(){
 
@@ -115,9 +115,11 @@ public class BoardManager : MonoBehaviour {
 
 		GenerateKeyItems ();
 
-		SpawnEnemies(0, 1);
-		SpawnEnemies(1, 2);
-		SpawnEnemies(2, 3);
+        int enemyCounter = (int)Math.Log(Player.floorLevel, 2);
+
+        SpawnEnemies(0, enemyCounter);
+        SpawnEnemies(1, enemyCounter);
+        SpawnEnemies(2, enemyCounter);
 
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
@@ -130,7 +132,6 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void GenerateKeyItems(){
-		Vector3 position;
 		foreach (GameObject keyItem in keyItems) {
 			// Values between 1 and the number of rows-1.
 			float x = (int)(Random.value * (columns-2)+1);
@@ -219,63 +220,6 @@ public class BoardManager : MonoBehaviour {
                 Instantiate(enemies[type], position, Quaternion.identity);
                 filledPositions.Add(position);
             }
-        }
-    }
-	
-	/*void SpawnEnemies (int index, Vector3 position){			
-		Instantiate(enemies[index], position, Quaternion.identity);
-		filledPositions.Add (position);	
-	}*/
-
-    /*public void LevelSelector(int level)
-    {
-
-        //Un comment this when using the ghost instance board fix above
-//        SetupBoard(rows, columns);
-
-        //SetupList();
-
-        Instantiate(player);        
-
-        LayoutTilesAtRandom(wallTile, 5, 10);
-
-        LayoutTilesAtRandom(pitTile, 1, 4);
-
-        int enemyCounter = (int)Math.Log(level, 2);
-
-        while (enemyCounter != 0)
-        {
-            SpawnEnemies(0, GetRandomPosition());
-            SpawnEnemies(1, GetRandomPosition());
-
-            enemyCounter--;
-        }
-
-    } */
-
-    Vector3 GetRandomPosition()
-    {
-        int randomIndex = Random.Range(0, boardPositions.Count);
-
-        Vector3 randomPosition = boardPositions[randomIndex];
-
-        boardPositions.RemoveAt(randomIndex);
-
-        return randomPosition;        
-    }
-
-    void LayoutTilesAtRandom(GameObject tile, int min, int max)
-    {
-        int objectCounter = Random.Range(min, max + 1);
-
-        for (int i = 0; i < objectCounter; i++)
-        {
-            Vector3 randomPosition = GetRandomPosition();
-
-            //if (BestSearch() == true)
-                Instantiate(tile, randomPosition, Quaternion.identity);
-            //else
-            //    Instantiate(floorTile, randomPosition, Quaternion.identity);
         }
     }
 
