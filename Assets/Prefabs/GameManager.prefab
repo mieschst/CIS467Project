@@ -69,6 +69,7 @@ MonoBehaviour:
   - {fileID: 134626, guid: 165a67011cd494b679262b463da15305, type: 2}
   ladder: {fileID: 152950, guid: 90ce2abc87ca645b58e0f629844fb897, type: 2}
   lockedDoor: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
+  merchant: {fileID: 199094, guid: 8dbfbdd4ff8b44f00a8a3b4487309114, type: 2}
 --- !u!114 &11469924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,6 +140,10 @@ Prefab:
       propertyPath: basicItems.Array.data[6]
       value: 
       objectReference: {fileID: 121630, guid: cc2d89d614e5645848d3d2fbfa684b74, type: 2}
+    - target: {fileID: 0}
+      propertyPath: merchant
+      value: 
+      objectReference: {fileID: 199094, guid: 8dbfbdd4ff8b44f00a8a3b4487309114, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}

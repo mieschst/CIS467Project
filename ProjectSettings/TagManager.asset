@@ -8,6 +8,9 @@ TagManager:
   - Effect
   - Item
   - Enemy
+  - Exit
+  - NPC
+  - Shop
   layers:
   - Default
   - TransparentFX

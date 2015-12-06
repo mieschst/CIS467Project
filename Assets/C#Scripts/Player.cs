@@ -35,7 +35,7 @@ public class Player : Unit {
 	public static KeyCode keyPAUSE = KeyCode.Escape;
 	// Closes the program immediately, saving any states if neccesary
 	public static KeyCode keyEXIT = KeyCode.Return;
-
+	
 	// The multiplier for calculating level experience requirements.
 	const int EXPERIENCE_FACTOR = 10;
 
@@ -177,15 +177,20 @@ public class Player : Unit {
 					actionPerformed = true;
 				}
 			} else if (hitUnit) {
-				if (Input.GetKey (keyATTACK)) {
-					UseBowAttack (hitUnit);
-					actionPerformed = true;
-				} else if (Input.GetKey (KeyCode.B)) {
-					UseBomb (hitUnit);
-					actionPerformed = true;
-				} else if(!isJump){
-					UseSwordAttack (hitUnit);
-					actionPerformed = true;
+				if(hitUnit.collider.tag.Contains ("NPC")){
+					FindObjectOfType<ShopScript>().OpenShopScreen();
+				}
+				else{
+					if (Input.GetKey (keyATTACK)) {
+						UseBowAttack (hitUnit);
+						actionPerformed = true;
+					} else if (Input.GetKey (KeyCode.B)) {
+						UseBomb (hitUnit);
+						actionPerformed = true;
+					} else if(!isJump){
+						UseSwordAttack (hitUnit);
+						actionPerformed = true;
+					}
 				}
 			} else if (hit) {
 				if(Input.GetKey(keyATTACK)){
@@ -489,6 +494,7 @@ public class Player : Unit {
 		CanMove (Input.GetKey(keyMOVE));
 		StartCoroutine(WaitForEnemies ());
 		// Check each frame if the player's health has changed.
+		setHUDcurrency (this.Currency);
 		setHUDhealth (this.Health);
 	}
 }

@@ -20,6 +20,7 @@ public class BoardManager : MonoBehaviour {
 
 	public GameObject ladder;
 	public GameObject lockedDoor;
+	public GameObject merchant;
 	
 	int rows;
 	int columns;
@@ -58,6 +59,7 @@ public class BoardManager : MonoBehaviour {
             }
         }
 
+		Vector3 merchantPosition = new Vector3 ((int)(columns / 2), rows);
         // Adds the wall tiles to the game board.
         for (int i = -2; i <= rows+1; i++)
         {
@@ -65,9 +67,17 @@ public class BoardManager : MonoBehaviour {
             {
                 if (i < 0 || i >= rows || j < 0 || j >= columns)
                 {
-					int index = (int) (Random.value * wallTiles.Length);
-                    GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
-                    newTile.transform.SetParent(boardTiles);
+					if(i == rows && j == (int)(columns/2)){
+						// Instantiate the merchant and a grass tile for him to stand on.
+						Instantiate(merchant, merchantPosition, Quaternion.identity);
+						GameObject newTile = Instantiate(floorTile, merchantPosition, Quaternion.identity) as GameObject;
+						newTile.transform.SetParent(boardTiles);
+					}
+					else{
+						int index = (int) (Random.value * wallTiles.Length);
+                    	GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
+                    	newTile.transform.SetParent(boardTiles);
+					}
                 }
             }
         }       
@@ -189,10 +199,6 @@ public class BoardManager : MonoBehaviour {
 				filledPositions.Add (position);
 			}
 		}
-	}
-
-	void MoveEnemies(){
-
 	}
 
     public void LevelSelector(int level)

@@ -159,7 +159,7 @@ public class Moblin : Unit {
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
-				Destroy (hitPlayer.collider.gameObject, 0.5F);
+				Destroy (hitPlayer.collider.gameObject, 1.0F);
 			}
 		}
 	}
