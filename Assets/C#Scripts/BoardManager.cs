@@ -33,7 +33,7 @@ public class BoardManager : MonoBehaviour {
 	List<Vector3> filledPositions = new List<Vector3>();
 
 	private Transform boardTiles;
-	private Transform boardItems;
+	public static Transform boardItems;
 
     //List of all possible board positions
     private List<Vector3> boardPositions = new List<Vector3>();
