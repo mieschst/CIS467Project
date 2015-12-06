@@ -40,4 +40,17 @@ public class Item {
 		}
 	}
 
+	public void Steal (Sableye sableye){
+		switch (Name) {
+		case "RupeeSmall":
+			sableye.Currency++;
+			break;
+		case "RupeeMedium":
+			sableye.Currency += 5;
+			break;
+		case "RupeeLarge":
+			sableye.Currency += 10;
+			break;
+		}
+	}
 }
