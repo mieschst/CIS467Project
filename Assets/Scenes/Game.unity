@@ -85,6 +85,78 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &6059748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 6059749}
+  - 222: {fileID: 6059751}
+  - 114: {fileID: 6059750}
+  m_Layer: 5
+  m_Name: FloorLevelText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6059749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 6059748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 356961218}
+  m_RootOrder: 4
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -310, y: 147}
+  m_SizeDelta: {x: 170, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &6059750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 6059748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'FLOOR LEVEL: '
+--- !u!222 &6059751
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 6059748}
 --- !u!1 &53721725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,6 +1188,7 @@ RectTransform:
   - {fileID: 1878700885}
   - {fileID: 1537863350}
   - {fileID: 233599834}
+  - {fileID: 6059749}
   m_Father: {fileID: 1333760996}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
@@ -1137,6 +1210,7 @@ MonoBehaviour:
   HealthText: {fileID: 1787564902}
   SkillText: {fileID: 1878700886}
   RupeeText: {fileID: 1537863351}
+  floorLevelText: {fileID: 6059750}
   HealthSlider: {fileID: 233599835}
   SliderBackground: {fileID: 358303080}
   SliderForeground: {fileID: 632449601}
@@ -1552,6 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 247886154}
+  experienceText: {fileID: 94317375}
 --- !u!1 &614764393
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,8 +3593,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -359.5, y: 153.890045}
-  m_SizeDelta: {x: 81, y: 32}
+  m_AnchoredPosition: {x: -363, y: 125}
+  m_SizeDelta: {x: 85, y: 32}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1537863351
 MonoBehaviour:
@@ -4332,7 +4407,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -363, y: 211.390015}
+  m_AnchoredPosition: {x: -367, y: 211.390015}
   m_SizeDelta: {x: 74, y: 27}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1787564902

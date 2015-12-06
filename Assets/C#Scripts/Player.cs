@@ -39,6 +39,9 @@ public class Player : Unit {
 	// The multiplier for calculating level experience requirements.
 	const int EXPERIENCE_FACTOR = 10;
 
+	// The floor the player's currently on.
+	public static int floorLevel = 1;
+	
 	//These variables are accessed by the HUD
 	// The amount of health the player has.
 	public static int health;
@@ -64,6 +67,7 @@ public class Player : Unit {
 	public GameObject smallRupee;
 	public GameObject mediumRupee;
 	public GameObject largeRupee;
+	public GameObject heart;
 
 	int[] stats;
 	
@@ -313,7 +317,10 @@ public class Player : Unit {
 			} 
 
 			float lootProbability = Random.value;
-			if(lootProbability > 0.3 && lootProbability < 0.70){
+			if(lootProbability > 0.15 && lootProbability < 0.3){
+				Instantiate (heart, rock.transform.position, Quaternion.identity);
+			}
+			if(lootProbability >= 0.3 && lootProbability < 0.70){
 				Instantiate(smallRupee, rock.transform.position, Quaternion.identity);
 			}
 			else if(lootProbability >= 0.70 && lootProbability < 0.95){
@@ -334,6 +341,7 @@ public class Player : Unit {
 			this.transform.position = new Vector3(0,0);
 			// Resets the player's animation to forward idle.
 			this.animator.Play ("PlayerForwardIdle");
+			Player.floorLevel++;
     	    Application.LoadLevel(Application.loadedLevel);
     	}
 

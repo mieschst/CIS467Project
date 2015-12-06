@@ -6,6 +6,7 @@ public class ShopScript : MonoBehaviour {
 
 	Player player;
 	public GameObject shopPanel;
+	public Text experienceText;
 
 	// Use this for initialization
 	void Start () {
@@ -28,12 +29,12 @@ public class ShopScript : MonoBehaviour {
 	}
 
 	public void ExperienceButtonClicked(){
+		int experienceGained = 40 + (Player.floorLevel * 10);
 		if (player.Currency >= 50) {
 			player.Currency -= 50;
-			player.Experience += 50;
 			GameObject expMoblin = new GameObject();
 			expMoblin.AddComponent<Moblin>();
-			expMoblin.GetComponent<Moblin>().Experience = 50;
+			expMoblin.GetComponent<Moblin>().Experience = experienceGained;
 			player.DefeatEnemy(expMoblin.GetComponent<Moblin>());
 			Destroy (expMoblin);
 		}
@@ -46,5 +47,9 @@ public class ShopScript : MonoBehaviour {
 
 	public void OpenShopScreen(){
 		shopPanel.SetActive (true);
+	}
+
+	new void Update(){
+		experienceText.text = string.Empty + (40 + (Player.floorLevel * 10)) + " experience\n\nCost: 50 rupees";
 	}
 }

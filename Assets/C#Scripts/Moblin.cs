@@ -15,13 +15,17 @@ public class Moblin : Unit {
 
 	GameObject player = null;
 
-	public void InitMoblin(int level, bool isHardMode) {
-		CalculateStats (level, isHardMode);
+	public void InitMoblin(bool isHardMode) {
+		CalculateStats (CalculateLevel(), isHardMode);
+	}
+
+	int CalculateLevel (){
+		return (int)Mathf.Ceil(Player.floorLevel / 2F);
 	}
 
 	// Initializes key variables for the Moblin enemy.
 	void Start () {
-		InitMoblin (1, GameManager.isHardMode);
+		InitMoblin (GameManager.isHardMode);
 		moblinAnimator = this.GetComponent<Animator> ();
 	}
 

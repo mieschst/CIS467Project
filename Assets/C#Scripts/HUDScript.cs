@@ -8,6 +8,7 @@ public class HUDScript : MonoBehaviour {
 	public Text HealthText;
 	public Text SkillText;
 	public Text RupeeText;
+	public Text floorLevelText;
 
 	//This slider manages the player's health bar
 	public Slider HealthSlider;
@@ -47,6 +48,10 @@ public class HUDScript : MonoBehaviour {
 			RupeeText.enabled = true;
 			RupeeText.text = "RUPEES: " + Player.currency;
 
+			floorLevelText.enabled = true;
+			floorLevelText.text = string.Format ("FLOOR LEVEL: {0}", Player.floorLevel);
+
+
 			//Enables the HUD's player health bar
 			HealthSlider.enabled = true;
 			SliderBackground.enabled = true;
@@ -57,6 +62,7 @@ public class HUDScript : MonoBehaviour {
 			HealthText.enabled = false;
 			SkillText.enabled = false;
 			RupeeText.enabled = false;
+			floorLevelText.enabled = false;
 			//Disables the HUD's player health bar
 			HealthSlider.enabled = false;
 			SliderBackground.enabled = false;

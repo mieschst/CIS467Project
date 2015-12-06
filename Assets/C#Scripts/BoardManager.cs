@@ -98,8 +98,12 @@ public class BoardManager : MonoBehaviour {
 
 		GenerateKeyItems ();
 
-		SpawnEnemies(0, 1);
-		SpawnEnemies(1, 2);
+
+		int enemyCounter = (int)Math.Log(Player.floorLevel, 2);
+
+		for (int i = 0; i < enemies.Length; i++) {
+			SpawnEnemies (i, enemyCounter);
+		}
 
 		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);

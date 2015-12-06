@@ -100,6 +100,7 @@ MonoBehaviour:
   smallRupee: {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
   mediumRupee: {fileID: 134680, guid: 9d6f330e07f3b4f08ade92e23ae55b5e, type: 2}
   largeRupee: {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
+  heart: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
 --- !u!212 &21215346
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -147,6 +148,10 @@ Prefab:
       propertyPath: largeRupee
       value: 
       objectReference: {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
+    - target: {fileID: 0}
+      propertyPath: heart
+      value: 
+      objectReference: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198646}

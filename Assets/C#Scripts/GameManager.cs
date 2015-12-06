@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
         //If instance already exists and it's not this:
         else if (instance != this)
 
+
             //Then destroy this
             Destroy(gameObject); 
 //        
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 //        DontDestroyOnLoad(gameObject);
 
         //boardScript = GetComponent<BoardManager>();
-        Init();
+        //Init();
         //boardScript.LevelSelector(level);
     }
 
