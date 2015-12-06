@@ -407,6 +407,11 @@ public class Player : Unit {
 				nextLevel = (int) Mathf.Pow (this.Level, 2) * EXPERIENCE_FACTOR;
 			}
 		}
+
+		if(enemy.Currency > 0){
+			this.Currency += enemy.Currency;
+			this.setHUDcurrency(this.Currency);
+		}
 	}
 	
 	void OnTriggerEnter2D(Collider2D collider){
@@ -426,6 +431,7 @@ public class Player : Unit {
 			}
 			else {
 				this.Inventory.Add (item);
+				InventoryScript.updateInventory(Inventory);
 			}
 			// Removes the item from the game board.
 			Destroy (collider.gameObject);
@@ -441,6 +447,7 @@ public class Player : Unit {
 		}
 		// Remove the item from the player's inventory.
 		Inventory.Remove(item);
+		InventoryScript.removeFromInventory (item);
 	}
 	
 	public void CalculateDamageDealt(Unit enemy, int additionalDamage = 0){
@@ -475,6 +482,13 @@ public class Player : Unit {
 			CalculateDamageDealt(enemy, additionalDamage);
 			if(hitUnit.collider.gameObject.GetComponent<Moblin>().Health <= 0){
 				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Moblin>());
+				Destroy (hitUnit.collider.gameObject);
+			}
+			break;
+		case "Sableye":
+			CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Sableye>());
+			if(hitUnit.collider.gameObject.GetComponent<Sableye>().Health <= 0){
+				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Sableye>());
 				Destroy (hitUnit.collider.gameObject);
 			}
 			break;
