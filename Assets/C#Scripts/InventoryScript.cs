@@ -12,46 +12,37 @@ public class InventoryScript : MonoBehaviour {
 	//Holds the key that activates the inventory. Can be reset by the option's menu button configuration. 
 	public static KeyCode keyINVENTORY = KeyCode.I;
 	//These are the background images of the six inventory slots that will be modified.
-	public GameObject Item1;
-	public GameObject Item2;
-	public GameObject Item3;
-	public GameObject Item4;
-	public GameObject Item5;
-	public GameObject Item6;
+	public GameObject[] slots;
 	//These six booleans tell us if an inventory slot is full or not.
-	public static bool Item1Full = false;
-	public static bool Item2Full = false;
-	public static bool Item3Full = false;
-	public static bool Item4Full = false;
-	public static bool Item5Full = false;
-	public static bool Item6Full = false;
+
+	public Sprite healthPotion;
+	public Sprite bomb;
+	public Sprite arrow;
+	public Sprite key;
+	public Sprite noItemImage;
+
+	public static bool[] filledSlots;
 
 	// Use this for initialization
 	void Start () {
+		filledSlots = new bool[slots.Length];
 		isInventoryActive = false;
 		inventoryMenu.SetActive (false);
-		Item1.SetActive (false);
-		Item2.SetActive (false);
-		Item3.SetActive (false);
-		Item4.SetActive (false);
-		Item5.SetActive (false);
-		Item6.SetActive (false);
+		foreach (GameObject slot in slots) {
+			slot.SetActive(true);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		toggleInventory ();
 		setMenu ();
-		toggleSlots ();
 	}
 
 	void toggleInventory(){
 		if ((Input.GetKeyDown (keyINVENTORY)) && (PauseScript.isKeysEnabled)) {
-			if(isInventoryActive == false){
-				isInventoryActive = true;
-			}else{
-				isInventoryActive = false;
-			}
+			// Disables or enables the inventory.
+			isInventoryActive = !isInventoryActive;
 		}
 	}
 
@@ -68,109 +59,49 @@ public class InventoryScript : MonoBehaviour {
 		}
 	}
 
-	void toggleSlots(){
-		if (Item1Full) {
-			Item1.SetActive(true);
-		} else {
-			Item1.SetActive(false);
-		}
-		if (Item2Full) {
-			Item2.SetActive(true);
-		} else {
-			Item2.SetActive(false);
-		}
-		if (Item3Full) {
-			Item3.SetActive(true);
-		} else {
-			Item3.SetActive(false);
-		}
-		if (Item4Full) {
-			Item4.SetActive(true);
-		} else {
-			Item4.SetActive(false);
-		}
-		if (Item5Full) {
-			Item5.SetActive(true);
-		} else {
-			Item5.SetActive(false);
-		}
-		if (Item6Full) {
-			Item6.SetActive(true);
-		} else {
-			Item6.SetActive(false);
-		}
-	}
+	public void updateInventory(List<Item> playerList){
+		int j = 0;
 
-	public static void updateInventory(List<Item> playerList){
-		for(int i = 0; i<playerList.Count; i++){
-			Item slot = playerList[i];
-			switch(slot.Name)
-			{
+		for (int i = 0; i < filledSlots.Length; i++) {
+			filledSlots[i] = false;
+			slots[i].GetComponent<Image>().sprite = noItemImage;
+		}
+
+		foreach (Item item in playerList) {
+			switch(item.Name){
 			case "HealthPotion":
-				if(!Item1Full){
-					Item1Full = true;
-					break;
-				}else if(!Item2Full){
-					Item2Full = true;
-					break;
-				}else if(!Item3Full){
-					Item3Full = true;
-					break;
-				}else if(!Item4Full){
-					Item4Full = true;
-					break;
-				}else if(!Item5Full){
-					Item5Full = true;
-					break;
-				}else{
-					//playerList.Remove (slot);
-					break;
-				}
-			case "Key":
-				if(!Item6Full){
-					Item6Full = true;
-					break;
-				}else{
-					//playerList.Remove(slot);
-					break;
-				}
-			default:
-				//playerList.Remove (slot);
+				slots[j].GetComponent<Image>().sprite = healthPotion;
+				filledSlots[j] = true;
 				break;
+			case "Key":
+				slots[j].GetComponent<Image>().sprite = key;
+				filledSlots[j] = true;
+				break;
+			case "Bomb":
+				slots[j].GetComponent<Image>().sprite = bomb;
+				filledSlots[j] = true;
+				break;
+			case "Arrow":
+				slots[j].GetComponent<Image>().sprite = arrow;
+				filledSlots[j] = true;
+				break;
+			default:
+				slots[j].GetComponent<Image>().sprite = noItemImage;
+				filledSlots[j] = false;
+				break;
+			}
+			j++;
+		}
+
+		for (int i = 0; i < filledSlots.Length; i++) {
+			if(filledSlots[i] == false){
+				slots[j].GetComponent<Image>().sprite = noItemImage;
 			}
 		}
 	}
 
-	public static void removeFromInventory(Item slot){
-		switch (slot.Name) {
-		case "HealthPotion":
-			if(Item1Full){
-				Item1Full = false;
-				break;
-			}else if(Item2Full){
-				Item2Full = false;
-				break;
-			}else if(Item3Full){
-				Item3Full = false;
-				break;
-			}else if(Item4Full){
-				Item4Full = false;
-				break;
-			}else if(Item5Full){
-				Item5Full = false;
-				break;
-			}else{
-				break;
-			}
-		case "Key":
-			if(Item6Full){
-				Item6Full = false;
-				break;
-			}else{
-				break;
-			}
-		default:
-			break;
-		}
+	public void ClearSlot(int index){
+		slots[index].GetComponent<Image>().sprite = noItemImage;
+		filledSlots [index] = false;
 	}
 }

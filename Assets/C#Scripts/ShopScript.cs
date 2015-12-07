@@ -15,16 +15,18 @@ public class ShopScript : MonoBehaviour {
 	}
 
 	public void ArrowButtonClicked(){
-		if (player.Currency >= 5) {
+		if (player.Currency >= 5 && Player.basicItemCount < Player.INVENTORY_CAPACITY - 1) {
 			player.Currency -= 5;
 			player.Inventory.Add(new Item("Arrow"));
+			Player.basicItemCount++;
 		}
 	}
 
 	public void BombButtonClicked(){
-		if (player.Currency >= 10) {
+		if (player.Currency >= 10 && Player.basicItemCount < Player.INVENTORY_CAPACITY - 1) {
 			player.Currency -= 10;
 			player.Inventory.Add(new Item("Bomb"));
+			Player.basicItemCount++;
 		}
 	}
 

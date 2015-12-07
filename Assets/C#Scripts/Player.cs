@@ -57,6 +57,9 @@ public class Player : Unit {
 
 	int maxHealth;
 
+	public static int INVENTORY_CAPACITY = 18;
+	public static int basicItemCount = 0;
+
 	Animator animator;
 	
 	// A string variable that we can change while playing the game or outside Play mode.
@@ -244,8 +247,10 @@ public class Player : Unit {
 		
 		foreach (Item item in Inventory) {
 			if(item.Name.Equals ("Arrow")){
+				FindObjectOfType<InventoryScript>().ClearSlot(this.Inventory.IndexOf(item));
 				Inventory.Remove (item);
 				hasArrow = true;
+				basicItemCount--;
 				break;
 			}
 		}
@@ -274,8 +279,10 @@ public class Player : Unit {
 
 		foreach (Item item in Inventory) {
 			if(item.Name.Equals ("Bomb")){
+				FindObjectOfType<InventoryScript>().ClearSlot(this.Inventory.IndexOf(item));
 				Inventory.Remove (item);
 				hasBomb = true;
+				basicItemCount--;
 				break;
 			}
 		}
@@ -417,7 +424,7 @@ public class Player : Unit {
 	void OnTriggerEnter2D(Collider2D collider){
 
 		//Check if the tag of the trigger collided with is Exit.
-        	if (collider.gameObject.tag.Equals ("Exit") )
+        	if (collider.gameObject.tag.Equals ("Exit"))
        	 	{
         	   //Invoke the Restart function to start the next level with a delay of 1 second.
          	   Invoke("Restart", 0);
@@ -425,15 +432,20 @@ public class Player : Unit {
 
 		if (collider.gameObject.tag.Equals ("Item")) {
 			// Adds the item to the player's inventory.
-			Item item = new Item(collider.gameObject.name);
-			if(item.Name.Contains("Rupee") || item.Name.Contains ("Heart")) {
-				UseItem(item);
-			}
-			else {
+			Item item = new Item (collider.gameObject.name);
+			if (item.Name.Contains ("Rupee") || item.Name.Contains ("Heart")) {
+				UseItem (item);
+				Destroy (collider.gameObject);
+			} else if (basicItemCount < INVENTORY_CAPACITY - 1){
 				this.Inventory.Add (item);
-				InventoryScript.updateInventory(Inventory);
+				basicItemCount++;
+				// Removes the item from the game board.
+				Destroy (collider.gameObject);
 			}
-			// Removes the item from the game board.
+		} 
+		if (collider.gameObject.tag.Equals ("KeyItem")) {
+			Item item = new Item (collider.gameObject.name);
+			this.Inventory.Add (item);
 			Destroy (collider.gameObject);
 		}
 	}
@@ -445,9 +457,6 @@ public class Player : Unit {
 		if (this.Health > maxHealth) {
 			this.Health = maxHealth;
 		}
-		// Remove the item from the player's inventory.
-		Inventory.Remove(item);
-		InventoryScript.removeFromInventory (item);
 	}
 	
 	public void CalculateDamageDealt(Unit enemy, int additionalDamage = 0){
@@ -506,6 +515,7 @@ public class Player : Unit {
 		}
 
 		if (door.collider.gameObject.name == "Door(Clone)" && hasKey) {
+			FindObjectOfType<InventoryScript>().ClearSlot(this.Inventory.IndexOf(key));
 			this.Inventory.Remove(key);
 			Destroy (door.collider.gameObject);
 		}
@@ -518,5 +528,6 @@ public class Player : Unit {
 		// Check each frame if the player's health has changed.
 		setHUDcurrency (this.Currency);
 		setHUDhealth (this.Health);
+		FindObjectOfType<InventoryScript>().updateInventory(this.Inventory);
 	}
 }

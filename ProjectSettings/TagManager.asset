@@ -11,6 +11,7 @@ TagManager:
   - Exit
   - NPC
   - Shop
+  - KeyItem
   layers:
   - Default
   - TransparentFX
