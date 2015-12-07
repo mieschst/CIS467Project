@@ -30,7 +30,7 @@ public class SpecialManager : MonoBehaviour {
 	// TODO: Handle case where player is in shop and opens and closes the pause menu.
 	void ToggleSpecialMenu(){
 		// Toggles the visibility of the special attack menu.
-		if (Input.GetKeyDown (Player.keyPAUSE) || !Player.canMove) {
+		if (Input.GetKeyDown (Player.keyPAUSE) || Player.playerInShop) {
 			specialMenu.SetActive (false);
 		} else if (Player.canMove) {
 			specialMenu.SetActive (true);

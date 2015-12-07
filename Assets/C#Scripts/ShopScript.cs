@@ -45,14 +45,16 @@ public class ShopScript : MonoBehaviour {
 	public void DoneButtonClicked(){
 		shopPanel.SetActive (false);
 		Player.canMove = true;
+		Player.playerInShop = false;
 		GameObject.Find ("Merchant(Clone)").GetComponent<Animator> ().SetTrigger ("MerchantRockOn");
 	}
 
 	public void OpenShopScreen(){
 		shopPanel.SetActive (true);
+		Player.playerInShop = true;
 	}
 
-	new void Update(){
+	void Update(){
 		experienceText.text = string.Empty + (40 + (Player.floorLevel * 10)) + " experience\n\nCost: 50 rupees";
 	}
 }

@@ -16,6 +16,7 @@ public class Player : Unit {
 	public static bool bombAttackEnabled;
 	public static bool diggingClawsEnabled;
 	public static bool canMove;
+	public static bool playerInShop;
 
 	public static int INVENTORY_CAPACITY = 18;
 	public static int basicItemCount = 0;
@@ -145,6 +146,7 @@ public class Player : Unit {
 		bombAttackEnabled = false;
 		diggingClawsEnabled = false;
 		canMove = true;
+		playerInShop = false;
 	}
 	
 	// Use this for initialization

@@ -31,9 +31,6 @@ public class BoardManager : MonoBehaviour {
 	private Transform boardTiles;
 	private Transform boardItems;
 
-    //List of all possible board positions
-    //private List<Vector3> boardPositions = new List<Vector3>();
-	
 	public void SetupBoard(){
 
 		int maxAdditionalBoardHeight = 6;
@@ -204,41 +201,7 @@ public class BoardManager : MonoBehaviour {
 			}
 		}
 	}
-
-    public void LevelSelector(int level)
-    {
-//        SetupList();
-
-//        LayoutTilesAtRandom(wallTile, 5, 10);
-//
-//        LayoutTilesAtRandom(pitTile, 1, 4);
-    }
-
-
-
-//    Vector3 GetRandomPosition()
-//    {
-//        int randomIndex = Random.Range(0, boardPositions.Count);
-//
-//        Vector3 randomPosition = boardPositions[randomIndex];
-//
-//        boardPositions.RemoveAt(randomIndex);
-//
-//        return randomPosition;        
-//    }
-
-//    void LayoutTilesAtRandom(GameObject tile, int min, int max)
-//    {
-//        int objectCounter = Random.Range(min, max + 1);
-//
-//        for (int i = 0; i < objectCounter; i++)
-//        {
-//            Vector3 randomPosition = GetRandomPosition();
-//
-//            Instantiate(tile, randomPosition, Quaternion.identity);
-//        }
-//    }
-
+	
 	void GenerateBlockingObjects(GameObject blockingObject, float frequency){
 		for (int i = 0; i < (rows * columns) * frequency; i++) {
 			float x = (int)(Random.value * (columns-2) + 1);
