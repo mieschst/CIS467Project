@@ -60,6 +60,10 @@ public class Player : Unit {
 	public static int INVENTORY_CAPACITY = 18;
 	public static int basicItemCount = 0;
 
+	public static bool bowAttackEnabled;
+	public static bool bombAttackEnabled;
+	public static bool diggingClawsEnabled;
+
 	Animator animator;
 	
 	// A string variable that we can change while playing the game or outside Play mode.
@@ -135,6 +139,10 @@ public class Player : Unit {
 		setHUDcurrency (this.Currency);
 
 		Player.PLAYERS_TURN = true;
+
+		bowAttackEnabled = true;
+		bombAttackEnabled = false;
+		diggingClawsEnabled = false;
 	}
 	
 	// Use this for initialization
@@ -188,10 +196,10 @@ public class Player : Unit {
 					FindObjectOfType<ShopScript>().OpenShopScreen();
 				}
 				else{
-					if (Input.GetKey (keyATTACK)) {
+					if (Input.GetKey (keyATTACK) && bowAttackEnabled) {
 						UseBowAttack (hitUnit);
 						actionPerformed = true;
-					} else if (Input.GetKey (KeyCode.B)) {
+					} else if (Input.GetKey (keyATTACK) && bombAttackEnabled) {
 						UseBomb (hitUnit);
 						actionPerformed = true;
 					} else if(!isJump){
@@ -200,7 +208,7 @@ public class Player : Unit {
 					}
 				}
 			} else if (hit) {
-				if(Input.GetKey(keyATTACK)){
+				if(Input.GetKey(keyATTACK) && diggingClawsEnabled){
 					UseDig(hit);
 					actionPerformed = true;
 				}

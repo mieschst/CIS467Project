@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 068f977974d7c445ebebe0d983514fe7
-timeCreated: 1449349620
+timeCreated: 1449477192
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -210,6 +210,7 @@ TextureImporter:
     21300406: LoZ_Link_MC_203
     21300408: LoZ_Link_MC_204
     21300410: LoZ_Link_MC_205
+    21300412: LoZ_Link_MC_206
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -2313,6 +2314,16 @@ TextureImporter:
         y: 3508
         width: 131
         height: 169
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LoZ_Link_MC_206
+      rect:
+        serializedVersion: 2
+        x: 2062
+        y: 3149
+        width: 137
+        height: 100
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
