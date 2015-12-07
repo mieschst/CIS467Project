@@ -598,7 +598,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979186860}
+      - m_Target: {fileID: 1333761002}
         m_MethodName: EquipBow
         m_Mode: 1
         m_Arguments:
@@ -3273,7 +3273,6 @@ GameObject:
   - 222: {fileID: 979186859}
   - 114: {fileID: 979186858}
   - 114: {fileID: 979186857}
-  - 114: {fileID: 979186860}
   m_Layer: 5
   m_Name: SpecialAttackMenu
   m_TagString: Untagged
@@ -3354,17 +3353,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 979186855}
---- !u!114 &979186860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 979186855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5712ba36383470288edd33ca93abf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &979566245
 GameObject:
   m_ObjectHideFlags: 0
@@ -4070,7 +4058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979186860}
+      - m_Target: {fileID: 1333761002}
         m_MethodName: EquipDiggingClaws
         m_Mode: 1
         m_Arguments:
@@ -4446,6 +4434,7 @@ GameObject:
   - 114: {fileID: 1333761000}
   - 114: {fileID: 1333760997}
   - 114: {fileID: 1333761001}
+  - 114: {fileID: 1333761002}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4638,7 +4627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a12f374506bd44ab621a3f93143db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPaused: 0
   PauseMenu: {fileID: 79374519}
 --- !u!114 &1333761001
 MonoBehaviour:
@@ -4677,6 +4665,18 @@ MonoBehaviour:
   arrow: {fileID: 21300280, guid: 068f977974d7c445ebebe0d983514fe7, type: 3}
   key: {fileID: 21300000, guid: ac5c12cca502f41ef9198607865371ef, type: 3}
   noItemImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!114 &1333761002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1333760992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5712ba36383470288edd33ca93abf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialMenu: {fileID: 979186855}
 --- !u!1 &1488098985
 GameObject:
   m_ObjectHideFlags: 0
@@ -5838,7 +5838,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 979186860}
+      - m_Target: {fileID: 1333761002}
         m_MethodName: EquipBomb
         m_Mode: 1
         m_Arguments:

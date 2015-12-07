@@ -3,6 +3,12 @@ using System.Collections;
 
 public class SpecialManager : MonoBehaviour {
 
+	public GameObject specialMenu;
+
+	void Start(){
+		specialMenu.SetActive (true);
+	}
+
 	public void EquipBow(){
 		Player.bowAttackEnabled = true;
 		Player.bombAttackEnabled = false;
@@ -21,4 +27,17 @@ public class SpecialManager : MonoBehaviour {
 		Player.diggingClawsEnabled = true;
 	}
 
+	// TODO: Handle case where player is in shop and opens and closes the pause menu.
+	void ToggleSpecialMenu(){
+		// Toggles the visibility of the special attack menu.
+		if (Input.GetKeyDown (Player.keyPAUSE) || !Player.canMove) {
+			specialMenu.SetActive (false);
+		} else if (Player.canMove) {
+			specialMenu.SetActive (true);
+		}
+	}
+
+	void Update(){
+		ToggleSpecialMenu ();
+	}
 }

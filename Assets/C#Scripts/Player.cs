@@ -12,6 +12,14 @@ public class Player : Unit {
 	 * 2 System Keys (keyPAUSE, keyEXIT)
 	 */
 	public static bool PLAYERS_TURN;
+	public static bool bowAttackEnabled;
+	public static bool bombAttackEnabled;
+	public static bool diggingClawsEnabled;
+	public static bool canMove;
+
+	public static int INVENTORY_CAPACITY = 18;
+	public static int basicItemCount = 0;
+
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
 	// Down
@@ -56,13 +64,6 @@ public class Player : Unit {
 	public LayerMask unitsLayer;
 
 	int maxHealth;
-
-	public static int INVENTORY_CAPACITY = 18;
-	public static int basicItemCount = 0;
-
-	public static bool bowAttackEnabled;
-	public static bool bombAttackEnabled;
-	public static bool diggingClawsEnabled;
 
 	Animator animator;
 	
@@ -143,6 +144,7 @@ public class Player : Unit {
 		bowAttackEnabled = true;
 		bombAttackEnabled = false;
 		diggingClawsEnabled = false;
+		canMove = true;
 	}
 	
 	// Use this for initialization
@@ -154,7 +156,7 @@ public class Player : Unit {
 	}
 
 	public void CanMove(bool isJump = false){
-		if (PLAYERS_TURN) {
+		if (PLAYERS_TURN && canMove) {
 			bool actionPerformed = false;
 
 			Vector3 startPosition = this.transform.position;
@@ -193,6 +195,7 @@ public class Player : Unit {
 				}
 			} else if (hitUnit) {
 				if(hitUnit.collider.tag.Contains ("NPC")){
+					canMove = false;
 					FindObjectOfType<ShopScript>().OpenShopScreen();
 				}
 				else{

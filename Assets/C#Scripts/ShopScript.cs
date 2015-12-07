@@ -44,6 +44,7 @@ public class ShopScript : MonoBehaviour {
 
 	public void DoneButtonClicked(){
 		shopPanel.SetActive (false);
+		Player.canMove = true;
 		GameObject.Find ("Merchant(Clone)").GetComponent<Animator> ().SetTrigger ("MerchantRockOn");
 	}
 
