@@ -32,6 +32,8 @@ public class HUDScript : MonoBehaviour {
 		HealthSlider.enabled = true;
 		SliderBackground.enabled = true;
 		SliderForeground.enabled = true;
+
+		this.gameObject.GetComponent<Image> ().enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -65,11 +67,12 @@ public class HUDScript : MonoBehaviour {
 			nameText.enabled = true;
 			nameText.text = string.Format ("NAME: {0}", Player.myName.ToUpper());
 
-
 			//Enables the HUD's player health bar
 			HealthSlider.enabled = true;
 			SliderBackground.enabled = true;
 			SliderForeground.enabled = true;
+
+			this.gameObject.GetComponent<Image> ().enabled = true;
 
 		} else {
 			//Disables the HUD's labels
@@ -82,6 +85,8 @@ public class HUDScript : MonoBehaviour {
 			HealthSlider.enabled = false;
 			SliderBackground.enabled = false;
 			SliderForeground.enabled = false;
+
+			this.gameObject.GetComponent<Image> ().enabled = false;
 		}
 	}
 
