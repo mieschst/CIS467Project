@@ -8,6 +8,8 @@ public class BoardManager : MonoBehaviour {
 	
 	public GameObject floorTile;
 	public GameObject waterTile;
+	public GameObject seaTile;
+	public GameObject reefTile;
 	public GameObject lavaTile;
 	public GameObject pitTile;
 	public GameObject[] wallTiles;
@@ -26,7 +28,6 @@ public class BoardManager : MonoBehaviour {
 	int columns;
 
 	List<Vector3> filledPositions;
-	List<GameObject> activeEnemies;
 
 	private Transform boardTiles;
 	private Transform boardItems;
@@ -35,7 +36,7 @@ public class BoardManager : MonoBehaviour {
 
 		int maxAdditionalBoardHeight = 6;
 		int maxAdditionalBoardWidth = 6;
-		int minDimension = 8;
+		int minDimension = 10;
 
 		rows = (int)(Random.value * maxAdditionalBoardHeight) + minDimension;
 		columns = (int)(Random.value * maxAdditionalBoardWidth) + minDimension;
@@ -77,17 +78,33 @@ public class BoardManager : MonoBehaviour {
 					}
                 }
             }
-        }       
+        }
+
+		for (int i = -9; i <= rows+8; i++)
+		{
+			for (int j = -9; j <= columns+8; j++)
+			{
+				if (i < -2 || i >= rows + 1 || j < -2 || j >= columns + 1)
+				{
+					GameObject newTile = Instantiate(seaTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+					newTile.transform.SetParent(boardTiles);
+
+					float reefProbability = Random.value;
+					if(reefProbability >= 0.95){
+						GameObject reefObj = Instantiate(reefTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+						reefObj.transform.SetParent(boardTiles);
+					}
+				}
+			}
+		}
     }
 
 	// Use this for initialization
 	void Start () {
-
 		// Assigns values to the column and row variables.
 		SetupBoard ();
 
 		filledPositions = new List<Vector3> ();
-		activeEnemies = new List<GameObject> ();
 
 		// Adds a ladder right corner of the moveable section of the board.
 		Instantiate (ladder, new Vector3 (columns-1, rows-1), Quaternion.identity);

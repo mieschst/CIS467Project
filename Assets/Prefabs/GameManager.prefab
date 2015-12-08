@@ -42,6 +42,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTile: {fileID: 140714, guid: e8e484be8c3394a4eb66a9f05ee1a0a3, type: 2}
   waterTile: {fileID: 170220, guid: 9ec40fecb869241869f301d849877f16, type: 2}
+  seaTile: {fileID: 108966, guid: 82b6b79acd95046b6a51639fba02aa82, type: 2}
+  reefTile: {fileID: 132660, guid: dbc3a7e00c06c4ae5863aaf3df4e7701, type: 2}
   lavaTile: {fileID: 109792, guid: 8c7864c61105e459ba8ef39a108635b1, type: 2}
   pitTile: {fileID: 148562, guid: 910bfb5656422064a8b54f717e7a6c05, type: 2}
   wallTiles:
@@ -153,6 +155,14 @@ Prefab:
       propertyPath: enemies.Array.data[2]
       value: 
       objectReference: {fileID: 119260, guid: 34c7b7071ee45694f94e73ad01c1ea49, type: 2}
+    - target: {fileID: 0}
+      propertyPath: seaTile
+      value: 
+      objectReference: {fileID: 108966, guid: 82b6b79acd95046b6a51639fba02aa82, type: 2}
+    - target: {fileID: 0}
+      propertyPath: reefTile
+      value: 
+      objectReference: {fileID: 132660, guid: dbc3a7e00c06c4ae5863aaf3df4e7701, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}

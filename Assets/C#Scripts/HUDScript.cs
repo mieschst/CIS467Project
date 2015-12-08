@@ -9,6 +9,7 @@ public class HUDScript : MonoBehaviour {
 	public Text SkillText;
 	public Text RupeeText;
 	public Text floorLevelText;
+	public Text nameText;
 
 	//The game must be in motion for 5 seconds before "GameOver is triggered". This is to prevent a program timing bug.
 	float timeLeft = 5.0f;
@@ -59,6 +60,8 @@ public class HUDScript : MonoBehaviour {
 
 			floorLevelText.enabled = true;
 			floorLevelText.text = string.Format ("FLOOR LEVEL: {0}", Player.floorLevel);
+			nameText.enabled = true;
+			nameText.text = string.Format ("NAME: {0}", Player.myName.ToUpper());
 
 
 			//Enables the HUD's player health bar
@@ -72,6 +75,7 @@ public class HUDScript : MonoBehaviour {
 			SkillText.enabled = false;
 			RupeeText.enabled = false;
 			floorLevelText.enabled = false;
+			nameText.enabled = false;
 			//Disables the HUD's player health bar
 			HealthSlider.enabled = false;
 			SliderBackground.enabled = false;

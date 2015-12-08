@@ -25,7 +25,7 @@ public class OptionsMenuScript : MonoBehaviour {
 	}
 
 	public void ChangeSong(){
-		FindObjectOfType<AudioManager>().PlayRandomSong();
+		FindObjectOfType<AudioManager> ().PlayNextSong ();
 	}
 
 	void ScanForOptionsActive()
