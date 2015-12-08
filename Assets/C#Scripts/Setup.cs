@@ -14,6 +14,7 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameManager.isHardMode = false;
 		playerNameField = FindObjectOfType<InputField> ();
 		normalBtn = normalBtn.GetComponent<Button> ();
 		hardBtn = hardBtn.GetComponent<Button> ();

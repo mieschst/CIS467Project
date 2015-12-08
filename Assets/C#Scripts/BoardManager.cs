@@ -27,6 +27,9 @@ public class BoardManager : MonoBehaviour {
 	int rows;
 	int columns;
 
+	const int WALL_DEPTH = 2;
+	const int SEA_DEPTH = 6;
+
 	List<Vector3> filledPositions;
 
 	private Transform boardTiles;
@@ -43,28 +46,38 @@ public class BoardManager : MonoBehaviour {
 	
         boardTiles = new GameObject("BoardTiles").transform;
 
-        // Adds the floor tiles to the game board.
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                // Creates a new tile game object at position (j,i).
-                GameObject newTile = Instantiate(floorTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+		DrawFloorTiles ();
+		DrawWall ();
+		DrawSeaWithReefs ();
+    }
 
-                // Adds the new tile to GameObject called 'BoardTiles' to help reduce clutter in the
-                // hierarchy.
-                newTile.transform.SetParent(boardTiles);
-            }
-        }
+	void DrawFloorTiles (){
+		// Adds the floor tiles to the game board.
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < columns; j++)
+			{
+				// Creates a new tile game object at position (j,i).
+				GameObject newTile = Instantiate(floorTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+				
+				// Adds the new tile to GameObject called 'BoardTiles' to help reduce clutter in the
+				// hierarchy.
+				newTile.transform.SetParent(boardTiles);
+			}
+		}
+	}
 
+	void DrawWall(){
+		int min = -1 * WALL_DEPTH;
+		int max = WALL_DEPTH;
 		Vector3 merchantPosition = new Vector3 ((int)(columns / 2), rows);
-        // Adds the wall tiles to the game board.
-        for (int i = -2; i <= rows+1; i++)
-        {
-            for (int j = -2; j <= columns+1; j++)
-            {
-                if (i < 0 || i >= rows || j < 0 || j >= columns)
-                {
+		// Adds the wall tiles to the game board.
+		for (int i = min; i < rows + max; i++)
+		{
+			for (int j = min; j < columns + max; j++)
+			{
+				if (i < 0 || i >= rows || j < 0 || j >= columns)
+				{
 					if(i == rows && j == (int)(columns/2)){
 						// Instantiate the merchant and a grass tile for him to stand on.
 						Instantiate(merchant, merchantPosition, Quaternion.identity);
@@ -73,22 +86,27 @@ public class BoardManager : MonoBehaviour {
 					}
 					else{
 						int index = (int) (Random.value * wallTiles.Length);
-                    	GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
-                    	newTile.transform.SetParent(boardTiles);
+						GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
+						newTile.transform.SetParent(boardTiles);
 					}
-                }
-            }
-        }
+				}
+			}
+		}
+	}
 
-		for (int i = -9; i <= rows+8; i++)
+	void DrawSeaWithReefs(){
+		int max = WALL_DEPTH + SEA_DEPTH;
+		int min = -1 * max;
+
+		for (int i = min; i < rows + max; i++)
 		{
-			for (int j = -9; j <= columns+8; j++)
+			for (int j = min; j < columns + max; j++)
 			{
-				if (i < -2 || i >= rows + 1 || j < -2 || j >= columns + 1)
+				if (i < (-1 * WALL_DEPTH) || i >= (rows + WALL_DEPTH) || j < (-1 * WALL_DEPTH) || j >= (columns + WALL_DEPTH))
 				{
 					GameObject newTile = Instantiate(seaTile, new Vector2(j, i), Quaternion.identity) as GameObject;
 					newTile.transform.SetParent(boardTiles);
-
+					
 					float reefProbability = Random.value;
 					if(reefProbability >= 0.95){
 						GameObject reefObj = Instantiate(reefTile, new Vector2(j, i), Quaternion.identity) as GameObject;
@@ -97,7 +115,7 @@ public class BoardManager : MonoBehaviour {
 				}
 			}
 		}
-    }
+	}
 
 	// Use this for initialization
 	void Start () {

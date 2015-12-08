@@ -49,7 +49,7 @@ public class Player : Unit {
 	const int EXPERIENCE_FACTOR = 10;
 
 	// The floor the player's currently on.
-	public static int floorLevel = 1;
+	public static int floorLevel;
 	
 	//These variables are accessed by the HUD
 	// The amount of health the player has.
@@ -140,6 +140,8 @@ public class Player : Unit {
 		setHUDplayerlevel (this.Level);
 		setHUDcurrency (this.Currency);
 
+		floorLevel = 1;
+
 		Player.PLAYERS_TURN = true;
 
 		bowAttackEnabled = true;
@@ -196,7 +198,7 @@ public class Player : Unit {
 					actionPerformed = true;
 				}
 			} else if (hitUnit) {
-				if(hitUnit.collider.tag.Contains ("NPC")){
+				if(hitUnit.collider.tag.Contains ("NPC") && !isJump){
 					canMove = false;
 					FindObjectOfType<ShopScript>().OpenShopScreen();
 				}

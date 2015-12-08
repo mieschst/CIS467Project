@@ -43,6 +43,8 @@ public class HUDScript : MonoBehaviour {
 		timeLeft -= Time.deltaTime;
 		//If player dies then load GameOver scene
 		if ((Player.health <= 0) && (timeLeft < 0)) {
+			Destroy (FindObjectOfType<Player> ());
+			Destroy (FindObjectOfType<AudioManager> ());
 			Application.LoadLevel ("GameOver");
 		}
 	}
