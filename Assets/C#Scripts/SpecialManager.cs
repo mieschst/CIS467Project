@@ -6,6 +6,7 @@ public class SpecialManager : MonoBehaviour {
 	public GameObject specialMenu;
 
 	void Start(){
+		// Makes the special attack menu visible.
 		specialMenu.SetActive (true);
 	}
 

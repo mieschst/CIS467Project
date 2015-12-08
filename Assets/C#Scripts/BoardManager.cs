@@ -27,7 +27,9 @@ public class BoardManager : MonoBehaviour {
 	int rows;
 	int columns;
 
+	// Sets the depth of the wall tiles around the board to 2.
 	const int WALL_DEPTH = 2;
+	// Sets the depth of the sea tiles to 6.
 	const int SEA_DEPTH = 6;
 
 	List<Vector3> filledPositions;
@@ -36,18 +38,25 @@ public class BoardManager : MonoBehaviour {
 	private Transform boardItems;
 
 	public void SetupBoard(){
-
+		// The maximum additional height the board can have.
 		int maxAdditionalBoardHeight = 6;
+		// The maximum additional width the board can have.
 		int maxAdditionalBoardWidth = 6;
+		// The minimum width x height dimensions.
 		int minDimension = 10;
 
+		// Generates a random size between 10 and the additional height allowed.
 		rows = (int)(Random.value * maxAdditionalBoardHeight) + minDimension;
+		// Generates a random size between 10 and the additional width allowed.
 		columns = (int)(Random.value * maxAdditionalBoardWidth) + minDimension;
 	
         boardTiles = new GameObject("BoardTiles").transform;
 
+		// Draws the floor tiles.
 		DrawFloorTiles ();
+		// Draws the wall tiles lining the floor.
 		DrawWall ();
+		// Draws the sea and reef tiles lining the outer wall layer.
 		DrawSeaWithReefs ();
     }
 
@@ -68,8 +77,11 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void DrawWall(){
+		// The minimum position where we can generate wall tiles.
 		int min = -1 * WALL_DEPTH;
+		// The maximum position where we can generate wall tiles.
 		int max = WALL_DEPTH;
+		// The position to spawn the merchant.
 		Vector3 merchantPosition = new Vector3 ((int)(columns / 2), rows);
 		// Adds the wall tiles to the game board.
 		for (int i = min; i < rows + max; i++)
@@ -79,14 +91,19 @@ public class BoardManager : MonoBehaviour {
 				if (i < 0 || i >= rows || j < 0 || j >= columns)
 				{
 					if(i == rows && j == (int)(columns/2)){
-						// Instantiate the merchant and a grass tile for him to stand on.
+						// Instantiates the merchant.
 						Instantiate(merchant, merchantPosition, Quaternion.identity);
+						// Instantiates the floor tile for the merchant to stand on.
 						GameObject newTile = Instantiate(floorTile, merchantPosition, Quaternion.identity) as GameObject;
+						// Adds the floor tile to the Transform object containing all the board tiles.
 						newTile.transform.SetParent(boardTiles);
 					}
 					else{
+						// Generate a random index.
 						int index = (int) (Random.value * wallTiles.Length);
+						// Instantiate a new wall tile from the list of wall tiles.
 						GameObject newTile = Instantiate(wallTiles[index], new Vector2(j, i), Quaternion.identity) as GameObject;
+						// Adds the wall tile to the collection of board tiles.
 						newTile.transform.SetParent(boardTiles);
 					}
 				}
@@ -95,21 +112,30 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void DrawSeaWithReefs(){
+		// The maximum position to generate a sea or reef tile.
 		int max = WALL_DEPTH + SEA_DEPTH;
+		// The minimum position to generate a sea or reef tile.
 		int min = -1 * max;
 
 		for (int i = min; i < rows + max; i++)
 		{
 			for (int j = min; j < columns + max; j++)
 			{
+				// Checks if we are at one of the valid positions.
 				if (i < (-1 * WALL_DEPTH) || i >= (rows + WALL_DEPTH) || j < (-1 * WALL_DEPTH) || j >= (columns + WALL_DEPTH))
 				{
+					// Instantiates a new sea tile.
 					GameObject newTile = Instantiate(seaTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+					// Adds the sea tile to the collection of board tiles.
 					newTile.transform.SetParent(boardTiles);
-					
+
+					// Generates a random number.
 					float reefProbability = Random.value;
+					// If the generated probability is 0.95 or greater, then create a new reef tile.
 					if(reefProbability >= 0.95){
+						// Instantiates a new reef tile.
 						GameObject reefObj = Instantiate(reefTile, new Vector2(j, i), Quaternion.identity) as GameObject;
+						// Adds the reef tile to the collection fo board tiles.
 						reefObj.transform.SetParent(boardTiles);
 					}
 				}
@@ -149,7 +175,6 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void GenerateKeyItems(){
-		Vector3 position;
 		foreach (GameObject keyItem in keyItems) {
 			// Values between 1 and the number of rows-1.
 			float x = (int)(Random.value * (columns-2)+1);
@@ -164,28 +189,7 @@ public class BoardManager : MonoBehaviour {
 				// Add the position to the list.
 				filledPositions.Add(location);
 				// Instantiate the new item GameObject.
-				GameObject newItem = Instantiate (keyItem, location, Quaternion.identity) as GameObject;
-			}
-		}
-	}
-
-	public void DrawPond(int rows, int columns, Vector3 position){
-		GameObject newTile;
-		Vector3 tilePosition;
-		for (int i = 0; i < rows; i++) {
-			tilePosition = new Vector3(position.x, position.y + i);
-			if(!filledPositions.Contains(tilePosition)){
-				newTile = Instantiate (waterTile, new Vector3(tilePosition.x, tilePosition.y), Quaternion.identity) as GameObject;
-				filledPositions.Add(newTile.transform.position);
-				newTile.transform.SetParent(boardTiles);
-			}
-			for(int j = 1; j < columns; j++){
-				tilePosition = new Vector3(position.x + j, position.y + i);
-				if(!filledPositions.Contains(tilePosition)){
-					newTile = Instantiate (waterTile, new Vector3(tilePosition.x, tilePosition.y), Quaternion.identity) as GameObject;
-					newTile.transform.SetParent(boardTiles);
-					filledPositions.Add(newTile.transform.position);
-				}
+				Instantiate (keyItem, location, Quaternion.identity);
 			}
 		}
 	}
@@ -193,7 +197,6 @@ public class BoardManager : MonoBehaviour {
 	// Generates an item and places it at some random position on the board. Note: The floor lining the wall
 	// will not have items in it. This is so that the player doesn't get blocked when we add obstacles.
 	void GenerateBasicItems(int numberOfItems){
-
 		boardItems = new GameObject ("BoardItems").transform;
 
 		// Adds items at random positions on the board.
@@ -226,6 +229,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void SpawnEnemies (int type, int numToSpawn){
+		// Spawns x number of enemies at random positions on the game board.
 		for(int i = 0; i < numToSpawn; i++) {
 			float x = (int)(Random.value * columns-2) + 1;
 			float y = (int)(Random.value * rows-2) + 1;
@@ -238,6 +242,7 @@ public class BoardManager : MonoBehaviour {
 	}
 	
 	void GenerateBlockingObjects(GameObject blockingObject, float frequency){
+		// Generates blocking objects throughout the game board as a percentage of the game board.
 		for (int i = 0; i < (rows * columns) * frequency; i++) {
 			float x = (int)(Random.value * (columns-2) + 1);
 			float y = (int)(Random.value * (rows-2) + 1);

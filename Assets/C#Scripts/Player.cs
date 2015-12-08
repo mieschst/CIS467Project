@@ -18,8 +18,10 @@ public class Player : Unit {
 	public static bool canMove;
 	public static bool playerInShop;
 
-	public static int INVENTORY_CAPACITY = 18;
-	public static int basicItemCount = 0;
+	// The player's inventory capacity.
+	public static int INVENTORY_CAPACITY;
+	// The number of basic items that the player currently has.
+	public static int basicItemCount;
 
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
@@ -141,6 +143,9 @@ public class Player : Unit {
 		setHUDcurrency (this.Currency);
 
 		floorLevel = 1;
+
+		INVENTORY_CAPACITY = 18;
+		basicItemCount = 0;
 
 		Player.PLAYERS_TURN = true;
 
