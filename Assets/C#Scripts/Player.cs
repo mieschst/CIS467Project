@@ -374,8 +374,8 @@ public class Player : Unit {
 
 	// Randomizes the stat bonuses when leveling.
 	void RandomizeStatBonuses() {
-		// A maximum of 4 stat bonuses can occur when leveling.
-		int maxBonuses = 4;
+		// A maximum of 5 stat bonuses can occur when leveling.
+		int maxBonuses = 5;
 
 		int index;
 		for(int i = 0; i < maxBonuses; i++){
@@ -470,7 +470,7 @@ public class Player : Unit {
 		}
 	}
 
-	void UseItem(Item item) {
+	public void UseItem(Item item) {
 		// Use the item.
 		item.Use (this);
 		// If the item healed any health, check if it healthed over the player's max allowed health.
@@ -524,6 +524,19 @@ public class Player : Unit {
 		}
 	}
 
+	public void UsePotion(){
+		int index = -1;
+		foreach (Item item in Inventory) {
+			if(item.Name.Equals("HealthPotion")){
+				index = Inventory.IndexOf(item);
+				UseItem(item);
+				Inventory.RemoveAt(index);
+				basicItemCount--;
+				break;
+			}
+		}
+	}
+
 	public void UnlockDoor(RaycastHit2D door){
 		bool hasKey = false;
 		Item key = null;
@@ -542,7 +555,7 @@ public class Player : Unit {
 	}
 
 	// Update is called once per frame
-	new void Update () {
+	void Update () {
 		CanMove (Input.GetKey(keyMOVE));
 		StartCoroutine(WaitForEnemies ());
 		// Check each frame if the player's health has changed.

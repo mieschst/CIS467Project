@@ -74,26 +74,4 @@ public abstract class Unit : MonoBehaviour {
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	public void Update () {
-
-		// If all actions have been taken this turn, end the turn
-		if (moves <= 0){
-			state = 4;
-		}
-		
-		// returns to active state if it is your turn
-		if (state == 4 & moves > 0) {
-			state = 0;
-		}
-		
-		// debug turn incrementor, will be incremented by 1 everytime it is my turn again in final product
-		moves += 0.01;
-		
-		// Make sure moves are limited by maxmoves
-		if (moves > maxmoves) {
-			moves = maxmoves;	
-		}
-	}
 }

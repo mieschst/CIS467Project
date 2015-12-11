@@ -29,8 +29,8 @@ public class BoardManager : MonoBehaviour {
 
 	// Sets the depth of the wall tiles around the board to 2.
 	const int WALL_DEPTH = 2;
-	// Sets the depth of the sea tiles to 6.
-	const int SEA_DEPTH = 6;
+	// Sets the depth of the sea tiles to 5.
+	const int SEA_DEPTH = 5;
 
 	List<Vector3> filledPositions;
 
@@ -43,11 +43,11 @@ public class BoardManager : MonoBehaviour {
 		// The maximum additional width the board can have.
 		int maxAdditionalBoardWidth = 6;
 		// The minimum width x height dimensions.
-		int minDimension = 10;
+		int minDimension = 8;
 
-		// Generates a random size between 10 and the additional height allowed.
+		// Generates a random size between 8 and the additional height allowed.
 		rows = (int)(Random.value * maxAdditionalBoardHeight) + minDimension;
-		// Generates a random size between 10 and the additional width allowed.
+		// Generates a random size between 8 and the additional width allowed.
 		columns = (int)(Random.value * maxAdditionalBoardWidth) + minDimension;
 	
         boardTiles = new GameObject("BoardTiles").transform;

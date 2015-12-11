@@ -1,32 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Random = UnityEngine.Random;
 
-public class Moblin : Unit {
+public class KingDadongo : Unit {
 
 	Animator moblinAnimator;
-
+	
 	int direction = 0;
-
+	
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
-
+	
 	GameObject player = null;
-
+	
 	public void InitMoblin(bool isHardMode) {
 		CalculateStats (CalculateLevel(), isHardMode);
 	}
-
+	
 	int CalculateLevel (){
 		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.7F) : (int)Mathf.Ceil (Player.floorLevel / 1.6F);
 	}
-
+	
 	// Initializes key variables for the Moblin enemy.
 	void Start () {
 		InitMoblin (GameManager.isHardMode);
 		moblinAnimator = this.GetComponent<Animator> ();
 	}
-
+	
 	public void CalculateStats(int level, bool isHardMode){
 		this.Level = level;
 		this.Health = 3;
@@ -34,7 +33,7 @@ public class Moblin : Unit {
 		this.Defense = 1;
 		this.Speed = 1;
 		this.Experience = 10 * level;
-
+		
 		// If we are on normal mode, then just follow the normal enemy stat calculations.
 		if (isHardMode == false) {
 			for (int i = 1; i < level; i++) {
@@ -62,7 +61,7 @@ public class Moblin : Unit {
 			}
 		}
 	}
-
+	
 	public void CalculateDamageDealt(Unit player){
 		// If the enemy's attack stat is greater than the player's defense, then set the new damage amount.
 		// The enemy's attack must be at least 2 more than the player's defense for the damage to be more
@@ -70,15 +69,15 @@ public class Moblin : Unit {
 		int damage = (this.Attack > player.Defense) ? this.Attack - player.Defense : 1;
 		player.Health -= damage;
 	}
-
+	
 	int ChasePlayer(){
 		int moveDirection = -1;
-
+		
 		float playerX = player.transform.position.x;
 		float playerY = player.transform.position.y;
 		float enemyX = this.transform.position.x;
 		float enemyY = this.transform.position.y;
-
+		
 		if (playerX > enemyX) {
 			moveDirection = 2;
 		} else if (playerX < enemyX) {
@@ -88,18 +87,18 @@ public class Moblin : Unit {
 		} else if (playerY < enemyY) {
 			moveDirection = 0;
 		}
-
+		
 		return moveDirection;
 	}
-
+	
 	public override void Move(){
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
-
+		
 		if (GameManager.isHardMode) {
 			CheckLineOfSight ();
 		}
-
+		
 		int movement = 1;
 		if (player == null) {
 			direction = (int)(Random.value * 4);
@@ -142,7 +141,7 @@ public class Moblin : Unit {
 			AttackPlayer(hitUnit, direction);
 		}
 	}
-
+	
 	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
 		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
 			switch (movementDirection) {
@@ -165,13 +164,13 @@ public class Moblin : Unit {
 			}
 		}
 	}
-
+	
 	public void CheckLineOfSight(){
 		int sight = 3;
-
+		
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
-
+		
 		switch (direction) {
 		case 0: 
 			endPosition = new Vector3 (startPosition.x, startPosition.y - sight);
@@ -186,21 +185,21 @@ public class Moblin : Unit {
 			endPosition = new Vector3 (startPosition.x - sight, startPosition.y);
 			break;
 		}
-
+		
 		this.GetComponent<BoxCollider2D> ().enabled = false;
-
+		
 		RaycastHit2D hitPlayer = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
-
+		
 		this.GetComponent<BoxCollider2D> ().enabled = true;
-
-
+		
+		
 		if (hitPlayer) {
 			if (hitPlayer.collider.gameObject.tag.Contains ("Player")) {
 				player = hitPlayer.collider.gameObject;
 			}
 		}
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		if (PauseScript.isKeysEnabled) {

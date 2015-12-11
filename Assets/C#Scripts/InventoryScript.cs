@@ -70,6 +70,7 @@ public class InventoryScript : MonoBehaviour {
 		for (int i = 0; i < filledSlots.Length; i++) {
 			filledSlots[i] = false;
 			slots[i].GetComponent<Image>().sprite = noItemImage;
+			slots[i].GetComponent<Button>().enabled = false;
 		}
 
 		// Cycle through the player's inventory and update the inventory slots with sprite images and setting
@@ -78,6 +79,7 @@ public class InventoryScript : MonoBehaviour {
 			switch(item.Name){
 			case "HealthPotion":
 				slots[j].GetComponent<Image>().sprite = healthPotion;
+				slots[j].GetComponent<Button>().enabled = true;
 				filledSlots[j] = true;
 				break;
 			case "Key":
@@ -113,5 +115,9 @@ public class InventoryScript : MonoBehaviour {
 		slots[index].GetComponent<Image>().sprite = noItemImage;
 		// Sets the filled slot boolean at position 'index' to false.
 		filledSlots [index] = false;
+	}
+
+	public void HealthPotionClicked(){
+		FindObjectOfType<Player> ().UsePotion ();
 	}
 }
