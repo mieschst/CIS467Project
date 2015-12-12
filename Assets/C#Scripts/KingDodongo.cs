@@ -1,29 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KingDadongo : Unit {
-
-	Animator moblinAnimator;
+public class KingDodongo : Unit {
+	
+	Animator kingDodongoAnimator;
 	
 	int direction = 0;
 	
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
 	
-	GameObject player = null;
+	GameObject player;
 	
-	public void InitMoblin(bool isHardMode) {
+	public void InitKingDodongo(bool isHardMode) {
 		CalculateStats (CalculateLevel(), isHardMode);
 	}
 	
 	int CalculateLevel (){
-		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.7F) : (int)Mathf.Ceil (Player.floorLevel / 1.6F);
+		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.2F) : (int)Mathf.Ceil (Player.floorLevel / 1.0F);
 	}
 	
-	// Initializes key variables for the Moblin enemy.
+	// Initializes key variables for the King Dodongo enemy.
 	void Start () {
-		InitMoblin (GameManager.isHardMode);
-		moblinAnimator = this.GetComponent<Animator> ();
+		InitKingDodongo (GameManager.isHardMode);
+		kingDodongoAnimator = this.GetComponent<Animator> ();
+		player = FindObjectOfType<Player> ().gameObject;
 	}
 	
 	public void CalculateStats(int level, bool isHardMode){
@@ -38,24 +39,25 @@ public class KingDadongo : Unit {
 		if (isHardMode == false) {
 			for (int i = 1; i < level; i++) {
 				if (i % 2 == 0) {
-					this.Health++;
-					this.Attack++;
-					this.Defense++;
+					this.Health += 2;
+					this.Attack += 2;
+					this.Defense ++;
 				} else {
 					this.Attack++;
 					this.Speed++;
 				}
 			}
 		}
-		// Otherwise, if we are on hard mode, then the moblin will have enhanced health and attack stats.
+		// Otherwise, if we are on hard mode, then King Dodongo will have enhanced stats.
 		else {
 			for (int i = 1; i < level; i++) {
 				if (i % 2 == 0) {
 					this.Health += 2;
 					this.Attack += 2;
-					this.Defense++;
+					this.Defense += 2;
 				} else {
-					this.Attack++;
+					this.Health++;
+					this.Defense++;
 					this.Speed++;
 				}
 			}
@@ -92,53 +94,47 @@ public class KingDadongo : Unit {
 	}
 	
 	public override void Move(){
-		Vector3 startPosition = this.transform.position;
-		Vector3 endPosition = this.transform.position;
+		if (!Player.PLAYERS_TURN) {
+			Vector3 startPosition = this.transform.position;
+			Vector3 endPosition = this.transform.position;
 		
-		if (GameManager.isHardMode) {
-			CheckLineOfSight ();
-		}
-		
-		int movement = 1;
-		if (player == null) {
-			direction = (int)(Random.value * 4);
-		} else {
+			int movement = 1;
 			direction = ChasePlayer ();
-		}
 		
-		switch (direction) {
-		case 0: 
-			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
-			moblinAnimator.Play ("MoblinForwardIdle");
-			break;
-		case 1:
-			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
-			moblinAnimator.Play ("MoblinBackwardIdle");
-			break;
-		case 2:
-			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
-			moblinAnimator.Play ("MoblinRightIdle");
-			break;
-		case 3:
-			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
-			moblinAnimator.Play ("MoblinLeftIdle");
-			break;
-		}
+			switch (direction) {
+			case 0: 
+				endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
+				kingDodongoAnimator.Play ("KingDodongoForwardIdle");
+				break;
+			case 1:
+				endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
+				kingDodongoAnimator.Play ("KingDodongoBackwardIdle");
+				break;
+			case 2:
+				endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
+				kingDodongoAnimator.Play ("KingDodongoRightIdle");
+				break;
+			case 3:
+				endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
+				kingDodongoAnimator.Play ("KingDodongoLeftIdle");
+				break;
+			}
 		
-		BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
+			BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
 		
-		boxCollider.enabled = false;
+			boxCollider.enabled = false;
 		
-		RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
-		RaycastHit2D hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
+			RaycastHit2D hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
+			RaycastHit2D hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
 		
-		boxCollider.enabled = true;
+			boxCollider.enabled = true;
 		
-		if (!hit && !hitUnit) {
-			this.transform.position = endPosition;
-		}
-		if (hitUnit) {
-			AttackPlayer(hitUnit, direction);
+			if (!hit && !hitUnit) {
+				this.transform.position = endPosition;
+			}
+			if (hitUnit) {
+				AttackPlayer (hitUnit, direction);
+			}
 		}
 	}
 	
@@ -146,66 +142,30 @@ public class KingDadongo : Unit {
 		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
 			switch (movementDirection) {
 			case 0:
-				moblinAnimator.SetTrigger ("MoblinAttackForward");
+				kingDodongoAnimator.SetTrigger ("KingDodongoAttackForward");
 				break;
 			case 1:
-				moblinAnimator.SetTrigger ("MoblinAttackBackward");
+				kingDodongoAnimator.SetTrigger ("KingDodongoAttackBackward");
 				break;
 			case 2:
-				moblinAnimator.SetTrigger ("MoblinAttackRight");
+				kingDodongoAnimator.SetTrigger ("KingDodongoAttackRight");
 				break;
 			case 3:
-				moblinAnimator.SetTrigger ("MoblinAttackLeft");
+				kingDodongoAnimator.SetTrigger ("KingDodongoAttackLeft");
 				break;
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
 				Destroy (hitPlayer.collider.gameObject, 1.0F);
 			}
-		}
-	}
-	
-	public void CheckLineOfSight(){
-		int sight = 3;
-		
-		Vector3 startPosition = this.transform.position;
-		Vector3 endPosition = this.transform.position;
-		
-		switch (direction) {
-		case 0: 
-			endPosition = new Vector3 (startPosition.x, startPosition.y - sight);
-			break;
-		case 1:
-			endPosition = new Vector3 (startPosition.x, startPosition.y + sight);
-			break;
-		case 2:
-			endPosition = new Vector3 (startPosition.x + sight, startPosition.y);
-			break;
-		case 3:
-			endPosition = new Vector3 (startPosition.x - sight, startPosition.y);
-			break;
-		}
-		
-		this.GetComponent<BoxCollider2D> ().enabled = false;
-		
-		RaycastHit2D hitPlayer = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
-		
-		this.GetComponent<BoxCollider2D> ().enabled = true;
-		
-		
-		if (hitPlayer) {
-			if (hitPlayer.collider.gameObject.tag.Contains ("Player")) {
-				player = hitPlayer.collider.gameObject;
-			}
+			Debug.Log ("Attacking Player");
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (PauseScript.isKeysEnabled) {
-			if (!Player.PLAYERS_TURN){
-				Move ();
-			}
+			Move ();
 		}
 	}
 }

@@ -521,6 +521,13 @@ public class Player : Unit {
 				Destroy (hitUnit.collider.gameObject);
 			}
 			break;
+		case "KingDodongo":
+			CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
+			if(hitUnit.collider.gameObject.GetComponent<KingDodongo>().Health <= 0){
+				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
+				Destroy (hitUnit.collider.gameObject);
+			}
+			break;
 		}
 	}
 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8a6349f38c896460aa19f311fe2bd47a
-timeCreated: 1449871515
+timeCreated: 1449877134
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -203,10 +203,10 @@ TextureImporter:
     - name: boss_13
       rect:
         serializedVersion: 2
-        x: 91
-        y: 233
+        x: 251
+        y: 235
         width: 48
-        height: 28
+        height: 24
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,10 +223,10 @@ TextureImporter:
     - name: boss_15
       rect:
         serializedVersion: 2
-        x: 251
-        y: 235
+        x: 91
+        y: 233
         width: 48
-        height: 24
+        height: 28
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,7 +255,7 @@ TextureImporter:
         serializedVersion: 2
         x: 126
         y: 127
-        width: 24
+        width: 25
         height: 29
       alignment: 0
       pivot: {x: .5, y: .5}

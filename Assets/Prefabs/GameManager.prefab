@@ -70,6 +70,7 @@ MonoBehaviour:
   - {fileID: 127472, guid: 9a1c0250669bf57478a2d36c4183ac74, type: 2}
   - {fileID: 134626, guid: 165a67011cd494b679262b463da15305, type: 2}
   - {fileID: 119260, guid: 34c7b7071ee45694f94e73ad01c1ea49, type: 2}
+  - {fileID: 182000, guid: 0343546d6d7814623b468e28948f26e5, type: 2}
   ladder: {fileID: 152950, guid: 90ce2abc87ca645b58e0f629844fb897, type: 2}
   lockedDoor: {fileID: 161908, guid: da5d537b6f380459988498ef3c69a05f, type: 2}
   merchant: {fileID: 199094, guid: 8dbfbdd4ff8b44f00a8a3b4487309114, type: 2}
@@ -93,7 +94,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: enemies.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: rockTiles.Array.size
@@ -163,6 +164,10 @@ Prefab:
       propertyPath: reefTile
       value: 
       objectReference: {fileID: 132660, guid: dbc3a7e00c06c4ae5863aaf3df4e7701, type: 2}
+    - target: {fileID: 0}
+      propertyPath: enemies.Array.data[3]
+      value: 
+      objectReference: {fileID: 182000, guid: 0343546d6d7814623b468e28948f26e5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 130524}
