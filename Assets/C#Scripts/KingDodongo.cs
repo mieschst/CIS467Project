@@ -33,7 +33,7 @@ public class KingDodongo : Unit {
 		this.Attack = 1;
 		this.Defense = 1;
 		this.Speed = 1;
-		this.Experience = 10 * level;
+		this.Experience = 30 * level;
 		
 		// If we are on normal mode, then just follow the normal enemy stat calculations.
 		if (isHardMode == false) {
@@ -44,6 +44,7 @@ public class KingDodongo : Unit {
 					this.Defense ++;
 				} else {
 					this.Attack++;
+					this.Defense++;
 					this.Speed++;
 				}
 			}
@@ -57,6 +58,7 @@ public class KingDodongo : Unit {
 					this.Defense += 2;
 				} else {
 					this.Health++;
+					this.Attack++;
 					this.Defense++;
 					this.Speed++;
 				}
@@ -158,7 +160,6 @@ public class KingDodongo : Unit {
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
 				Destroy (hitPlayer.collider.gameObject, 1.0F);
 			}
-			Debug.Log ("Attacking Player");
 		}
 	}
 	

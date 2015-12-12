@@ -90,7 +90,7 @@ public class BoardManager : MonoBehaviour {
 			{
 				if (i < 0 || i >= rows || j < 0 || j >= columns)
 				{
-					if(i == rows && j == (int)(columns/2)){
+					if(i == rows && j == (int)(columns/2) && Player.floorLevel % 25 != 0){
 						// Instantiates the merchant.
 						Instantiate(merchant, merchantPosition, Quaternion.identity);
 						// Instantiates the floor tile for the merchant to stand on.
@@ -143,9 +143,37 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
+	void SetupBasicLevel(){
 		// Assigns values to the column and row variables.
+		SetupBoard ();
+		
+		filledPositions = new List<Vector3> ();
+		
+		// Adds a ladder right corner of the moveable section of the board.
+		Instantiate (ladder, new Vector3 (columns-1, rows-1), Quaternion.identity);
+		Instantiate (lockedDoor, new Vector3 (columns-1, rows-1), Quaternion.identity);
+		
+		GenerateKeyItems ();
+		
+		
+		int enemyCounter = (int)Math.Log(Player.floorLevel, 2);
+		
+		for (int i = 0; i < enemies.Length - 1; i++) {
+			SpawnEnemies (i, enemyCounter);
+		}
+		
+		// May generate items up to the specified number and place them on the board.
+		GenerateBasicItems ((rows+columns)/3);
+		
+		GenerateBlockingObjects (waterTile, 0.01F);
+		GenerateBlockingObjects (lavaTile, 0.01F);
+		for (int i = 0; i < rockTiles.Length; i++) {
+			GenerateBlockingObjects (rockTiles [(int)(Random.value * rockTiles.Length)], 0.01F);
+		}
+		GenerateBlockingObjects (pitTile, 0.01F);
+	}
+
+	void SetupBossLevel(){
 		SetupBoard ();
 
 		filledPositions = new List<Vector3> ();
@@ -154,24 +182,26 @@ public class BoardManager : MonoBehaviour {
 		Instantiate (ladder, new Vector3 (columns-1, rows-1), Quaternion.identity);
 		Instantiate (lockedDoor, new Vector3 (columns-1, rows-1), Quaternion.identity);
 
-		GenerateKeyItems ();
+		DrawFloorTiles ();
+		DrawWall ();
+		DrawSeaWithReefs ();
+		SpawnEnemies (enemies.Length - 1, 1);
 
-
-		int enemyCounter = (int)Math.Log(Player.floorLevel, 2);
-
-		for (int i = 0; i < enemies.Length; i++) {
-			SpawnEnemies (i, enemyCounter);
-		}
-
-		// May generate items up to the specified number and place them on the board.
 		GenerateBasicItems ((rows+columns)/3);
 
-		GenerateBlockingObjects (waterTile, 0.01F);
 		GenerateBlockingObjects (lavaTile, 0.01F);
 		for (int i = 0; i < rockTiles.Length; i++) {
 			GenerateBlockingObjects (rockTiles [(int)(Random.value * rockTiles.Length)], 0.01F);
 		}
-		GenerateBlockingObjects (pitTile, 0.01F);
+	}
+
+	// Use this for initialization
+	void Start () {
+		if (Player.floorLevel % 25.0 == 0) {
+			SetupBossLevel();
+		} else {
+			SetupBasicLevel ();
+		}
 	}
 
 	void GenerateKeyItems(){

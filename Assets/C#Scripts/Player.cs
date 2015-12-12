@@ -66,6 +66,8 @@ public class Player : Unit {
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
 
+	public GameObject key;
+
 	int maxHealth;
 
 	Animator animator;
@@ -310,6 +312,8 @@ public class Player : Unit {
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy") && hasBomb) {
 			// Spawns a bomb on the enemy space.
 			GameObject bombObj = Instantiate(bomb, hitUnit.collider.gameObject.transform.position, Quaternion.identity) as GameObject;
+			// Changes the state of the bomb to an effect and prevent the player from picking it up.
+			bombObj.tag = "Effect";
 			// Gets the animation controller associated with the bomb object.
 			Animator bombAnimator = bombObj.GetComponent<Animator>();
 			// Plays the explosion animation for the bomb.
@@ -524,6 +528,7 @@ public class Player : Unit {
 		case "KingDodongo":
 			CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 			if(hitUnit.collider.gameObject.GetComponent<KingDodongo>().Health <= 0){
+				Instantiate(key, hitUnit.collider.gameObject.transform.position, Quaternion.identity);
 				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 				Destroy (hitUnit.collider.gameObject);
 			}
