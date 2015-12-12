@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -10,6 +10,7 @@ public class HUDScript : MonoBehaviour {
 	public Text RupeeText;
 	//The game must be in motion for 5 seconds before "GameOver is triggered". This is to prevent a program timing bug.
 	float timeLeft = 5.0f;
+	float winDelay = 1.0f;
 	//This slider manages the player's health bar
 	public Slider HealthSlider;
 	public Image SliderBackground;
@@ -38,7 +39,15 @@ public class HUDScript : MonoBehaviour {
 		timeLeft -= Time.deltaTime;
 		//If player dies then load GameOver scene
 		if ((Player.health <= 0) && (timeLeft < 0)) {
+			Destroy(FindObjectOfType<Player>());
 			Application.LoadLevel ("GameOver");
+		}
+		if ((Player.currency >= 100) && (Player.health > 0)) {
+			winDelay -= Time.deltaTime;
+		}
+		if (winDelay < 0) {
+			Destroy(FindObjectOfType<Player>());
+			Application.LoadLevel("WinScreen");
 		}
 	}
 

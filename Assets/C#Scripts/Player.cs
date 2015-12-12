@@ -29,6 +29,9 @@ public class Player : Unit {
 	public static KeyCode keyITEM = KeyCode.D;
 	// Exit other modes, including inventory
 	public static KeyCode keyCANCEL = KeyCode.Space;
+
+	// Player will use a potion if it is in their inventory
+	public static KeyCode keyPOTION = KeyCode.O;
 	
 	//The following two keys may belong somewhere else, I just wanted to set a framework
 	// Bring up Pause menu
@@ -336,6 +339,8 @@ public class Player : Unit {
 		setHUDhealth (this.Health);
 		//Updates the player's current position so the AI knows where to go to fight him
 		currentPosition = this.transform.position;
+		//Checks to see if the player wants to use a health potion.
+		checkPotions ();
 	}
 
 	//moves the character occording to the inputs
@@ -591,6 +596,17 @@ public class Player : Unit {
 			}
 			// Removes the item from the game board.
 			Destroy (collider.gameObject);
+		}
+	}
+
+	void checkPotions(){
+		if ((PauseScript.isKeysEnabled) && (Input.GetKeyDown (keyPOTION))) {
+			for(int i = 0; i < this.Inventory.Count; i++){
+				if(this.Inventory[i].Name.Equals("HealthPotion")){
+					UseItem(this.Inventory[i]);
+					break;
+				}
+			}
 		}
 	}
 
