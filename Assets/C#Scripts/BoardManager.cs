@@ -27,6 +27,8 @@ public class BoardManager : MonoBehaviour {
 	int rows;
 	int columns;
 
+	public const int BOSS_LEVEL = 20;
+
 	// Sets the depth of the wall tiles around the board to 2.
 	const int WALL_DEPTH = 2;
 	// Sets the depth of the sea tiles to 5.
@@ -90,7 +92,7 @@ public class BoardManager : MonoBehaviour {
 			{
 				if (i < 0 || i >= rows || j < 0 || j >= columns)
 				{
-					if(i == rows && j == (int)(columns/2) && Player.floorLevel % 25 != 0){
+					if(i == rows && j == (int)(columns/2) && Player.floorLevel % BOSS_LEVEL != 0){
 						// Instantiates the merchant.
 						Instantiate(merchant, merchantPosition, Quaternion.identity);
 						// Instantiates the floor tile for the merchant to stand on.
@@ -154,8 +156,7 @@ public class BoardManager : MonoBehaviour {
 		Instantiate (lockedDoor, new Vector3 (columns-1, rows-1), Quaternion.identity);
 		
 		GenerateKeyItems ();
-		
-		
+
 		int enemyCounter = (int)Math.Log(Player.floorLevel, 2);
 		
 		for (int i = 0; i < enemies.Length - 1; i++) {
@@ -197,7 +198,7 @@ public class BoardManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (Player.floorLevel % 25.0 == 0) {
+		if (Player.floorLevel % BOSS_LEVEL == 0) {
 			SetupBossLevel();
 		} else {
 			SetupBasicLevel ();

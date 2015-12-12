@@ -378,8 +378,8 @@ public class Player : Unit {
 
 	// Randomizes the stat bonuses when leveling.
 	void RandomizeStatBonuses() {
-		// A maximum of 5 stat bonuses can occur when leveling.
-		int maxBonuses = 5;
+		// A maximum of 4 stat bonuses can occur when leveling.
+		int maxBonuses = 4;
 
 		int index;
 		for(int i = 0; i < maxBonuses; i++){

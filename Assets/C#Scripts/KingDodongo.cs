@@ -17,7 +17,7 @@ public class KingDodongo : Unit {
 	}
 	
 	int CalculateLevel (){
-		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.2F) : (int)Mathf.Ceil (Player.floorLevel / 1.0F);
+		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.3F) : (int)Mathf.Ceil (Player.floorLevel / 1.1F);
 	}
 	
 	// Initializes key variables for the King Dodongo enemy.
@@ -57,7 +57,6 @@ public class KingDodongo : Unit {
 					this.Attack += 2;
 					this.Defense += 2;
 				} else {
-					this.Health++;
 					this.Attack++;
 					this.Defense++;
 					this.Speed++;
