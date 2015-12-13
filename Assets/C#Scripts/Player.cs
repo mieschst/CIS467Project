@@ -529,8 +529,16 @@ public class Player : Unit {
 			CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 			if(hitUnit.collider.gameObject.GetComponent<KingDodongo>().Health <= 0){
 				Instantiate(key, hitUnit.collider.gameObject.transform.position, Quaternion.identity);
+
 				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 				Destroy (hitUnit.collider.gameObject);
+
+//				// Destroys the Player and AudioManager from the scene hierarchy.
+//				Destroy (FindObjectOfType<Player>().gameObject);
+//				Destroy(FindObjectOfType<AudioManager>().gameObject);
+//
+//				// Loads the 'win' scene when the player defeats the boss.
+//				// -------WIN SCENE LOAD CALL GOES HERE--------
 			}
 			break;
 		}
