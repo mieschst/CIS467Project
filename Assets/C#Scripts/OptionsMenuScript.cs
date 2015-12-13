@@ -68,6 +68,7 @@ public class OptionsMenuScript : MonoBehaviour {
 		Player.keyCANCEL = KeyCode.Space;
 		Player.keyPAUSE = KeyCode.Escape;
 		Player.keyEXIT = KeyCode.Return;
+		Player.keyPOTION = KeyCode.O;
 		kcTEMP = KeyCode.Q;
 		DefaultKeyText.enabled = true;
 		SuccessText.enabled = false;
@@ -108,6 +109,9 @@ public class OptionsMenuScript : MonoBehaviour {
 			sharedKeys++;
 		}
 		if ((kcTEMP == Player.keyEXIT) && (keyFlag != "quit")) {
+			sharedKeys++;
+		}
+		if ((kcTEMP == Player.keyPOTION) && (keyFlag != "potion")) {
 			sharedKeys++;
 		}
 
@@ -227,6 +231,20 @@ public class OptionsMenuScript : MonoBehaviour {
 		} else {
 			SuccessText.enabled = false;
 			ErrorText.text = "ERROR: The 'PAUSE' command is already assigned to a key other than: " + kcTEMP;
+			ErrorText.enabled = true;
+		}
+	}
+	//If this button is pressed then search for new input.
+	public void SetPotionButton ()
+	{
+		if (CheckKeyOverlap (kcTEMP, "potion")) {
+			Player.keyPOTION = kcTEMP;
+			SuccessText.text = "SUCCESS: The 'POTION' command was re-assigned to the key: " + kcTEMP;
+			SuccessText.enabled = true;
+			ErrorText.enabled = false;
+		} else {
+			SuccessText.enabled = false;
+			ErrorText.text = "ERROR: The 'POTION' command is already assigned to a key other than: " + kcTEMP;
 			ErrorText.enabled = true;
 		}
 	}
