@@ -42,7 +42,7 @@ public class BoardManager : MonoBehaviour {
     	public List<Vector3> ClosedList = new List<Vector3>();
     	Dictionary<Vector3, Vector3> cameFrom = new Dictionary<Vector3, Vector3>();
 
-   	List<Vector3> filledPositions = new List<Vector3>();
+   	//List<Vector3> filledPositions = new List<Vector3>();
    	List<Vector3> blockedPositions = new List<Vector3>();
 
 	private Transform boardTiles;
@@ -372,8 +372,7 @@ public class BoardManager : MonoBehaviour {
     void Update () {
 
 	}
-
->>>>>>> refs/remotes/origin/Maps-Sprint-4
+    
 	void GenerateBlockingObjects(GameObject blockingObject, float frequency){
 		// Generates blocking objects throughout the game board as a percentage of the game board.
 		for (int i = 0; i < (rows * columns) * frequency; i++) {
