@@ -46,7 +46,7 @@ public class BoardManager : MonoBehaviour {
    	List<Vector3> blockedPositions = new List<Vector3>();
 
 	private Transform boardTiles;
-	private Transform boardItems;
+	public static Transform boardItems;
 
 	public void SetupBoard(){
 		// The maximum additional height the board can have.
