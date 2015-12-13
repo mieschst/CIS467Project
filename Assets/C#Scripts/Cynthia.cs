@@ -12,6 +12,8 @@ public class Cynthia : Enemy {
 
     private AudioSource source;
 
+    public GameObject attackEffect;
+
 	public override void InitEnemy(int level, bool isHardMode){
 		CalculateStats (level, isHardMode);
 
@@ -189,20 +191,29 @@ public class Cynthia : Enemy {
 
 	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
 		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
+            Vector3 target = new Vector3();
             source.Play();
 			switch (movementDirection) {
 			case 0:
 				animator.Play ("GarchompDown");
-				break;
+                    target = new Vector3(this.transform.position.x , this.transform.position.y - 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 1:
 				animator.Play ("GarchompUp");
-				break;
+                    target = new Vector3(this.transform.position.x, this.transform.position.y + 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 2:
 				animator.Play ("GarchompRight");
-				break;
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 3:
 				animator.Play ("GarchompLeft");
-				break;
+                    target = new Vector3(this.transform.position.x - 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
