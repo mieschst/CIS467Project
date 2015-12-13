@@ -201,6 +201,7 @@ public class Player : Unit {
 
 			if (!hit && !hitUnit) {
 				this.transform.position = endPosition;
+				currentPosition = endPosition;
 				if(endPosition != startPosition){
 					actionPerformed = true;
 				}

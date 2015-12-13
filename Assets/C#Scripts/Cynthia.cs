@@ -10,11 +10,15 @@ public class Cynthia : Enemy {
 
 	public static Vector3 currentPosition;
 
+	bool isHardMode;
+	bool hitObstacle;
+	int prevDirection;
+
     private AudioSource source;
 
-	public override void InitEnemy(int level, bool isHardMode){
+	public override void InitEnemy(int level, bool hardMode){
 		CalculateStats (level, isHardMode);
-
+		isHardMode = hardMode;
 		state = 0;
 		maxmoves = 1.0;
 		moves = maxmoves;
@@ -89,69 +93,71 @@ public class Cynthia : Enemy {
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
 		
+		//Debug.Log(hitObstacle);
+
 		int movement = 1;
 		//int direction = (int)(Random.value * 4);
-		int direction;
+		int direction = 0;
 		float playerEnemyXDiff = Player.currentPosition.x - this.transform.position.x;
 		float playerEnemyYDiff = Player.currentPosition.y - this.transform.position.y;
 		float absPlayerEnemyXDiff = Mathf.Abs(playerEnemyXDiff);
 		float absPlayerEnemyYDiff = Mathf.Abs(playerEnemyYDiff);
 
-		if(absPlayerEnemyYDiff > 1 || absPlayerEnemyXDiff > 1){
-			//We aren't in range of the player to attack, we must advance!
-			//Now, which way should we go...
-			if(absPlayerEnemyYDiff > absPlayerEnemyXDiff){
-				if(absPlayerEnemyXDiff != 0){
-					direction = moveWestEast(playerEnemyXDiff);
-				}else{
-					direction = moveNorthSouth(playerEnemyYDiff);
+			if(absPlayerEnemyYDiff > 1 || absPlayerEnemyXDiff > 1){
+				//We aren't in range of the player to attack, we must advance!
+				//Now, which way should we go...
+				if(absPlayerEnemyYDiff > absPlayerEnemyXDiff){
+					if(absPlayerEnemyXDiff != 0){
+						direction = moveWestEast(playerEnemyXDiff);
+					}else{
+						direction = moveNorthSouth(playerEnemyYDiff);
+					}
+				}else {
+					if(absPlayerEnemyYDiff != 0){
+						direction = moveNorthSouth(playerEnemyYDiff);
+					}else{
+						direction = moveWestEast(playerEnemyXDiff);
+					}
+				}
+			}else if(absPlayerEnemyXDiff == 1 && absPlayerEnemyYDiff == 1){
+				if(playerEnemyXDiff == 1 && playerEnemyYDiff == 1){
+					direction = 0;
+				}else if(playerEnemyXDiff == 1 && playerEnemyYDiff == -1){
+					direction = 3;
+				}else if(playerEnemyXDiff == -1 && playerEnemyYDiff == -1){
+					direction = 1;
+				}else {
+					direction = 2;
 				}
 			}else {
-				if(absPlayerEnemyYDiff != 0){
-					direction = moveNorthSouth(playerEnemyYDiff);
-				}else{
+				if(absPlayerEnemyXDiff > 0){
 					direction = moveWestEast(playerEnemyXDiff);
+				} else{
+					direction = moveNorthSouth(playerEnemyYDiff);
 				}
 			}
-		}else if(absPlayerEnemyXDiff == 1 && absPlayerEnemyYDiff == 1){
-			if(playerEnemyXDiff == 1 && playerEnemyYDiff == 1){
-				direction = 0;
-			}else if(playerEnemyXDiff == 1 && playerEnemyYDiff == -1){
-				direction = 3;
-			}else if(playerEnemyXDiff == -1 && playerEnemyYDiff == -1){
-				direction = 1;
-			}else {
-				direction = 2;
-			}
-		}else {
-			if(absPlayerEnemyXDiff > 0){
-				direction = moveWestEast(playerEnemyXDiff);
-			} else{
-				direction = moveNorthSouth(playerEnemyYDiff);
-			}
-		}
 		
 		switch (direction) {
-		case 0: 
-			endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
-			animator.Play ("cynthia_ 1");
-			//animator.Play ("GarchompDown");
-			break;
-		case 1:
-			endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
-			animator.Play ("cynthia_");
-			//animator.Play ("GarchompUp");
-			break;
-		case 2:
-			endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
-			animator.Play ("cynthia_ 3");
-			//animator.Play ("GarchompRight");
-			break;
-		case 3:
-			endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
-			animator.Play ("cynthia_ 2");
-			//animator.Play ("GarchompLeft");
-			break;
+			case 0: 
+				endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
+				animator.Play ("cynthia_ 1");
+				//animator.Play ("GarchompDown");
+				break;
+			case 1:
+				endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
+				animator.Play ("cynthia_");
+				//animator.Play ("GarchompUp");
+				break;
+			case 2:
+				endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
+				animator.Play ("cynthia_ 3");
+				//animator.Play ("GarchompRight");
+				break;
+			case 3:
+				endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
+				animator.Play ("cynthia_ 2");
+				//animator.Play ("GarchompLeft");
+				break;
 		}
 		
 		BoxCollider2D boxCollider = this.GetComponent<BoxCollider2D> ();
@@ -165,10 +171,48 @@ public class Cynthia : Enemy {
 		
 		if (!hit && !hitUnit) {
 			this.transform.position = endPosition;
-		}
-		if (hitUnit) {
+			hitObstacle = false;
+		} else if (hitUnit) {
 			AttackPlayer(hitUnit, direction);
-		}
+		}/*else if(isHardMode && (hit || hitUnit)){
+			int temp = 0;
+				switch(direction){
+					case 0:
+						endPosition = new Vector3 (startPosition.x + movement, startPosition.y);
+						animator.Play ("cynthia_ 3");
+							direction = 2;
+							prevDirection = 2;
+						//animator.Play ("GarchompRight");
+						break;
+					case 1:
+						endPosition = new Vector3 (startPosition.x - movement, startPosition.y);
+						animator.Play ("cynthia_ 2");
+							direction = 3;
+							prevDirection = 3;
+						//animator.Play ("GarchompLeft");
+						break;
+					case 2: 
+						endPosition = new Vector3 (startPosition.x, startPosition.y - movement);
+						animator.Play ("cynthia_ 1");
+							direction = 1;
+							prevDirection = 1;
+						//animator.Play ("GarchompDown");
+						break;
+					case 3:
+						endPosition = new Vector3 (startPosition.x, startPosition.y + movement);
+						animator.Play ("cynthia_");
+							direction = 0;
+							prevDirection = 0;
+						//animator.Play ("GarchompUp");
+						break;
+				}
+				hit = Physics2D.Linecast (startPosition, endPosition, blockingLayer);
+				hitUnit = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
+			hitObstacle = true;
+			if(!hit && !hitUnit){
+				this.transform.position = endPosition;
+			}
+		}*/
 	}
 
 	int moveNorthSouth(float y){
