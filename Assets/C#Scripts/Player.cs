@@ -42,6 +42,8 @@ public class Player : Unit {
 	public static KeyCode keyITEM = KeyCode.D;
 	// Exit other modes, including inventory
 	public static KeyCode keyCANCEL = KeyCode.Space;
+	// Hotkey for the player using a potion if it is in their inventory
+	public static KeyCode keyPOTION = KeyCode.O;
 	
 	//The following two keys may belong somewhere else, I just wanted to set a framework
 	// Bring up Pause menu
@@ -541,13 +543,13 @@ public class Player : Unit {
 
 				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 				Destroy (hitUnit.collider.gameObject);
-
-//				// Destroys the Player and AudioManager from the scene hierarchy.
-//				Destroy (FindObjectOfType<Player>().gameObject);
-//				Destroy(FindObjectOfType<AudioManager>().gameObject);
-//
-//				// Loads the 'win' scene when the player defeats the boss.
-//				// -------WIN SCENE LOAD CALL GOES HERE--------
+						
+				// Destroys the Player and AudioManager from the scene hierarchy.
+				Destroy (FindObjectOfType<Player>().gameObject);
+				Destroy(FindObjectOfType<AudioManager>().gameObject);
+				
+				// Loads the 'win' scene when the player defeats the boss.
+				Application.LoadLevel("WinScreen");
 			}
 			break;
 		}
@@ -592,5 +594,9 @@ public class Player : Unit {
 		setHUDcurrency (this.Currency);
 		setHUDhealth (this.Health);
 		FindObjectOfType<InventoryScript>().updateInventory(this.Inventory);
+		//Checks to see if the player wants to use a health potion.
+		if ((PauseScript.isKeysEnabled) && (Input.GetKeyDown (keyPOTION))) {
+			UsePotion();
+		}
 	}
 }
