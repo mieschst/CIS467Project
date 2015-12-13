@@ -4,8 +4,8 @@ using Random = UnityEngine.Random;
 using System.Collections.Generic;
 
 public class Player : Unit {
-	
-	/*
+
+    /*
 	 * Static Input Keys
 	 * 4 Directional Keys (keyUP, keyDOWN, keyLEFT, keyRIGHT)
 	 * 4 Command Keys (keyMOVE, keyATTACK, keyITEM, keyCANCEL)
@@ -22,6 +22,8 @@ public class Player : Unit {
 	public static int INVENTORY_CAPACITY;
 	// The number of basic items that the player currently has.
 	public static int basicItemCount;
+
+        public static int floorLevel = 1;
 
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
@@ -229,7 +231,6 @@ public class Player : Unit {
 				else {
 					UnlockDoor (hit);
 				}
-
 			}
 
 			if(actionPerformed){
@@ -250,13 +251,13 @@ public class Player : Unit {
 	// Allows the player to do damage with their sword attack.
 	void UseSwordAttack (RaycastHit2D hitUnit) {
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy")) {
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			if (Input.GetKeyDown (keyRIGHT)) {
 				animator.SetTrigger ("PlayerSwordRight");
-			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			} else if (Input.GetKeyDown (keyLEFT)) {
 				animator.SetTrigger ("PlayerSwordLeft");
-			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			} else if (Input.GetKeyDown (keyUP)) {
 				animator.SetTrigger ("PlayerSwordBackward");
-			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			} else if (Input.GetKeyDown (keyDOWN)) {
 				animator.SetTrigger ("PlayerSwordForward");
 			} 
 			DamageEnemy(hitUnit);
@@ -282,11 +283,11 @@ public class Player : Unit {
 			// Spawns an arrow when attacking with the bow.
 			if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBowRight");
-			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			} else if (Input.GetKeyDown (keyLEFT)) {
 				animator.SetTrigger ("PlayerBowLeft");
-			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			} else if (Input.GetKeyDown (keyUP)) {
 				animator.SetTrigger ("PlayerBowBackward");
-			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			} else if (Input.GetKeyDown (keyDOWN)) {
 				animator.SetTrigger ("PlayerBowForward");
 			} 
 			DamageEnemy(hitUnit, arrowDamage);
@@ -305,6 +306,13 @@ public class Player : Unit {
 				Inventory.Remove (item);
 				hasBomb = true;
 				basicItemCount--;
+				break;
+			case "Sableye":
+				CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<Sableye>());
+				if(hitUnit.collider.gameObject.GetComponent<Sableye>().Health <= 0){
+					DefeatEnemy(hitUnit.collider.gameObject.GetComponent<Sableye>());
+					Destroy (hitUnit.collider.gameObject);
+				}
 				break;
 			}
 		}
@@ -570,6 +578,7 @@ public class Player : Unit {
 		if (door.collider.gameObject.name == "Door(Clone)" && hasKey) {
 			FindObjectOfType<InventoryScript>().ClearSlot(this.Inventory.IndexOf(key));
 			this.Inventory.Remove(key);
+			InventoryScript.removeFromInventory(key);
 			Destroy (door.collider.gameObject);
 		}
 	}
