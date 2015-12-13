@@ -26,11 +26,13 @@ public class BoardManager : MonoBehaviour {
 
     public GameObject player;
 
-    //public List<Vector3> OpenList = new List<Vector3>();
-    //public List<Vector3> ClosedList = new List<Vector3>();
+    public List<Vector3> OpenList = new List<Vector3>();
+    public List<Vector3> ClosedList = new List<Vector3>();
+    Dictionary<Vector3, Vector3> cameFrom = new Dictionary<Vector3, Vector3>();
     //public List<int> HValues = new List<int>();
 
-	List<Vector3> filledPositions = new List<Vector3>();
+    List<Vector3> filledPositions = new List<Vector3>();
+    List<Vector3> blockedPositions = new List<Vector3>();
 
 	private Transform boardTiles;
 	private Transform boardItems;
@@ -81,25 +83,6 @@ public class BoardManager : MonoBehaviour {
         //Instantiate(ladder, new Vector3(rows - 1, columns - 1, 0), Quaternion.identity);
 
  }
-
-   /* void SetupList()
-    {
-        //Clear previous list
-        boardPositions.Clear();
-
-        // Adds tiles to the board positions list.
-        for (int i = 1; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {     
-		if(j==8)
-			break;
-		                     
-                //Adds the board location to the list
-                boardPositions.Add(new Vector3(i, j, -1f));
-            }
-        }
-    }	*/
     
 	// Use this for initialization
 	void Start () {
@@ -108,6 +91,8 @@ public class BoardManager : MonoBehaviour {
 		SetupBoard ();
 
 		filledPositions = new List<Vector3> ();
+        blockedPositions = new List<Vector3>();
+        cameFrom = new Dictionary<Vector3, Vector3>();
 
 		// Adds a ladder right corner of the moveable section of the board.
 		Instantiate (ladder, new Vector3 (columns-1, rows-1), Quaternion.identity);
@@ -129,6 +114,9 @@ public class BoardManager : MonoBehaviour {
 			GenerateBlockingObjects (rockTiles [(int)(Random.value * rockTiles.Length)], 0.01F);
 		}
 		GenerateBlockingObjects (pitTile, 0.01F);
+
+        if (CheckPaths() == false)
+            Start();
 	}
 
 	void GenerateKeyItems(){
@@ -223,39 +211,69 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
-    /* Work in Progress for Pathfinding
-	bool BestSearch()
+    bool CheckPaths()
     {
         OpenList.Clear();
         ClosedList.Clear();
-        OpenList.Add(new Vector3(0, 0, 0));
-        ClosedList.Add(new Vector3(0, 0, 0));
+        List<Vector3> neighbors = new List<Vector3>();
+        var frontier = new Queue<Vector3>();
 
         Vector3 goal = new Vector3(rows - 1, columns - 1);
 
-        while(OpenList.Count != 0)
+        for (int i = 0; i < rows; i++)
         {
-            Vector3 current = OpenList[0];
+            for (int j = 0; j < columns; j++)
+            {
+                if(!blockedPositions.Contains(new Vector3(i, j)))
+                OpenList.Add(new Vector3(i, j));
+            }
+        }
+
+        frontier.Enqueue(OpenList[0]);
+        cameFrom[OpenList[0]] = OpenList[0];
+
+        while(frontier.Count > 0)
+        {
+            Vector3 current = frontier.Dequeue();
+            ClosedList.Add(current);
 
             if (current == goal)
                 break;
 
-            foreach(Vector3 neighbor in GetNeighbors(current))
+            foreach(var next in GetNeighbors(current))
             {
-                if(ClosedList.Contains(neighbor) == false)
+                if(OpenList.Contains(next))
                 {
-                    OpenList.Insert(0, neighbor);
-                    ClosedList.Add(current);
+                    if(!frontier.Contains(next) && !ClosedList.Contains(next))
+                    {
+                        frontier.Enqueue(next);
+                        cameFrom[next] = current;
+                    }
                 }
             }
         }
 
-        return true;
+        return CheckCameFrom(cameFrom, OpenList[0], goal);
+
     }
 
-    int Heuristic(Vector3 a, Vector3 b)
+    bool CheckCameFrom(Dictionary<Vector3,Vector3> cameFrom, Vector3 start, Vector3 goal)
     {
-        return (int)Math.Abs(a.x - b.x) + (int)Math.Abs(a.y - b.y);
+        Vector3 current = goal;
+        Vector3 temp = current;
+        int infiniteCounter = 0;
+
+        while (current != start)
+        {
+            temp = cameFrom[current];
+            current = temp;
+            infiniteCounter++;
+
+            if (infiniteCounter > cameFrom.Count)
+                return false;
+        }        
+
+        return true;
     }
 
     List<Vector3> GetNeighbors(Vector3 current)
@@ -272,9 +290,7 @@ public class BoardManager : MonoBehaviour {
         ret.Add(new Vector3(current.x - 1, current.y - 1, current.z));
 
         return ret;
-    }
-
-    */
+    }    
 
     // Update is called once per frame
     void Update () {
@@ -288,6 +304,7 @@ public class BoardManager : MonoBehaviour {
 			if(!filledPositions.Contains(new Vector3(x,y))) {
 				Instantiate(blockingObject, new Vector3(x,y),Quaternion.identity);
 				filledPositions.Add (new Vector3(x,y));
+                blockedPositions.Add(new Vector3(x, y));
 			}
 		}
 	}
