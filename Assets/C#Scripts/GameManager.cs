@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour {
         else if (instance != this)
             //Then destroy this
             Destroy(gameObject);
-
-        Player.floorLevel++;
-
     }
 
     // Update is called once per frame
