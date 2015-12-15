@@ -14,6 +14,7 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// Sets the GameManager difficulty to 'Normal' as a default.
 		GameManager.isHardMode = false;
 		playerNameField = FindObjectOfType<InputField> ();
 		normalBtn = normalBtn.GetComponent<Button> ();
@@ -32,12 +33,15 @@ public class Setup : MonoBehaviour {
 		// Sets up the player before jumping to the new scene.
 		Instantiate (player, new Vector3 (0, 0), Quaternion.identity);
 		Instantiate (audioManager);
+		// Checks if the user entered a name.
 		if (playerNameField.text.Length > 0) {
 			Player.myName = playerNameField.text;
 		}
 		// Tells the application to maintain the player gameobject when switching to the Game scene.
 		DontDestroyOnLoad (FindObjectOfType<Player>());
+		// Allows the AudioManager to persist through the scene change.
 		DontDestroyOnLoad (FindObjectOfType<AudioManager>());
+		// Loads the Game scene.
 		Application.LoadLevel("Game");
 	}
 }

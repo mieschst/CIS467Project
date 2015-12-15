@@ -36,6 +36,7 @@ public class PauseScript : MonoBehaviour {
                 ToggleAudio();
                 Time.timeScale = 0;
                 LockInput(true);
+				// Prevents the player from moving while the game is paused.
 				Player.canMove = false;
                 PauseMenu.SetActive(true);
             }
@@ -46,6 +47,7 @@ public class PauseScript : MonoBehaviour {
                 ToggleAudio();
                 Time.timeScale = 1;
                 LockInput(false);
+				// Allows the player to move again.
 				Player.canMove = true;
                 PauseMenu.SetActive(false);
             }
@@ -93,6 +95,7 @@ public class PauseScript : MonoBehaviour {
 			ToggleAudio();
 			Time.timeScale = 1;
 			LockInput(false);
+			// Allows the player the ability to move again.
 			Player.canMove = true;
 			PauseMenu.SetActive(false);
 		}

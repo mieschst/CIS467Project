@@ -18,8 +18,10 @@ public class Player : Unit {
 	public static bool canMove;
 	public static bool playerInShop;
 
-	public static int INVENTORY_CAPACITY = 18;
-	public static int basicItemCount = 0;
+	// The player's inventory capacity.
+	public static int INVENTORY_CAPACITY;
+	// The number of basic items that the player currently has.
+	public static int basicItemCount;
 
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
@@ -63,6 +65,8 @@ public class Player : Unit {
 
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
+
+	public GameObject key;
 
 	int maxHealth;
 
@@ -142,6 +146,9 @@ public class Player : Unit {
 		setHUDcurrency (this.Currency);
 
 		floorLevel = 1;
+
+		INVENTORY_CAPACITY = 18;
+		basicItemCount = 0;
 
 		Player.PLAYERS_TURN = true;
 
@@ -315,6 +322,8 @@ public class Player : Unit {
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy") && hasBomb) {
 			// Spawns a bomb on the enemy space.
 			GameObject bombObj = Instantiate(bomb, hitUnit.collider.gameObject.transform.position, Quaternion.identity) as GameObject;
+			// Changes the state of the bomb to an effect and prevent the player from picking it up.
+			bombObj.tag = "Effect";
 			// Gets the animation controller associated with the bomb object.
 			Animator bombAnimator = bombObj.GetComponent<Animator>();
 			// Plays the explosion animation for the bomb.
@@ -475,7 +484,7 @@ public class Player : Unit {
 		}
 	}
 
-	void UseItem(Item item) {
+	public void UseItem(Item item) {
 		// Use the item.
 		item.Use (this);
 		// If the item healed any health, check if it healthed over the player's max allowed health.
@@ -526,6 +535,35 @@ public class Player : Unit {
 				Destroy (hitUnit.collider.gameObject);
 			}
 			break;
+		case "KingDodongo":
+			CalculateDamageDealt(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
+			if(hitUnit.collider.gameObject.GetComponent<KingDodongo>().Health <= 0){
+				Instantiate(key, hitUnit.collider.gameObject.transform.position, Quaternion.identity);
+
+				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
+				Destroy (hitUnit.collider.gameObject);
+
+//				// Destroys the Player and AudioManager from the scene hierarchy.
+//				Destroy (FindObjectOfType<Player>().gameObject);
+//				Destroy(FindObjectOfType<AudioManager>().gameObject);
+//
+//				// Loads the 'win' scene when the player defeats the boss.
+//				// -------WIN SCENE LOAD CALL GOES HERE--------
+			}
+			break;
+		}
+	}
+
+	public void UsePotion(){
+		int index = -1;
+		foreach (Item item in Inventory) {
+			if(item.Name.Equals("HealthPotion")){
+				index = Inventory.IndexOf(item);
+				UseItem(item);
+				Inventory.RemoveAt(index);
+				basicItemCount--;
+				break;
+			}
 		}
 	}
 
@@ -547,7 +585,7 @@ public class Player : Unit {
 	}
 
 	// Update is called once per frame
-	new void Update () {
+	void Update () {
 		CanMove (Input.GetKey(keyMOVE));
 		StartCoroutine(WaitForEnemies ());
 		// Check each frame if the player's health has changed.

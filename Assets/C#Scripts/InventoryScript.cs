@@ -25,9 +25,12 @@ public class InventoryScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// Sets up the filled slot booleans to all be false.
 		filledSlots = new bool[slots.Length];
 		isInventoryActive = false;
+		// Hides the inventory menu.
 		inventoryMenu.SetActive (false);
+		// Sets all of the slots to be active initially. Since the menu is hidden, these will not be displayed initially.
 		foreach (GameObject slot in slots) {
 			slot.SetActive(true);
 		}
@@ -35,6 +38,7 @@ public class InventoryScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Toggles the visibility of the inventory menu.
 		toggleInventory ();
 		setMenu ();
 	}
@@ -62,15 +66,20 @@ public class InventoryScript : MonoBehaviour {
 	public void updateInventory(List<Item> playerList){
 		int j = 0;
 
+		// Sets all of the slots to be empty.
 		for (int i = 0; i < filledSlots.Length; i++) {
 			filledSlots[i] = false;
 			slots[i].GetComponent<Image>().sprite = noItemImage;
+			slots[i].GetComponent<Button>().enabled = false;
 		}
 
+		// Cycle through the player's inventory and update the inventory slots with sprite images and setting
+		// the filled slot booleans appropriately.
 		foreach (Item item in playerList) {
 			switch(item.Name){
 			case "HealthPotion":
 				slots[j].GetComponent<Image>().sprite = healthPotion;
+				slots[j].GetComponent<Button>().enabled = true;
 				filledSlots[j] = true;
 				break;
 			case "Key":
@@ -93,6 +102,7 @@ public class InventoryScript : MonoBehaviour {
 			j++;
 		}
 
+		// Sets any leftover slots to have empty sprite images.
 		for (int i = 0; i < filledSlots.Length; i++) {
 			if(filledSlots[i] == false){
 				slots[j].GetComponent<Image>().sprite = noItemImage;
@@ -101,7 +111,13 @@ public class InventoryScript : MonoBehaviour {
 	}
 
 	public void ClearSlot(int index){
+		// Sets the slot at position 'index' to have a blank picture.
 		slots[index].GetComponent<Image>().sprite = noItemImage;
+		// Sets the filled slot boolean at position 'index' to false.
 		filledSlots [index] = false;
+	}
+
+	public void HealthPotionClicked(){
+		FindObjectOfType<Player> ().UsePotion ();
 	}
 }

@@ -5,8 +5,6 @@ using Random = UnityEngine.Random;
 public class Moblin : Unit {
 
 	Animator moblinAnimator;
-	
-	bool hardModeEnabled;
 
 	int direction = 0;
 
@@ -22,7 +20,7 @@ public class Moblin : Unit {
 	}
 
 	int CalculateLevel (){
-		return (int)Mathf.Ceil(Player.floorLevel / 2F);
+		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.7F) : (int)Mathf.Ceil (Player.floorLevel / 1.6F);
 	}
 
 	// Initializes key variables for the Moblin enemy.

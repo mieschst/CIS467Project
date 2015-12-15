@@ -25,7 +25,8 @@ public class OptionsMenuScript : MonoBehaviour {
 	}
 
 	public void ChangeSong(){
-		FindObjectOfType<AudioManager> ().PlayNextSong ();
+		// Plays the next song in the AudioClip collection.
+		FindObjectOfType<AudioManager>().PlayNextSong ();
 	}
 
 	void ScanForOptionsActive()
