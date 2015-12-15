@@ -11,7 +11,9 @@ public class Moblin : Unit {
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
 
-	GameObject player = null;
+    public GameObject attackEffect;
+
+    GameObject player = null;
 
 	public void InitMoblin(bool isHardMode) {
 		CalculateStats (CalculateLevel(), isHardMode);
@@ -145,19 +147,28 @@ public class Moblin : Unit {
 
 	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
 		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
+            Vector3 target = new Vector3();
 			switch (movementDirection) {
 			case 0:
 				moblinAnimator.SetTrigger ("MoblinAttackForward");
-				break;
+                    target = new Vector3(this.transform.position.x, this.transform.position.y - 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 1:
 				moblinAnimator.SetTrigger ("MoblinAttackBackward");
-				break;
+                    target = new Vector3(this.transform.position.x, this.transform.position.y + 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 2:
 				moblinAnimator.SetTrigger ("MoblinAttackRight");
-				break;
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 3:
 				moblinAnimator.SetTrigger ("MoblinAttackLeft");
-				break;
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {

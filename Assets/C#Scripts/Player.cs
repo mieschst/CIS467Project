@@ -81,8 +81,11 @@ public class Player : Unit {
 	public GameObject mediumRupee;
 	public GameObject largeRupee;
 	public GameObject heart;
+    public GameObject attackEffect;
+    public GameObject bombEffect;
+    public GameObject digEffect;
 
-	int[] stats;
+    int[] stats;
 	
 	public static void setHUDhealth(int pHealth)
 	{
@@ -250,16 +253,25 @@ public class Player : Unit {
 
 	// Allows the player to do damage with their sword attack.
 	void UseSwordAttack (RaycastHit2D hitUnit) {
+        Vector3 target = new Vector3();
 		if (hitUnit.collider.gameObject.tag.Equals ("Enemy")) {
 			if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerSwordRight");
-			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+                target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                Instantiate(attackEffect, target, Quaternion.identity);
+            } else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 				animator.SetTrigger ("PlayerSwordLeft");
-			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+                target = new Vector3(this.transform.position.x - 1, this.transform.position.y);
+                Instantiate(attackEffect, target, Quaternion.identity);
+            } else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 				animator.SetTrigger ("PlayerSwordBackward");
-			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+                target = new Vector3(this.transform.position.x, this.transform.position.y + 1);
+                Instantiate(attackEffect, target, Quaternion.identity);
+            } else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 				animator.SetTrigger ("PlayerSwordForward");
-			} 
+                target = new Vector3(this.transform.position.x, this.transform.position.y - 1);
+                Instantiate(attackEffect, target, Quaternion.identity);
+            } 
 			DamageEnemy(hitUnit);
 		}
 	}
@@ -291,7 +303,8 @@ public class Player : Unit {
 				animator.SetTrigger ("PlayerBowForward");
 			} 
 			DamageEnemy(hitUnit, arrowDamage);
-		}
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
+        }
 	}
 
 	// Allows the player to use bombs.
@@ -319,8 +332,9 @@ public class Player : Unit {
 			Animator bombAnimator = bombObj.GetComponent<Animator>();
 			// Plays the explosion animation for the bomb.
 			bombAnimator.Play ("BombExplosion");
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
 
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+            if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBombRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 				animator.SetTrigger ("PlayerBombLeft");
@@ -338,7 +352,8 @@ public class Player : Unit {
 	// Allows the player to dig up and remove rocks.
 	void UseDig(RaycastHit2D rock){
 		if (rock.collider.gameObject.name.Contains("Rock")) {
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
+            if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerDigRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 				animator.SetTrigger ("PlayerDigLeft");
@@ -442,7 +457,7 @@ public class Player : Unit {
 
 		if(enemy.Currency > 0){
 			this.Currency += enemy.Currency;
-			this.setHUDcurrency(this.Currency);
+			//this.setHUDcurrency(this.Currency);
 		}
 	}
 	

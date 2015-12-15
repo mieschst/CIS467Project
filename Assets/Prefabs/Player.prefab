@@ -39,6 +39,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198646}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
@@ -55,12 +56,13 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198646}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .899999976, y: .899999976}
+  m_Size: {x: 0.9, y: 0.9}
 --- !u!95 &9502346
 Animator:
   serializedVersion: 3
@@ -95,13 +97,16 @@ MonoBehaviour:
   unitsLayer:
     serializedVersion: 2
     m_Bits: 512
-  key: {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
+  key: {fileID: 0}
   bomb: {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
   arrow: {fileID: 121630, guid: cc2d89d614e5645848d3d2fbfa684b74, type: 2}
   smallRupee: {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
   mediumRupee: {fileID: 134680, guid: 9d6f330e07f3b4f08ade92e23ae55b5e, type: 2}
   largeRupee: {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
   heart: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
+  attackEffect: {fileID: 115950, guid: 003c31e5e1f9ea147ac6131a81c5c77f, type: 2}
+  bombEffect: {fileID: 182752, guid: 027f7ace5bc04ec418c3042333c7a8ea, type: 2}
+  digEffect: {fileID: 175652, guid: f9dbfe1e2378bdd489634fa9e25e780a, type: 2}
 --- !u!212 &21215346
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,13 +128,15 @@ SpriteRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1413569959
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -154,9 +161,17 @@ Prefab:
       value: 
       objectReference: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
     - target: {fileID: 0}
-      propertyPath: key
+      propertyPath: attackEffect
       value: 
-      objectReference: {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
+      objectReference: {fileID: 115950, guid: 003c31e5e1f9ea147ac6131a81c5c77f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bombEffect
+      value: 
+      objectReference: {fileID: 182752, guid: 027f7ace5bc04ec418c3042333c7a8ea, type: 2}
+    - target: {fileID: 0}
+      propertyPath: digEffect
+      value: 
+      objectReference: {fileID: 175652, guid: f9dbfe1e2378bdd489634fa9e25e780a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198646}

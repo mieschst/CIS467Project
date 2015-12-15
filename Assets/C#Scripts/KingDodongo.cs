@@ -9,8 +9,10 @@ public class KingDodongo : Unit {
 	
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
-	
-	GameObject player;
+
+    public GameObject attackEffect;
+
+    GameObject player;
 	
 	public void InitKingDodongo(bool isHardMode) {
 		CalculateStats (CalculateLevel(), isHardMode);
@@ -141,19 +143,28 @@ public class KingDodongo : Unit {
 	
 	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
 		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
+            Vector3 target = new Vector3();
 			switch (movementDirection) {
 			case 0:
 				kingDodongoAnimator.SetTrigger ("KingDodongoAttackForward");
-				break;
+                    target = new Vector3(this.transform.position.x, this.transform.position.y - 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 1:
 				kingDodongoAnimator.SetTrigger ("KingDodongoAttackBackward");
-				break;
+                    target = new Vector3(this.transform.position.x, this.transform.position.y + 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 2:
 				kingDodongoAnimator.SetTrigger ("KingDodongoAttackRight");
-				break;
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			case 3:
 				kingDodongoAnimator.SetTrigger ("KingDodongoAttackLeft");
-				break;
+                    target = new Vector3(this.transform.position.x - 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
 			}
 			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
 			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
