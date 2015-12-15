@@ -1,9 +1,22 @@
 fileFormatVersion: 2
 guid: 354c7757bf6835e4b86767e6672fa624
-timeCreated: 1450026430
+timeCreated: 1450157997
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: biteHit_strip13_0
+    21300002: biteHit_strip13_1
+    21300004: biteHit_strip13_2
+    21300006: biteHit_strip13_3
+    21300008: biteHit_strip13_4
+    21300010: biteHit_strip13_5
+    21300012: biteHit_strip13_6
+    21300014: biteHit_strip13_7
+    21300016: biteHit_strip13_8
+    21300018: biteHit_strip13_9
+    21300020: biteHit_strip13_10
+    21300022: biteHit_strip13_11
+    21300024: biteHit_strip13_12
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +51,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +62,288 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: biteHit_strip13_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17, y: 35}
+        - {x: -31, y: 29}
+        - {x: -31, y: -21}
+        - {x: -17, y: -34}
+        - {x: 17, y: -34}
+        - {x: 30, y: -29}
+        - {x: 31, y: -22}
+        - {x: 31, y: 26}
+        - {x: 26, y: 35}
+    - name: biteHit_strip13_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31, y: 1}
+        - {x: -31, y: -19}
+        - {x: -30, y: -25}
+        - {x: -22, y: -38}
+        - {x: 23, y: -38}
+        - {x: 31, y: -27}
+        - {x: 31, y: 1}
+      - - {x: 13, y: 40}
+        - {x: -16, y: 40}
+        - {x: -31, y: 24}
+        - {x: -31, y: 7}
+        - {x: -29, y: 1}
+        - {x: 31, y: 1}
+        - {x: 31, y: 22}
+        - {x: 30, y: 29}
+    - name: biteHit_strip13_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31, y: -4}
+        - {x: -31, y: -33}
+        - {x: -25, y: -44}
+        - {x: 27, y: -44}
+        - {x: 31, y: -34}
+        - {x: 31, y: -4}
+      - - {x: -18, y: 43}
+        - {x: -31, y: 28}
+        - {x: -31, y: 2}
+        - {x: 31, y: 2}
+        - {x: 31, y: 31}
+        - {x: 14, y: 43}
+    - name: biteHit_strip13_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31, y: -8}
+        - {x: -31, y: -45}
+        - {x: -19, y: -50}
+        - {x: 25, y: -50}
+        - {x: 31, y: -41}
+        - {x: 31, y: -8}
+      - - {x: 31, y: 43}
+        - {x: 28, y: 49}
+        - {x: 23, y: 50}
+        - {x: -20, y: 50}
+        - {x: -31, y: 34}
+        - {x: -31, y: 12}
+        - {x: -27, y: 7}
+        - {x: 31, y: 7}
+    - name: biteHit_strip13_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31, y: -8}
+        - {x: -31, y: -38}
+        - {x: -26, y: -47}
+        - {x: 25, y: -47}
+        - {x: 31, y: -38}
+        - {x: 31, y: -8}
+      - - {x: 31, y: 27}
+        - {x: 30, y: 34}
+        - {x: 13, y: 45}
+        - {x: -16, y: 45}
+        - {x: -31, y: 29}
+        - {x: -31, y: 12}
+        - {x: -27, y: 6}
+        - {x: 31, y: 6}
+    - name: biteHit_strip13_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: -5}
+        - {x: -28, y: -5}
+        - {x: -31, y: -10}
+        - {x: -31, y: -28}
+        - {x: -22, y: -43}
+        - {x: 22, y: -43}
+        - {x: 31, y: -28}
+      - - {x: 31, y: 27}
+        - {x: 21, y: 38}
+        - {x: -26, y: 38}
+        - {x: -31, y: 24}
+        - {x: -31, y: 2}
+        - {x: -26, y: 1}
+        - {x: 31, y: 1}
+    - name: biteHit_strip13_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: 30}
+        - {x: -31, y: 19}
+        - {x: -31, y: -25}
+        - {x: -16, y: -37}
+        - {x: 15, y: -37}
+        - {x: 19, y: -36}
+        - {x: 31, y: -26}
+        - {x: 31, y: 19}
+        - {x: 13, y: 30}
+    - name: biteHit_strip13_7
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: -22}
+        - {x: -26, y: -27}
+        - {x: 20, y: -27}
+        - {x: 31, y: -22}
+        - {x: 31, y: 15}
+        - {x: 29, y: 21}
+        - {x: -26, y: 21}
+        - {x: -32, y: 9}
+    - name: biteHit_strip13_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 16}
+        - {x: -31, y: 6}
+        - {x: -31, y: -17}
+        - {x: -21, y: -26}
+        - {x: 16, y: -26}
+        - {x: 31, y: -19}
+        - {x: 31, y: 11}
+        - {x: 17, y: 16}
+    - name: biteHit_strip13_9
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: 21}
+        - {x: -31, y: 14}
+        - {x: -31, y: -24}
+        - {x: -16, y: -30}
+        - {x: 17, y: -30}
+        - {x: 31, y: -19}
+        - {x: 31, y: 8}
+        - {x: 18, y: 21}
+    - name: biteHit_strip13_10
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23, y: 24}
+        - {x: -21, y: 24}
+        - {x: -31, y: 14}
+        - {x: -31, y: -17}
+        - {x: -29, y: -26}
+        - {x: -18, y: -31}
+        - {x: -6, y: -33}
+        - {x: 28, y: -33}
+        - {x: 31, y: -21}
+        - {x: 31, y: 18}
+    - name: biteHit_strip13_11
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 29}
+        - {x: -31, y: 16}
+        - {x: -31, y: -29}
+        - {x: -19, y: -35}
+        - {x: -15, y: -36}
+        - {x: 17, y: -36}
+        - {x: 31, y: -23}
+        - {x: 31, y: 17}
+        - {x: 15, y: 29}
+    - name: biteHit_strip13_12
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 33}
+        - {x: -31, y: 19}
+        - {x: -31, y: -29}
+        - {x: -13, y: -42}
+        - {x: 13, y: -42}
+        - {x: 31, y: -30}
+        - {x: 31, y: 27}
+        - {x: 16, y: 33}
     outline: []
   spritePackingTag: 
   userData: 

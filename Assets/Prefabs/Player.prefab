@@ -97,6 +97,7 @@ MonoBehaviour:
   unitsLayer:
     serializedVersion: 2
     m_Bits: 512
+  key: {fileID: 0}
   bomb: {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
   arrow: {fileID: 121630, guid: cc2d89d614e5645848d3d2fbfa684b74, type: 2}
   smallRupee: {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
@@ -104,6 +105,8 @@ MonoBehaviour:
   largeRupee: {fileID: 149136, guid: df7552a20080a4f71923be53097a5762, type: 2}
   heart: {fileID: 146282, guid: c39188568bb07438da21d7ca359821b3, type: 2}
   attackEffect: {fileID: 115950, guid: 003c31e5e1f9ea147ac6131a81c5c77f, type: 2}
+  bombEffect: {fileID: 182752, guid: 027f7ace5bc04ec418c3042333c7a8ea, type: 2}
+  digEffect: {fileID: 175652, guid: f9dbfe1e2378bdd489634fa9e25e780a, type: 2}
 --- !u!212 &21215346
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -161,6 +164,14 @@ Prefab:
       propertyPath: attackEffect
       value: 
       objectReference: {fileID: 115950, guid: 003c31e5e1f9ea147ac6131a81c5c77f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: bombEffect
+      value: 
+      objectReference: {fileID: 182752, guid: 027f7ace5bc04ec418c3042333c7a8ea, type: 2}
+    - target: {fileID: 0}
+      propertyPath: digEffect
+      value: 
+      objectReference: {fileID: 175652, guid: f9dbfe1e2378bdd489634fa9e25e780a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198646}

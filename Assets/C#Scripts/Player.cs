@@ -82,6 +82,8 @@ public class Player : Unit {
 	public GameObject largeRupee;
 	public GameObject heart;
     public GameObject attackEffect;
+    public GameObject bombEffect;
+    public GameObject digEffect;
 
     int[] stats;
 	
@@ -300,7 +302,8 @@ public class Player : Unit {
 				animator.SetTrigger ("PlayerBowForward");
 			} 
 			DamageEnemy(hitUnit, arrowDamage);
-		}
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
+        }
 	}
 
 	// Allows the player to use bombs.
@@ -328,8 +331,9 @@ public class Player : Unit {
 			Animator bombAnimator = bombObj.GetComponent<Animator>();
 			// Plays the explosion animation for the bomb.
 			bombAnimator.Play ("BombExplosion");
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
 
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+            if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerBombRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 				animator.SetTrigger ("PlayerBombLeft");
@@ -347,7 +351,8 @@ public class Player : Unit {
 	// Allows the player to dig up and remove rocks.
 	void UseDig(RaycastHit2D rock){
 		if (rock.collider.gameObject.name.Contains("Rock")) {
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+            Instantiate(digEffect, this.transform.position, Quaternion.identity);
+            if (Input.GetKeyDown (KeyCode.RightArrow)) {
 				animator.SetTrigger ("PlayerDigRight");
 			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 				animator.SetTrigger ("PlayerDigLeft");

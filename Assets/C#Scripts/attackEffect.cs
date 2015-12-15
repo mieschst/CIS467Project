@@ -12,11 +12,11 @@ public class attackEffect : MonoBehaviour {
     // Use this for initialization
     void Start () {
         speaker = GetComponent<AudioSource>();
-        if (startSound.channels != 0){
+        if (!startSound.Equals(null)){
             speaker.clip = startSound;
             speaker.Play();
         }
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,11 +30,13 @@ public class attackEffect : MonoBehaviour {
     // Use this as the last thing before destruction
     void End ()
     {
-        if (endSound.channels != 0)
+        if (!endSound.Equals(null))
         {
             speaker.clip = endSound;
             speaker.Play();
         }
-        Destroy(this);
+        Destroy(gameObject, 0.02f);
     }
+
+
 }
