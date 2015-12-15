@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSound: {fileID: 8300000, guid: 6c915d506ed41b04190a807db65eaaca, type: 3}
   endSound: {fileID: 8300000, guid: 0ee7eb109717fdb46b3d60e248b53f33, type: 3}
-  animationLength: 1
+  animationLength: 6
 --- !u!212 &21291368
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -172,7 +172,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: animationLength
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156146}
