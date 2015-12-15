@@ -22,6 +22,7 @@ public class Player : Unit {
 	public static int INVENTORY_CAPACITY;
 	// The number of basic items that the player currently has.
 	public static int basicItemCount;
+	public static int floorLevel = 1;
 
 	// Up
 	public	static KeyCode keyUP = KeyCode.UpArrow;
@@ -40,6 +41,8 @@ public class Player : Unit {
 	public static KeyCode keyITEM = KeyCode.D;
 	// Exit other modes, including inventory
 	public static KeyCode keyCANCEL = KeyCode.Space;
+	// Hotkey for the player using a potion if it is in their inventory
+	public static KeyCode keyPOTION = KeyCode.O;
 	
 	//The following two keys may belong somewhere else, I just wanted to set a framework
 	// Bring up Pause menu
@@ -49,9 +52,6 @@ public class Player : Unit {
 	
 	// The multiplier for calculating level experience requirements.
 	const int EXPERIENCE_FACTOR = 10;
-
-	// The floor the player's currently on.
-	public static int floorLevel;
 	
 	//These variables are accessed by the HUD
 	// The amount of health the player has.
@@ -204,6 +204,7 @@ public class Player : Unit {
 
 			if (!hit && !hitUnit) {
 				this.transform.position = endPosition;
+				currentPosition = endPosition;
 				if(endPosition != startPosition){
 					actionPerformed = true;
 				}
@@ -548,12 +549,12 @@ public class Player : Unit {
 				DefeatEnemy(hitUnit.collider.gameObject.GetComponent<KingDodongo>());
 				Destroy (hitUnit.collider.gameObject);
 
-//				// Destroys the Player and AudioManager from the scene hierarchy.
-//				Destroy (FindObjectOfType<Player>().gameObject);
-//				Destroy(FindObjectOfType<AudioManager>().gameObject);
-//
-//				// Loads the 'win' scene when the player defeats the boss.
-//				// -------WIN SCENE LOAD CALL GOES HERE--------
+				// Destroys the Player and AudioManager from the scene hierarchy.
+				Destroy (FindObjectOfType<Player>().gameObject);
+				Destroy(FindObjectOfType<AudioManager>().gameObject);
+
+				// Loads the 'win' scene when the player defeats the boss.
+				Application.LoadLevel("WinScreen");
 			}
 			break;
 		}
@@ -589,6 +590,7 @@ public class Player : Unit {
 		}
 	}
 
+
 	// Update is called once per frame
 	void Update () {
 		CanMove (Input.GetKey(keyMOVE));
@@ -597,5 +599,9 @@ public class Player : Unit {
 		setHUDcurrency (this.Currency);
 		setHUDhealth (this.Health);
 		FindObjectOfType<InventoryScript>().updateInventory(this.Inventory);
+		//Checks to see if the player wants to use a health potion.
+		if ((PauseScript.isKeysEnabled) && (Input.GetKeyDown (keyPOTION))) {
+			UsePotion();
+		}
 	}
 }
