@@ -97,7 +97,7 @@ MonoBehaviour:
   unitsLayer:
     serializedVersion: 2
     m_Bits: 512
-  key: {fileID: 0}
+  key: {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
   bomb: {fileID: 128002, guid: e0732ad6f8f134676af07ef3a18f1928, type: 2}
   arrow: {fileID: 121630, guid: cc2d89d614e5645848d3d2fbfa684b74, type: 2}
   smallRupee: {fileID: 105058, guid: a60f6bba7b45545eeb337ea8af3e19e0, type: 2}
@@ -172,6 +172,10 @@ Prefab:
       propertyPath: digEffect
       value: 
       objectReference: {fileID: 175652, guid: f9dbfe1e2378bdd489634fa9e25e780a, type: 2}
+    - target: {fileID: 0}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 156824, guid: 0ebd38b9d8e8f44c789f02c72d02a781, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198646}
