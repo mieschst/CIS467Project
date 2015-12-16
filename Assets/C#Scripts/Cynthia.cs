@@ -225,10 +225,8 @@ public class Cynthia : Enemy {
 	// Update is called once per frame
 	void Update () {
 		if (PauseScript.isKeysEnabled) {
-			numFrames++;
-			if (numFrames == FRAMES_PER_TURN) {
+			if (!Player.PLAYERS_TURN){
 				Move ();
-				numFrames = 0;
 			}
 		}
 	}
