@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PauseScript : MonoBehaviour {
 
-    public bool isPaused = false;
+	public bool isPaused { get; set; }
     public static bool isKeysEnabled = true;
 	public static bool isOptionsActive = false;
     public GameObject PauseMenu;
@@ -13,6 +13,7 @@ public class PauseScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+		isPaused = false;
 		Time.timeScale = 1;
     }
 	
@@ -35,6 +36,8 @@ public class PauseScript : MonoBehaviour {
                 ToggleAudio();
                 Time.timeScale = 0;
                 LockInput(true);
+				// Prevents the player from moving while the game is paused.
+				Player.canMove = false;
                 PauseMenu.SetActive(true);
             }
 			//This will trigger when the pause key is pressed in the pause menu.
@@ -44,6 +47,8 @@ public class PauseScript : MonoBehaviour {
                 ToggleAudio();
                 Time.timeScale = 1;
                 LockInput(false);
+				// Allows the player to move again.
+				Player.canMove = true;
                 PauseMenu.SetActive(false);
             }
         }
@@ -90,6 +95,8 @@ public class PauseScript : MonoBehaviour {
 			ToggleAudio();
 			Time.timeScale = 1;
 			LockInput(false);
+			// Allows the player the ability to move again.
+			Player.canMove = true;
 			PauseMenu.SetActive(false);
 		}
     }
@@ -109,6 +116,10 @@ public class PauseScript : MonoBehaviour {
 			isPaused = false;
 			ToggleAudio();
 			LockInput(false);
+
+			// Removes the player object.
+			Destroy (FindObjectOfType<Player> ());
+			Destroy (FindObjectOfType<AudioManager> ());
 			Application.LoadLevel(0);
 		}
     }

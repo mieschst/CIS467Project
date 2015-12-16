@@ -8,6 +8,11 @@ public class HUDScript : MonoBehaviour {
 	public Text HealthText;
 	public Text SkillText;
 	public Text RupeeText;
+	public Text floorLevelText;
+	public Text nameText;
+
+	//The game must be in motion for 5 seconds before "GameOver is triggered". This is to prevent a program timing bug.
+	float timeLeft = 5.0f;
 
 	//This slider manages the player's health bar
 	public Slider HealthSlider;
@@ -27,6 +32,8 @@ public class HUDScript : MonoBehaviour {
 		HealthSlider.enabled = true;
 		SliderBackground.enabled = true;
 		SliderForeground.enabled = true;
+
+		this.gameObject.GetComponent<Image> ().enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -34,6 +41,14 @@ public class HUDScript : MonoBehaviour {
 
 		CheckIfPaused ();
 		AdjustPlayerHealthBar ();
+
+		timeLeft -= Time.deltaTime;
+		//If player dies then load GameOver scene
+		if ((Player.health <= 0) && (timeLeft < 0)) {
+			Destroy (FindObjectOfType<Player> ());
+			Destroy (FindObjectOfType<AudioManager> ());
+			Application.LoadLevel ("GameOver");
+		}
 	}
 
 	void CheckIfPaused(){
@@ -47,20 +62,31 @@ public class HUDScript : MonoBehaviour {
 			RupeeText.enabled = true;
 			RupeeText.text = "RUPEES: " + Player.currency;
 
+			floorLevelText.enabled = true;
+			floorLevelText.text = string.Format ("FLOOR LEVEL: {0}", Player.floorLevel);
+			nameText.enabled = true;
+			nameText.text = string.Format ("NAME: {0}", Player.myName.ToUpper());
+
 			//Enables the HUD's player health bar
 			HealthSlider.enabled = true;
 			SliderBackground.enabled = true;
 			SliderForeground.enabled = true;
+
+			this.gameObject.GetComponent<Image> ().enabled = true;
 
 		} else {
 			//Disables the HUD's labels
 			HealthText.enabled = false;
 			SkillText.enabled = false;
 			RupeeText.enabled = false;
+			floorLevelText.enabled = false;
+			nameText.enabled = false;
 			//Disables the HUD's player health bar
 			HealthSlider.enabled = false;
 			SliderBackground.enabled = false;
 			SliderForeground.enabled = false;
+
+			this.gameObject.GetComponent<Image> ().enabled = false;
 		}
 	}
 

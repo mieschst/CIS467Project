@@ -6,25 +6,30 @@ public class Moblin : Unit {
 
 	Animator moblinAnimator;
 
-	int numFrames;
-
-	const int FRAMES_PER_TURN = 60;
+	int direction = 0;
 
 	public LayerMask blockingLayer;
 	public LayerMask unitsLayer;
 
-	public void InitMoblin(int level) {
-		CalculateStats (level);
+    public GameObject attackEffect;
+
+    GameObject player = null;
+
+	public void InitMoblin(bool isHardMode) {
+		CalculateStats (CalculateLevel(), isHardMode);
+	}
+
+	int CalculateLevel (){
+		return (GameManager.isHardMode) ? (int)Mathf.Ceil (Player.floorLevel / 1.7F) : (int)Mathf.Ceil (Player.floorLevel / 1.6F);
 	}
 
 	// Initializes key variables for the Moblin enemy.
 	void Start () {
-		InitMoblin (1);
-		numFrames = 0;
+		InitMoblin (GameManager.isHardMode);
 		moblinAnimator = this.GetComponent<Animator> ();
 	}
 
-	public void CalculateStats(int level){
+	public void CalculateStats(int level, bool isHardMode){
 		this.Level = level;
 		this.Health = 3;
 		this.Attack = 1;
@@ -32,15 +37,30 @@ public class Moblin : Unit {
 		this.Speed = 1;
 		this.Experience = 10 * level;
 
-		for(int i = 1; i < level; i++){
-			if(i % 2 == 0){
-				this.Health++;
-				this.Attack++;
-				this.Defense++;
+		// If we are on normal mode, then just follow the normal enemy stat calculations.
+		if (isHardMode == false) {
+			for (int i = 1; i < level; i++) {
+				if (i % 2 == 0) {
+					this.Health++;
+					this.Attack++;
+					this.Defense++;
+				} else {
+					this.Attack++;
+					this.Speed++;
+				}
 			}
-			else {
-				this.Attack++;
-				this.Speed++;
+		}
+		// Otherwise, if we are on hard mode, then the moblin will have enhanced health and attack stats.
+		else {
+			for (int i = 1; i < level; i++) {
+				if (i % 2 == 0) {
+					this.Health += 2;
+					this.Attack += 2;
+					this.Defense++;
+				} else {
+					this.Attack++;
+					this.Speed++;
+				}
 			}
 		}
 	}
@@ -53,12 +73,41 @@ public class Moblin : Unit {
 		player.Health -= damage;
 	}
 
+	int ChasePlayer(){
+		int moveDirection = -1;
+
+		float playerX = player.transform.position.x;
+		float playerY = player.transform.position.y;
+		float enemyX = this.transform.position.x;
+		float enemyY = this.transform.position.y;
+
+		if (playerX > enemyX) {
+			moveDirection = 2;
+		} else if (playerX < enemyX) {
+			moveDirection = 3;
+		} else if (playerY > enemyY) {
+			moveDirection = 1;
+		} else if (playerY < enemyY) {
+			moveDirection = 0;
+		}
+
+		return moveDirection;
+	}
+
 	public override void Move(){
 		Vector3 startPosition = this.transform.position;
 		Vector3 endPosition = this.transform.position;
-		
+
+		if (GameManager.isHardMode) {
+			CheckLineOfSight ();
+		}
+
 		int movement = 1;
-		int direction = (int)(Random.value * 4);
+		if (player == null) {
+			direction = (int)(Random.value * 4);
+		} else {
+			direction = ChasePlayer ();
+		}
 		
 		switch (direction) {
 		case 0: 
@@ -91,15 +140,83 @@ public class Moblin : Unit {
 		if (!hit && !hitUnit) {
 			this.transform.position = endPosition;
 		}
+		if (hitUnit) {
+			AttackPlayer(hitUnit, direction);
+		}
+	}
+
+	void AttackPlayer(RaycastHit2D hitPlayer, int movementDirection){
+		if (hitPlayer.collider.gameObject.tag.Equals ("Player")) {
+            Vector3 target = new Vector3();
+			switch (movementDirection) {
+			case 0:
+				moblinAnimator.SetTrigger ("MoblinAttackForward");
+                    target = new Vector3(this.transform.position.x, this.transform.position.y - 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
+			case 1:
+				moblinAnimator.SetTrigger ("MoblinAttackBackward");
+                    target = new Vector3(this.transform.position.x, this.transform.position.y + 1);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
+			case 2:
+				moblinAnimator.SetTrigger ("MoblinAttackRight");
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
+			case 3:
+				moblinAnimator.SetTrigger ("MoblinAttackLeft");
+                    target = new Vector3(this.transform.position.x + 1, this.transform.position.y);
+                    Instantiate(attackEffect, target, Quaternion.identity);
+                    break;
+			}
+			CalculateDamageDealt (hitPlayer.collider.gameObject.GetComponent<Player> ());
+			if (hitPlayer.collider.gameObject.GetComponent<Player> ().Health <= 0) {
+				Destroy (hitPlayer.collider.gameObject, 1.0F);
+			}
+		}
+	}
+
+	public void CheckLineOfSight(){
+		int sight = 3;
+
+		Vector3 startPosition = this.transform.position;
+		Vector3 endPosition = this.transform.position;
+
+		switch (direction) {
+		case 0: 
+			endPosition = new Vector3 (startPosition.x, startPosition.y - sight);
+			break;
+		case 1:
+			endPosition = new Vector3 (startPosition.x, startPosition.y + sight);
+			break;
+		case 2:
+			endPosition = new Vector3 (startPosition.x + sight, startPosition.y);
+			break;
+		case 3:
+			endPosition = new Vector3 (startPosition.x - sight, startPosition.y);
+			break;
+		}
+
+		this.GetComponent<BoxCollider2D> ().enabled = false;
+
+		RaycastHit2D hitPlayer = Physics2D.Linecast (startPosition, endPosition, unitsLayer);
+
+		this.GetComponent<BoxCollider2D> ().enabled = true;
+
+
+		if (hitPlayer) {
+			if (hitPlayer.collider.gameObject.tag.Contains ("Player")) {
+				player = hitPlayer.collider.gameObject;
+			}
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (PauseScript.isKeysEnabled) {
-			numFrames++;
-			if (numFrames == FRAMES_PER_TURN) {
+			if (!Player.PLAYERS_TURN){
 				Move ();
-				numFrames = 0;
 			}
 		}
 	}

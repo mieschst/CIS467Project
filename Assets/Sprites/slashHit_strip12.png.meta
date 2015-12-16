@@ -1,0 +1,309 @@
+fileFormatVersion: 2
+guid: 94a081f22a765d841aaf9c46cdcdf74e
+timeCreated: 1450030628
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: slashHit_strip12_0
+    21300002: slashHit_strip12_1
+    21300004: slashHit_strip12_2
+    21300006: slashHit_strip12_3
+    21300008: slashHit_strip12_4
+    21300010: slashHit_strip12_5
+    21300012: slashHit_strip12_6
+    21300014: slashHit_strip12_7
+    21300016: slashHit_strip12_8
+    21300018: slashHit_strip12_9
+    21300020: slashHit_strip12_10
+    21300022: slashHit_strip12_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: slashHit_strip12_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 33, y: -36}
+        - {x: 29, y: -43}
+        - {x: 29, y: -55}
+        - {x: 38, y: -62}
+        - {x: 49, y: -62}
+        - {x: 53, y: -54}
+        - {x: 53, y: -40}
+        - {x: 51, y: -36}
+      - - {x: 35, y: -4}
+        - {x: 29, y: -8}
+        - {x: 29, y: -23}
+        - {x: 35, y: -30}
+        - {x: 44, y: -30}
+        - {x: 53, y: -26}
+        - {x: 53, y: -7}
+        - {x: 50, y: -4}
+    - name: slashHit_strip12_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 50, y: -36}
+        - {x: 27, y: -36}
+        - {x: 27, y: -61}
+        - {x: 33, y: -70}
+        - {x: 57, y: -70}
+        - {x: 59, y: -64}
+        - {x: 59, y: -48}
+        - {x: 56, y: -38}
+      - - {x: 28, y: -4}
+        - {x: 27, y: -9}
+        - {x: 27, y: -32}
+        - {x: 42, y: -38}
+        - {x: 58, y: -38}
+        - {x: 59, y: -37}
+        - {x: 59, y: -18}
+        - {x: 47, y: -4}
+    - name: slashHit_strip12_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 44, y: -5}
+        - {x: 26, y: -5}
+        - {x: 26, y: -68}
+        - {x: 46, y: -82}
+        - {x: 63, y: -82}
+        - {x: 65, y: -78}
+        - {x: 65, y: -33}
+        - {x: 50, y: -10}
+    - name: slashHit_strip12_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: -4}
+        - {x: 33, y: -4}
+        - {x: 33, y: -63}
+        - {x: 69, y: -95}
+        - {x: 78, y: -95}
+        - {x: 78, y: -41}
+        - {x: 59, y: -8}
+    - name: slashHit_strip12_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 33, y: -5}
+        - {x: 28, y: -17}
+        - {x: 28, y: -61}
+        - {x: 65, y: -96}
+        - {x: 69, y: -96}
+        - {x: 73, y: -95}
+        - {x: 73, y: -32}
+        - {x: 47, y: -5}
+    - name: slashHit_strip12_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54, y: -5}
+        - {x: 31, y: -5}
+        - {x: 31, y: -64}
+        - {x: 68, y: -96}
+        - {x: 76, y: -96}
+        - {x: 76, y: -41}
+        - {x: 60, y: -7}
+    - name: slashHit_strip12_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: -4}
+        - {x: 33, y: -4}
+        - {x: 33, y: -63}
+        - {x: 69, y: -95}
+        - {x: 78, y: -95}
+        - {x: 78, y: -41}
+        - {x: 59, y: -8}
+    - name: slashHit_strip12_7
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 58, y: -11}
+        - {x: 51, y: -6}
+        - {x: 37, y: -6}
+        - {x: 33, y: -15}
+        - {x: 33, y: -61}
+        - {x: 68, y: -97}
+        - {x: 78, y: -97}
+        - {x: 78, y: -45}
+        - {x: 75, y: -40}
+    - name: slashHit_strip12_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: -4}
+        - {x: 33, y: -4}
+        - {x: 33, y: -63}
+        - {x: 69, y: -95}
+        - {x: 78, y: -95}
+        - {x: 78, y: -41}
+        - {x: 59, y: -8}
+    - name: slashHit_strip12_9
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 58, y: -11}
+        - {x: 51, y: -6}
+        - {x: 37, y: -6}
+        - {x: 33, y: -15}
+        - {x: 33, y: -61}
+        - {x: 68, y: -97}
+        - {x: 78, y: -97}
+        - {x: 78, y: -45}
+        - {x: 75, y: -40}
+    - name: slashHit_strip12_10
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: -4}
+        - {x: 33, y: -4}
+        - {x: 33, y: -63}
+        - {x: 69, y: -95}
+        - {x: 78, y: -95}
+        - {x: 78, y: -41}
+        - {x: 59, y: -8}
+    - name: slashHit_strip12_11
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: -4}
+        - {x: 33, y: -4}
+        - {x: 33, y: -63}
+        - {x: 69, y: -95}
+        - {x: 78, y: -95}
+        - {x: 78, y: -41}
+        - {x: 59, y: -8}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

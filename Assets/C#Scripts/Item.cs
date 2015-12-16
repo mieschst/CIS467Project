@@ -19,19 +19,15 @@ public class Item {
 		switch (Name) {
 		case "Heart":
 			player.Health++;
-			Player.setHUDhealth(player.Health);
 			break;
 		case "RupeeSmall":
 			player.Currency++;
-			Player.setHUDcurrency(player.Currency);
 			break;
 		case "RupeeMedium":
 			player.Currency += 5;
-			Player.setHUDcurrency(player.Currency);
 			break;
 		case "RupeeLarge":
 			player.Currency += 10;
-			Player.setHUDcurrency(player.Currency);
 			break;
 		case "HealthPotion":
 			player.Health += 5;
@@ -40,4 +36,17 @@ public class Item {
 		}
 	}
 
+	public void Steal (Sableye sableye){
+		switch (Name) {
+		case "RupeeSmall":
+			sableye.Currency++;
+			break;
+		case "RupeeMedium":
+			sableye.Currency += 5;
+			break;
+		case "RupeeLarge":
+			sableye.Currency += 10;
+			break;
+		}
+	}
 }

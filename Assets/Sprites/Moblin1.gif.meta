@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 198879823379442dd9424ee413f95aa5
-timeCreated: 1443942394
+timeCreated: 1446918623
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -43,6 +43,10 @@ TextureImporter:
     21300072: Moblin1_36
     21300074: Moblin1_37
     21300076: Moblin1_38
+    21300078: Moblin1_39
+    21300080: Moblin1_40
+    21300082: Moblin1_41
+    21300084: Moblin1_42
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -476,6 +480,46 @@ TextureImporter:
         y: 513
         width: 135
         height: 115
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Moblin1_39
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 798
+        width: 192
+        height: 111
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Moblin1_40
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 791
+        width: 194
+        height: 118
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Moblin1_41
+      rect:
+        serializedVersion: 2
+        x: 1635
+        y: 798
+        width: 192
+        height: 111
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Moblin1_42
+      rect:
+        serializedVersion: 2
+        x: 1843
+        y: 798
+        width: 193
+        height: 118
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,0 +1,545 @@
+fileFormatVersion: 2
+guid: 8428f45afed84f548a87426dee9932d2
+timeCreated: 1450026640
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: rockyHit_strip18_0
+    21300002: rockyHit_strip18_1
+    21300004: rockyHit_strip18_2
+    21300006: rockyHit_strip18_3
+    21300008: rockyHit_strip18_4
+    21300010: rockyHit_strip18_5
+    21300012: rockyHit_strip18_6
+    21300014: rockyHit_strip18_7
+    21300016: rockyHit_strip18_8
+    21300018: rockyHit_strip18_9
+    21300020: rockyHit_strip18_10
+    21300022: rockyHit_strip18_11
+    21300024: rockyHit_strip18_12
+    21300026: rockyHit_strip18_13
+    21300028: rockyHit_strip18_14
+    21300030: rockyHit_strip18_15
+    21300032: rockyHit_strip18_16
+    21300034: rockyHit_strip18_17
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: rockyHit_strip18_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 83, y: -58}
+        - {x: 28, y: -23}
+        - {x: 25, y: -24}
+        - {x: 23, y: -30}
+        - {x: 22, y: -34}
+        - {x: 19, y: -32}
+        - {x: 16, y: -33}
+        - {x: 16, y: -52}
+        - {x: 19, y: -63}
+        - {x: 37, y: -74}
+        - {x: 68, y: -74}
+        - {x: 86, y: -64}
+        - {x: 86, y: -59}
+    - name: rockyHit_strip18_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 76, y: -62}
+        - {x: 25, y: -32}
+        - {x: 22, y: -33}
+        - {x: 22, y: -52}
+        - {x: 25, y: -63}
+        - {x: 43, y: -74}
+        - {x: 68, y: -74}
+        - {x: 79, y: -68}
+        - {x: 79, y: -63}
+    - name: rockyHit_strip18_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 76, y: -62}
+        - {x: 25, y: -32}
+        - {x: 22, y: -33}
+        - {x: 22, y: -52}
+        - {x: 25, y: -63}
+        - {x: 43, y: -74}
+        - {x: 68, y: -74}
+        - {x: 79, y: -68}
+        - {x: 79, y: -63}
+    - name: rockyHit_strip18_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: -41}
+        - {x: 17, y: -54}
+        - {x: 34, y: -73}
+        - {x: 76, y: -73}
+        - {x: 80, y: -65}
+        - {x: 80, y: -51}
+        - {x: 30, y: -41}
+    - name: rockyHit_strip18_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 20, y: -48}
+        - {x: 17, y: -49}
+        - {x: 17, y: -60}
+        - {x: 30, y: -79}
+        - {x: 65, y: -79}
+        - {x: 71, y: -77}
+        - {x: 79, y: -58}
+        - {x: 79, y: -48}
+    - name: rockyHit_strip18_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 64, y: -44}
+        - {x: 39, y: -44}
+        - {x: 31, y: -47}
+        - {x: 31, y: -73}
+        - {x: 69, y: -73}
+        - {x: 69, y: -56}
+        - {x: 66, y: -46}
+    - name: rockyHit_strip18_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 33, y: -42}
+        - {x: 19, y: -51}
+        - {x: 19, y: -62}
+        - {x: 31, y: -74}
+        - {x: 72, y: -74}
+        - {x: 82, y: -58}
+        - {x: 82, y: -42}
+    - name: rockyHit_strip18_7
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 18, y: -74}
+        - {x: 25, y: -84}
+        - {x: 29, y: -87}
+        - {x: 64, y: -87}
+        - {x: 78, y: -79}
+        - {x: 78, y: -50}
+        - {x: 72, y: -34}
+        - {x: 31, y: -34}
+        - {x: 18, y: -54}
+    - name: rockyHit_strip18_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 34, y: -30}
+        - {x: 30, y: -33}
+        - {x: 21, y: -43}
+        - {x: 15, y: -61}
+        - {x: 15, y: -83}
+        - {x: 29, y: -88}
+        - {x: 65, y: -88}
+        - {x: 81, y: -78}
+        - {x: 81, y: -51}
+        - {x: 71, y: -30}
+    - name: rockyHit_strip18_9
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27, y: -27}
+        - {x: 25, y: -28}
+        - {x: 18, y: -57}
+        - {x: 18, y: -74}
+        - {x: 39, y: -85}
+        - {x: 74, y: -85}
+        - {x: 78, y: -76}
+        - {x: 78, y: -33}
+        - {x: 73, y: -27}
+    - name: rockyHit_strip18_10
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 44, y: -24}
+        - {x: 41, y: -30}
+        - {x: 42, y: -33}
+        - {x: 48, y: -39}
+        - {x: 45, y: -37}
+        - {x: 41, y: -33}
+        - {x: 41, y: -29}
+        - {x: 38, y: -24}
+        - {x: 24, y: -24}
+        - {x: 15, y: -42}
+        - {x: 15, y: -78}
+        - {x: 30, y: -87}
+        - {x: 77, y: -87}
+        - {x: 83, y: -83}
+        - {x: 83, y: -39}
+        - {x: 74, y: -24}
+    - name: rockyHit_strip18_11
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: -31}
+        - {x: 17, y: -71}
+        - {x: 26, y: -78}
+        - {x: 38, y: -85}
+        - {x: 57, y: -85}
+        - {x: 80, y: -76}
+        - {x: 80, y: -31}
+      - - {x: 24, y: -27}
+        - {x: 20, y: -32}
+        - {x: 20, y: -38}
+        - {x: 23, y: -42}
+        - {x: 32, y: -42}
+        - {x: 35, y: -37}
+        - {x: 35, y: -30}
+        - {x: 30, y: -27}
+      - - {x: 42, y: -22}
+        - {x: 39, y: -27}
+        - {x: 39, y: -35}
+        - {x: 44, y: -37}
+        - {x: 52, y: -37}
+        - {x: 54, y: -35}
+        - {x: 54, y: -26}
+        - {x: 52, y: -22}
+    - name: rockyHit_strip18_12
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 26, y: -39}
+        - {x: 18, y: -46}
+        - {x: 18, y: -72}
+        - {x: 38, y: -85}
+        - {x: 65, y: -85}
+        - {x: 73, y: -82}
+        - {x: 80, y: -75}
+        - {x: 80, y: -49}
+        - {x: 71, y: -39}
+      - - {x: 42, y: -21}
+        - {x: 38, y: -23}
+        - {x: 38, y: -28}
+        - {x: 40, y: -34}
+        - {x: 48, y: -34}
+        - {x: 51, y: -32}
+        - {x: 51, y: -25}
+        - {x: 50, y: -21}
+    - name: rockyHit_strip18_13
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 32, y: -34}
+        - {x: 17, y: -50}
+        - {x: 17, y: -63}
+        - {x: 21, y: -74}
+        - {x: 34, y: -79}
+        - {x: 61, y: -79}
+        - {x: 79, y: -69}
+        - {x: 79, y: -50}
+        - {x: 68, y: -34}
+      - - {x: 39, y: -20}
+        - {x: 35, y: -22}
+        - {x: 35, y: -27}
+        - {x: 37, y: -33}
+        - {x: 45, y: -33}
+        - {x: 48, y: -31}
+        - {x: 48, y: -24}
+        - {x: 47, y: -20}
+    - name: rockyHit_strip18_14
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 49, y: -19}
+        - {x: 33, y: -19}
+        - {x: 16, y: -46}
+        - {x: 16, y: -58}
+        - {x: 19, y: -65}
+        - {x: 32, y: -75}
+        - {x: 62, y: -75}
+        - {x: 80, y: -65}
+        - {x: 80, y: -44}
+        - {x: 58, y: -22}
+    - name: rockyHit_strip18_15
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 29, y: -40}
+        - {x: 29, y: -38}
+        - {x: 30, y: -35}
+        - {x: 30, y: -32}
+        - {x: 26, y: -28}
+        - {x: 17, y: -28}
+        - {x: 17, y: -60}
+        - {x: 18, y: -62}
+        - {x: 35, y: -73}
+        - {x: 58, y: -73}
+        - {x: 58, y: -42}
+        - {x: 51, y: -28}
+        - {x: 42, y: -28}
+        - {x: 35, y: -31}
+        - {x: 29, y: -37}
+      - - {x: 53, y: -28}
+        - {x: 48, y: -36}
+        - {x: 48, y: -52}
+        - {x: 54, y: -65}
+        - {x: 78, y: -65}
+        - {x: 81, y: -58}
+        - {x: 81, y: -45}
+        - {x: 73, y: -28}
+      - - {x: 40, y: -14}
+        - {x: 36, y: -16}
+        - {x: 36, y: -21}
+        - {x: 38, y: -27}
+        - {x: 46, y: -27}
+        - {x: 49, y: -25}
+        - {x: 49, y: -18}
+        - {x: 48, y: -14}
+    - name: rockyHit_strip18_16
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 42, y: -57}
+        - {x: 40, y: -59}
+        - {x: 40, y: -74}
+        - {x: 45, y: -78}
+        - {x: 49, y: -78}
+        - {x: 56, y: -76}
+        - {x: 60, y: -72}
+        - {x: 60, y: -63}
+        - {x: 58, y: -57}
+      - - {x: 18, y: -36}
+        - {x: 18, y: -49}
+        - {x: 21, y: -50}
+        - {x: 25, y: -51}
+        - {x: 21, y: -54}
+        - {x: 19, y: -61}
+        - {x: 26, y: -71}
+        - {x: 34, y: -71}
+        - {x: 38, y: -70}
+        - {x: 49, y: -54}
+        - {x: 49, y: -40}
+        - {x: 47, y: -36}
+      - - {x: 52, y: -36}
+        - {x: 51, y: -38}
+        - {x: 51, y: -61}
+        - {x: 55, y: -70}
+        - {x: 62, y: -71}
+        - {x: 84, y: -71}
+        - {x: 84, y: -54}
+        - {x: 76, y: -36}
+    - name: rockyHit_strip18_17
+      rect:
+        serializedVersion: 2
+        x: 1700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 45, y: -60}
+        - {x: 43, y: -67}
+        - {x: 43, y: -71}
+        - {x: 47, y: -75}
+        - {x: 50, y: -76}
+        - {x: 55, y: -76}
+        - {x: 59, y: -73}
+        - {x: 59, y: -65}
+        - {x: 57, y: -60}
+      - - {x: 24, y: -53}
+        - {x: 21, y: -55}
+        - {x: 21, y: -63}
+        - {x: 23, y: -69}
+        - {x: 33, y: -69}
+        - {x: 37, y: -66}
+        - {x: 37, y: -58}
+        - {x: 35, y: -53}
+      - - {x: 63, y: -64}
+        - {x: 67, y: -69}
+        - {x: 76, y: -69}
+        - {x: 79, y: -67}
+        - {x: 79, y: -55}
+        - {x: 78, y: -53}
+        - {x: 65, y: -53}
+        - {x: 63, y: -60}
+      - - {x: 37, y: -38}
+        - {x: 31, y: -39}
+        - {x: 30, y: -43}
+        - {x: 30, y: -51}
+        - {x: 36, y: -54}
+        - {x: 45, y: -54}
+        - {x: 46, y: -51}
+        - {x: 46, y: -40}
+        - {x: 43, y: -38}
+      - - {x: 55, y: -38}
+        - {x: 55, y: -53}
+        - {x: 59, y: -54}
+        - {x: 70, y: -54}
+        - {x: 71, y: -52}
+        - {x: 71, y: -44}
+        - {x: 69, y: -38}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
