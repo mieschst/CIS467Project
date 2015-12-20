@@ -27,7 +27,7 @@ public class BoardManager : MonoBehaviour {
 	int rows;
 	int columns;
 
-	public const int BOSS_LEVEL = 10;
+	public const int BOSS_LEVEL = 20;
 
 	// Sets the depth of the wall tiles around the board to 2.
 	const int WALL_DEPTH = 2;
